@@ -11,7 +11,7 @@ public interface Item {
 
     // MODIFIES: this
     // EFFECTS: active the item, so it is useable. If the item is
-    // already actived, the function will do nothing
+    // already activated, the function will do nothing
     public void activate();
 
     // MODIFIES: this
@@ -21,11 +21,4 @@ public interface Item {
 
     // EFFECTS: true if the item is active, false if it is not
     public boolean isActive();
-
-    // EFFECTS: true if this item is a coin
-    // public boolean isCoin();
-
-    // REQUIRES isCoin()
-    // return the value of the coin
-    // public int coinValue();
 }
