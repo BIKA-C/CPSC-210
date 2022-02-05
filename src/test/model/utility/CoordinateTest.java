@@ -54,20 +54,20 @@ public class CoordinateTest {
         }
     }
 
-    @Test
-    public void resetTest() {
-        coord.setX(100);
-        coord.setY(200);
-        coord.reset();
-        assertEquals(9, coord.getX());
-        assertEquals(2, coord.getY());
+    // @Test
+    // public void resetTest() {
+    //     coord.setX(100);
+    //     coord.setY(200);
+    //     coord.reset();
+    //     assertEquals(9, coord.getX());
+    //     assertEquals(2, coord.getY());
 
-        coord.setX(900);
-        coord.setY(15);
-        coord.reset();
-        assertEquals(9, coord.getX());
-        assertEquals(2, coord.getY());
-    }
+    //     coord.setX(900);
+    //     coord.setY(15);
+    //     coord.reset();
+    //     assertEquals(9, coord.getX());
+    //     assertEquals(2, coord.getY());
+    // }
 
     @Test
     public void setXTest() {
