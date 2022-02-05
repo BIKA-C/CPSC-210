@@ -6,12 +6,12 @@ import java.util.Random;
 import model.utility.Coordinate;
 import model.utility.Direction;
 
-// Maze describes a maze that the palyer has to solve.
+// Maze describes a maze that the player has to solve.
 // both start and exit point will be randomly generated
-// a point within the region of ([width/2, widht-1], [height/2, height-1])
+// a point within the region of ([width/2, width-1], [height/2, height-1])
 // will be the exit point
-// a point within the region of ([0, width/2], [0, height/2])
-// wiil be the start point
+// a point within the region of ([0, width/2), [0, height/2))
+// will be the start point
 // assuming the top left corner is (0, 0)
 public class Maze {
 
@@ -29,7 +29,7 @@ public class Maze {
     // EFFECTS: constructs a random maze by the given width and
     // height. A start point will be within the region of ([0, width/2), [0,
     // height/2))
-    // and a end point will be within the region of ([width/2, widht-1], [height/2,
+    // and a end point will be within the region of ([width/2, width-1], [height/2,
     // height-1])
     public Maze(int width, int height) {
         this.width = width;
@@ -82,10 +82,14 @@ public class Maze {
         return exit;
     }
 
+    // EFFECTS: return the number of the roads
     public int getNumOfRoad() {
         return roads.size();
     }
 
+    // REQUIRES: index >= 0 && index < getNumOfRoad()
+    // EFFECTS: returns a road coord by the given index
+    // the order is random
     public Coordinate getaRoad(int index) {
         return roads.get(index);
     }
@@ -112,6 +116,10 @@ public class Maze {
             queue.remove(index);
         }
 
+        generateExit();
+    }
+
+    private void generateExit() {
         do {
             int xcoord = random.nextInt(width / 2) + width / 2;
             int ycoord = random.nextInt(height / 2) + height / 2;
@@ -121,24 +129,28 @@ public class Maze {
 
     private int countSurroundingRoad(Coordinate coord) {
         int roadCounter = 0;
+        int saveX = coord.getX();
+        int saveY = coord.getY();
         for (Direction direction : Direction.values()) {
             coord.go(direction);
             if (this.isInRange(coord) && !this.isWall(coord)) {
                 roadCounter++;
             }
-            coord.reset();
+            coord.setXY(saveX, saveY);
         }
         return roadCounter;
     }
 
     private void explore(Coordinate coord, ArrayList<Coordinate> walls) {
+        int saveX = coord.getX();
+        int saveY = coord.getY();
         for (Direction direction : Direction.values()) {
             coord.go(direction);
             if (isInRange(coord) && isWall(coord)) {
                 Coordinate wall = new Coordinate(coord.getX(), coord.getY());
                 walls.add(wall);
             }
-            coord.reset();
+            coord.setXY(saveX, saveY);
         }
     }
 }
