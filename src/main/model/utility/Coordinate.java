@@ -138,6 +138,10 @@ public class Coordinate {
         return this.xcoord == coordinate.xcoord && this.ycoord == coordinate.ycoord;
     }
 
+    public boolean isSame(int x, int y) {
+        return this.xcoord == x && this.ycoord == y;
+    }
+
     public int getX() {
         return xcoord;
     }

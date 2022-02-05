@@ -103,12 +103,14 @@ public class Screen {
     // EFFECTS: immediately put s onto the screen with the given position
     // and style. If wide, it will draw it twice
     public void draw(String s, int x, int y, TextAttribute style, boolean wide) {
-        setCursor(x, y);
+        setCursor(x + 1, y + 1);
 
         applyStyle(style);
         System.out.print(s);
         if (wide) {
             System.out.print(s);
+        } else if (s.length() == 1) {
+            System.out.print(" ");
         }
 
         clearAllAttribute();
@@ -121,6 +123,14 @@ public class Screen {
     // and style. If wide, it will draw it twice
     public void draw(String s, Coordinate coord, TextAttribute style, boolean wide) {
         draw(s, coord.getX(), coord.getY(), style, wide);
+    }
+
+    public void drawPixel(Pixel p, int x, int y, boolean wide) {
+        draw(Character.toString(p.getCharacter()), x, y, p.getAttribute(), wide);
+    }
+
+    public void drawPixel(Pixel p, Coordinate coord, boolean wide) {
+        drawPixel(p, coord.getX(), coord.getY(), wide);
     }
 
     public int getHeight() {
