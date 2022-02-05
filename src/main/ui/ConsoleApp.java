@@ -39,8 +39,8 @@ public class ConsoleApp {
     private final Pixel playerPixel;
     private final Pixel itemPixel;
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 20;
+    public static final int WIDTH = 30;
+    public static final int HEIGHT = 30;
     public static final int STATUS_BAR_HEIGHT = 1;
 
     public ConsoleApp() throws InterruptedException, IOException {
@@ -70,7 +70,7 @@ public class ConsoleApp {
     }
 
     public void start() throws IOException, InterruptedException {
-        screen.setCursorInvisibale();
+        screen.setCursorInvisible();
         render();
         while (!quit) {
             if (!termial.isKeyDown()) {
@@ -83,8 +83,7 @@ public class ConsoleApp {
     }
 
     private void render() throws IOException, InterruptedException {
-
-        screen.write("Maze Game!! Coins: " + playerInventory.getCoins(), 0, 0, TextAttribute.DEFAULT);
+        screen.write("Maze Game!! Coins: " + playerInventory.getCoins(), 0, 0, TextAttribute.DEFAULT, false);
         drawMaze();
         drawItems();
         drawPlayer();
