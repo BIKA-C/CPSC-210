@@ -1,31 +1,23 @@
 package model.utility;
 
-// Coodinate is a (x, y) coordinate
+// Coordinate is a (x, y) coordinate
 public class Coordinate {
 
     private int xcoord;
     private int ycoord;
-    private final int saveX;
-    private final int saveY;
 
-    // xxx may not necessary // REQUIRES: xcoord >= 0 and ycoord >= 0
     // EFFECTS: constructs a coordinate with the given x and y
     public Coordinate(int xcoord, int ycoord) {
         this.xcoord = xcoord;
         this.ycoord = ycoord;
-
-        this.saveX = xcoord;
-        this.saveY = ycoord;
     }
 
-    // xxx may not necessary // REQUIRES: xcoord >= 0
     // MODIFIES: this
     // EFFECTS: set x to be the given x
     public void setX(int xcoord) {
         this.xcoord = xcoord;
     }
 
-    // xxx may not necessary // REQUIRES: ycoord >= 0
     // MODIFIES: this
     // EFFECTS: set y to be the given y
     public void setY(int ycoord) {
@@ -88,25 +80,25 @@ public class Coordinate {
     }
 
     // MODIFIES: this
-    // EFFECTS: increas y by amount
+    // EFFECTS: increase y by amount
     public void increaseY(int amount) {
         this.ycoord += amount;
     }
 
     // MODIFIES: this
-    // EFFECTS: decreas y by amount
+    // EFFECTS: decrease y by amount
     public void decreaseY(int amount) {
         this.ycoord -= amount;
     }
 
     // MODIFIES: this
-    // EFFECTS: increas x by amount
+    // EFFECTS: increase x by amount
     public void increaseX(int amount) {
         this.xcoord += amount;
     }
 
     // MODIFIES: this
-    // EFFECTS: decreas x by amount
+    // EFFECTS: decrease x by amount
     public void decreaseX(int amount) {
         this.xcoord -= amount;
     }
@@ -119,25 +111,20 @@ public class Coordinate {
     }
 
     // MODIFIES: this
-    // EFFECTS: decreas x and y by dx and dy
+    // EFFECTS: decrease x and y by dx and dy
     public void decreaseXY(int dx, int dy) {
         this.xcoord -= dx;
         this.ycoord -= dy;
     }
 
-    // MODIFIES: this
-    // EFFECTS: reset the xcoord and ycoord to be
-    // the value that the object is inititialized with
-    public void reset() {
-        this.xcoord = this.saveX;
-        this.ycoord = this.saveY;
-    }
 
+    // REQUIRES: coordinate != null
     // EFFECTS: true if getX() == coordinate.getX() && getY() == coordinate.getY();
     public boolean isSame(Coordinate coordinate) {
         return this.xcoord == coordinate.xcoord && this.ycoord == coordinate.ycoord;
     }
 
+    // EFFECTS: true if getX() == x && getY() == y;
     public boolean isSame(int x, int y) {
         return this.xcoord == x && this.ycoord == y;
     }
