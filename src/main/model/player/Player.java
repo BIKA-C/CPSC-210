@@ -17,8 +17,13 @@ public class Player {
     public void move(Direction dir) {
         if (dir != direction) {
             direction = dir;
+            return;
         }
-        position.go(direction);
+        position.go(direction, 1);
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public Inventory getInventory() {
@@ -29,7 +34,12 @@ public class Player {
         return position;
     }
 
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
     public void setPosition(Coordinate position) {
         this.position.setXY(position.getX(), position.getY());
     }
+
 }
