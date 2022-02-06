@@ -94,7 +94,7 @@ public class Maze {
         return roads.get(index);
     }
 
-    private void setBloack(Coordinate coord, boolean value) {
+    public void setBloack(Coordinate coord, boolean value) {
         maze[coord.getY()][coord.getX()] = value;
     }
 
@@ -132,7 +132,7 @@ public class Maze {
         int saveX = coord.getX();
         int saveY = coord.getY();
         for (Direction direction : Direction.values()) {
-            coord.go(direction);
+            coord.go(direction, 1);
             if (this.isInRange(coord) && !this.isWall(coord)) {
                 roadCounter++;
             }
@@ -145,7 +145,7 @@ public class Maze {
         int saveX = coord.getX();
         int saveY = coord.getY();
         for (Direction direction : Direction.values()) {
-            coord.go(direction);
+            coord.go(direction, 1);
             if (isInRange(coord) && isWall(coord)) {
                 Coordinate wall = new Coordinate(coord.getX(), coord.getY());
                 walls.add(wall);
