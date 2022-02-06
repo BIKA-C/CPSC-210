@@ -6,7 +6,7 @@ public class Terminal {
     private Screen screen;
 
     // REQUIRES: width > 0 and height > 0
-    // EFFECTS: creates a new termianl screen with the given width and height
+    // EFFECTS: creates a new terminal screen with the given width and height
     public Terminal(int width, int height) throws InterruptedException, IOException {
         screen = new Screen(width, height);
         String[] cmd = { "/bin/sh", "-c", "stty raw </dev/tty" };
@@ -42,7 +42,7 @@ public class Terminal {
     }
 
     // REQUIRES: getScreen() != null
-    // EFFECTS: read a key from the terminal immedately
+    // EFFECTS: read a key from the terminal immediately
     // (it does not wait for the enter), if ctrl+c is
     // pressed, this function will end the entire program
     // with a status code of 0
