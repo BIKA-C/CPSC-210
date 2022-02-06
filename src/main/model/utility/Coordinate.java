@@ -25,45 +25,45 @@ public class Coordinate {
     }
 
     // MODIFIES: this
-    // EFFECTS: xcoord - 1
-    public void goLeft() {
-        this.xcoord--;
+    // EFFECTS: getX() -= dx;
+    public void goLeft(int dx) {
+        this.xcoord -= dx;
     }
 
     // MODIFIES: this
-    // EFFECTS: xcoord + 1
-    public void goRight() {
-        this.xcoord++;
+    // EFFECTS: getX() += dx
+    public void goRight(int dx) {
+        this.xcoord += dx;
     }
 
     // MODIFIES: this
-    // EFFECTS: ycoord - 1
-    public void goUp() {
-        this.ycoord--;
+    // EFFECTS: getY() -= dy
+    public void goUp(int dy) {
+        this.ycoord -= dy;
     }
 
     // MODIFIES: this
-    // EFFECTS: ycoord + 1
-    public void goDown() {
-        this.ycoord++;
+    // EFFECTS: getY() += dy
+    public void goDown(int dy) {
+        this.ycoord += dy;
     }
 
     // MODIFIES: this
     // EFFECTS: go with the given direction
-    // for example go(Direction.up) is equivalent to goUp()
-    public void go(Direction direction) {
+    // for example go(Direction.up, 1) is equivalent to goUp(1)
+    public void go(Direction direction, int distance) {
         switch (direction) {
             case up:
-                this.goUp();
+                this.goUp(distance);
                 break;
             case down:
-                this.goDown();
+                this.goDown(distance);
                 break;
             case left:
-                this.goLeft();
+                this.goLeft(distance);
                 break;
             case right:
-                this.goRight();
+                this.goRight(distance);
                 break;
 
             default:
@@ -117,7 +117,6 @@ public class Coordinate {
         this.ycoord -= dy;
     }
 
-
     // REQUIRES: coordinate != null
     // EFFECTS: true if getX() == coordinate.getX() && getY() == coordinate.getY();
     public boolean isSame(Coordinate coordinate) {
@@ -135,5 +134,10 @@ public class Coordinate {
 
     public int getY() {
         return ycoord;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + xcoord + " , " + ycoord + ")";
     }
 }
