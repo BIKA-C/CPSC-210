@@ -17,29 +17,27 @@ public class Coin implements Item {
     @Override
     public void apply(Game g) {
         g.getPlayer().getInventory().addCoins(this.value);
+        g.setItemMessage("You got " + this.value + " coins");
     }
 
     @Override
-    public void activate() {
-    }
-
-    @Override
-    public void deactivate() {
-    }
-
-    @Override
-    public boolean isActive() {
+    public boolean autoApply(Game g) {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 
     // @Override
     // public boolean isCoin() {
-    //     return true;
+    // return true;
     // }
 
     // @Override
     // public int coinValue() {
-    //     return this.value;
+    // return this.value;
     // }
 
 }

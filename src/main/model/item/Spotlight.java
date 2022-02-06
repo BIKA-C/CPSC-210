@@ -22,29 +22,11 @@ public class Spotlight implements Item {
     @Override
     public void apply(Game g) {
         // TODO Auto-generated method stub
-
     }
 
-    // MODIFIES: this
-    // EFFECTS: active the item, so it is usable. If the item is
-    // active, the function will do nothing
     @Override
-    public void activate() {
-        this.isActive = true;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: deactivate the item, so it is usable. If the item is
-    // not active, the function will do nothing
-    @Override
-    public void deactivate() {
-        this.isActive = false;
-    }
-
-    // EFFECTS: true if the item is active, false if it is not
-    @Override
-    public boolean isActive() {
-        return this.isActive;
+    public boolean autoApply(Game g) {
+        return true;
     }
 
     // @Override
@@ -56,5 +38,10 @@ public class Spotlight implements Item {
     // public int coinValue() {
     //     return -1;
     // }
+    //
 
+    @Override
+    public String getName() {
+        return null;
+    }
 }
