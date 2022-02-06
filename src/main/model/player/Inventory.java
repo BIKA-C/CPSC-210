@@ -13,6 +13,28 @@ public class Inventory {
         coins = 0;
     }
 
+    public void addItem(Item i) {
+        inventory.add(i);
+    }
+
+    public int getInventorySize() {
+        return inventory.size();
+    }
+
+    public Item getItem(int i) {
+        if (i >= inventory.size()) {
+            return null;
+        }
+        return inventory.get(i);
+    }
+
+    public void removeItem(int i) {
+        if (i >= inventory.size()) {
+            return;
+        }
+        inventory.remove(i);
+    }
+
     // REQUIRES: amount>0
     // MODIFIES: this
     // EFFECTS: add amount of coins
