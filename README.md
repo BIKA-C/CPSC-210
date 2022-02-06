@@ -23,7 +23,7 @@ Everyone!
 
 - As a user, I want to be able to control the character to move and turn
 - As a user, I don't want to the character to be able to walk into the maze walls
-- As a user, I want to be able to add a in-game coin and items into the player inventory bag
+- As a user, I want to be able to add in-game coin and items into the player inventory bag
 - As a user, I want to be able to use the items that I have
 - As a user, I want to be able to see the entire maze
 - As a user, I want to be able to go the next maze if I solved the current one
