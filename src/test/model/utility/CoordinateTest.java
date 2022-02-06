@@ -32,23 +32,23 @@ public class CoordinateTest {
         // this internally test all goUp goDown goLeft and goRight methods
         for (Direction direction : Direction.values()) {
             coord = new Coordinate(9, 2);
-            coord.go(direction);
+            coord.go(direction, 3);
             switch (direction) {
                 case up:
-                    assertEquals(1, coord.getY());
+                    assertEquals(-1, coord.getY());
                     assertEquals(9, coord.getX());
                     break;
                 case down:
-                    assertEquals(3, coord.getY());
+                    assertEquals(5, coord.getY());
                     assertEquals(9, coord.getX());
                     break;
                 case right:
                     assertEquals(2, coord.getY());
-                    assertEquals(10, coord.getX());
+                    assertEquals(12, coord.getX());
                     break;
                 case left:
                     assertEquals(2, coord.getY());
-                    assertEquals(8, coord.getX());
+                    assertEquals(5, coord.getX());
                     break;
             }
         }
@@ -56,17 +56,17 @@ public class CoordinateTest {
 
     // @Test
     // public void resetTest() {
-    //     coord.setX(100);
-    //     coord.setY(200);
-    //     coord.reset();
-    //     assertEquals(9, coord.getX());
-    //     assertEquals(2, coord.getY());
+    // coord.setX(100);
+    // coord.setY(200);
+    // coord.reset();
+    // assertEquals(9, coord.getX());
+    // assertEquals(2, coord.getY());
 
-    //     coord.setX(900);
-    //     coord.setY(15);
-    //     coord.reset();
-    //     assertEquals(9, coord.getX());
-    //     assertEquals(2, coord.getY());
+    // coord.setX(900);
+    // coord.setY(15);
+    // coord.reset();
+    // assertEquals(9, coord.getX());
+    // assertEquals(2, coord.getY());
     // }
 
     @Test
