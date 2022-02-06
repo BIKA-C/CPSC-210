@@ -3,6 +3,7 @@ package ui;
 import java.io.IOException;
 
 import model.Game;
+import model.item.Item;
 import model.maze.Maze;
 import model.player.Inventory;
 import model.player.Player;
@@ -16,57 +17,46 @@ import ui.console.TextAttribute;
 public class ConsoleApp {
     private Game game;
     private Terminal termial;
+    private boolean quit;
 
     private final Screen screen;
 
-    private Maze maze;
     private final Player player;
     private final Inventory playerInventory;
     private final Coordinate playerPos;
 
-    private boolean quit;
-
     public final int screenWidth;
     public final int screenHeight;
 
-    private final TextAttribute wallStyle;
-    private final TextAttribute exitStyle;
-    private final TextAttribute playerStyle;
-    private final TextAttribute itemStyle;
+    private final TextAttribute wallStyle = new TextAttribute(4, -1, 0);
+    private final TextAttribute exitStyle = new TextAttribute(9, -1, 0);
+    private final TextAttribute playerStyle = new TextAttribute(10, -1, 0);
+    private final TextAttribute itemStyle = new TextAttribute(11, -1, 1);
+    private final TextAttribute messageStyle = new TextAttribute(6, -1, 0);
+    private final Pixel wallPixel = new Pixel('█', wallStyle);
+    private final Pixel exitPixel = new Pixel('⬤', exitStyle);
+    private final Pixel playerPixel = new Pixel('⬤', playerStyle);
+    private final Pixel itemPixel = new Pixel('⬤', itemStyle);
 
-    private final Pixel wallPixel;
-    private final Pixel exitPixel;
-    private final Pixel playerPixel;
-    private final Pixel itemPixel;
-
-    public static final int WIDTH = 30;
-    public static final int HEIGHT = 30;
-    public static final int STATUS_BAR_HEIGHT = 1;
+    public static final int WIDTH = 38;
+    public static final int HEIGHT = WIDTH;
+    public static final int INFO_PANNEL_START_X = (WIDTH + 3) * 2;
+    public static final int INFO_PANNEL_WIDTH = 30;
+    public static final int INFO_START_LINE = Math.toIntExact(Math.round(HEIGHT * 0.15));
 
     public ConsoleApp() throws InterruptedException, IOException {
         quit = false;
-        screenWidth = WIDTH;
-        screenHeight = HEIGHT + STATUS_BAR_HEIGHT;
+        screenWidth = WIDTH + INFO_PANNEL_WIDTH;
+        screenHeight = HEIGHT;
 
         game = new Game(WIDTH, HEIGHT);
         termial = new Terminal(screenWidth, screenHeight);
 
         screen = termial.getScreen();
 
-        maze = game.getMaze();
         player = game.getPlayer();
         playerInventory = player.getInventory();
         playerPos = player.getPosition();
-
-        wallStyle = new TextAttribute(4, -1, 0);
-        exitStyle = new TextAttribute(13, -1, 0);
-        playerStyle = new TextAttribute(83, -1, 0);
-        itemStyle = new TextAttribute(11, -1, 1);
-
-        wallPixel = new Pixel('█', wallStyle);
-        exitPixel = new Pixel('⬤', exitStyle);
-        playerPixel = new Pixel('⬤', playerStyle);
-        itemPixel = new Pixel('⬤', itemStyle);
     }
 
     public void start() throws IOException, InterruptedException {
@@ -83,19 +73,65 @@ public class ConsoleApp {
     }
 
     private void render() throws IOException, InterruptedException {
-        screen.write("Maze Game!! Coins: " + playerInventory.getCoins(), 0, 0, TextAttribute.DEFAULT, false);
+        drawInfoPannel();
         drawMaze();
         drawItems();
         drawPlayer();
         screen.render();
     }
 
+    private void drawInfoPannel() {
+        int line = INFO_START_LINE;
+        screen.write("This is a friendly maze solving game", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT,
+                false, true);
+        line++;
+        line = drawInventory(line);
+
+        line++;
+        line = drawInfo(line);
+
+        line++;
+        line = drawMessage(line);
+    }
+
+    private int drawMessage(int line) {
+        screen.write("Message: ", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        screen.write(game.getItemMessage(), INFO_PANNEL_START_X, line++, messageStyle, false, true);
+        return line;
+    }
+
+    private int drawInfo(int line) {
+        String info;
+        screen.write("Info: ", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        info = "Direction: " + player.getDirection();
+        screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        info = "Position: " + playerPos;
+        screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        return line;
+    }
+
+    private int drawInventory(int line) {
+        String info;
+        screen.write("Inventory: ", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        info = "Coins: " + playerInventory.getCoins();
+        screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        info = "You have " + playerInventory.getInventorySize() + " items:";
+        screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        for (int i = 0; i < playerInventory.getInventorySize(); i++) {
+            if (INFO_START_LINE + 12 + i + 1 == HEIGHT) {
+                screen.write("    ...", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+                return line;
+            }
+            info = "    " + (i + 1) + " - " + playerInventory.getItem(i).getName();
+            screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
+        }
+        return line;
+    }
+
     private void handleKeyDown() throws IOException, InterruptedException {
         int key = termial.getKey();
         char c = (char) key;
 
-        // screen.write("key:" + Character.toString(c) + " -> " + key, 11, 0,
-        // TextAttribute.DEFAULT);
         switch (c) {
             case 'q':
                 quit = true;
@@ -112,6 +148,17 @@ public class ConsoleApp {
             case 'd':
                 tryMove(Direction.right);
                 break;
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                tryApply(key - 48 - 1);
+                break;
             default:
                 break;
         }
@@ -120,11 +167,12 @@ public class ConsoleApp {
     }
 
     private void drawMaze() {
+        Maze maze = game.getMaze();
         drawMazeBorder();
         Coordinate screenPos;
         Coordinate pos;
         for (int i = 0; i < maze.getHeight(); i++) {
-            for (int j = 0; j < game.getMaze().getWidth(); j++) {
+            for (int j = 0; j < maze.getWidth(); j++) {
                 pos = new Coordinate(j, i);
                 screenPos = toScreen(pos);
                 if (i == maze.getExit().getY() && j == maze.getExit().getX()) {
@@ -139,22 +187,22 @@ public class ConsoleApp {
     }
 
     private void drawMazeBorder() {
-        Coordinate upper = new Coordinate(0, STATUS_BAR_HEIGHT);
-        Coordinate bottom = new Coordinate(0, screenHeight - 1);
+        Coordinate upper = new Coordinate(0, 0);
+        Coordinate bottom = new Coordinate(0, WIDTH - 1);
         for (int i = 0; i < WIDTH; i++) {
             screen.writePixel(wallPixel, upper, true);
             screen.writePixel(wallPixel, bottom, true);
-            upper.goRight();
-            bottom.goRight();
+            upper.goRight(1);
+            bottom.goRight(1);
         }
 
-        Coordinate left = new Coordinate(0, STATUS_BAR_HEIGHT);
-        Coordinate right = new Coordinate(WIDTH - 1, STATUS_BAR_HEIGHT);
+        Coordinate left = new Coordinate(0, 0);
+        Coordinate right = new Coordinate(WIDTH - 1, 0);
         for (int i = 0; i < HEIGHT; i++) {
             screen.writePixel(wallPixel, left, true);
             screen.writePixel(wallPixel, right, true);
-            left.goDown();
-            right.goDown();
+            left.goDown(1);
+            right.goDown(1);
         }
     }
 
@@ -174,17 +222,28 @@ public class ConsoleApp {
 
     private Coordinate toScreen(Coordinate pos) {
         Coordinate screenPos = new Coordinate(pos.getX(), pos.getY());
-        screenPos.increaseXY(1, STATUS_BAR_HEIGHT + 1);
+        screenPos.increaseXY(1, 1);
         return screenPos;
     }
 
     private void tryMove(Direction direction) {
+        Maze maze = game.getMaze();
         Coordinate pos = new Coordinate(playerPos.getX(), playerPos.getY());
-        pos.go(direction);
+        pos.go(direction, 1);
         if (!maze.isInRange(pos) || maze.isWall(pos)) {
+            player.setDirection(direction);
             return;
         }
         player.move(direction);
+    }
+
+    private void tryApply(int index) {
+        Item item = playerInventory.getItem(index);
+        if (item == null) {
+            return;
+        }
+        item.apply(game);
+        playerInventory.removeItem(index);
     }
 
     private void handleItem() {
@@ -192,14 +251,19 @@ public class ConsoleApp {
             if (!game.getItemPosition(i).isSame(playerPos)) {
                 continue;
             }
-            game.popItem(i).apply(game);
+            Item item = game.getItem(i);
+            if (item.autoApply(game)) {
+                item.apply(game);
+            } else {
+                playerInventory.addItem(item);
+            }
+            game.popItem(i);
         }
     }
 
     private void handleExit() {
         if (game.isEnded()) {
             game.nextLevel();
-            maze = game.getMaze();
         }
     }
 }
