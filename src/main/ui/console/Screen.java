@@ -12,17 +12,15 @@ public class Screen {
 
     private final Pixel[][][] buffers;
     private int currentBuffer;
-    private int previousBuffer;
 
     // REQUIRES: width > 0 && height > 0
     // EFFECTS: constructs an empty Screen with the given width and height
-    // and it clears the console
+    // and it clears the terminal screen
     public Screen(int width, int height) {
         this.width = width * 2;
         this.height = height;
         this.buffers = new Pixel[2][height][width * 2];
         this.currentBuffer = 0;
-        this.previousBuffer = 1;
         clear();
     }
 
@@ -69,6 +67,7 @@ public class Screen {
     public void render() {
         Pixel pixel;
         Pixel previousPixel;
+        int previousBuffer = currentBuffer ^ 1;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 pixel = buffers[currentBuffer][i][j];
@@ -83,8 +82,7 @@ public class Screen {
             }
         }
 
-        this.currentBuffer = currentBuffer == 0 ? 1 : 0;
-        this.previousBuffer = previousBuffer == 0 ? 1 : 0;
+        this.currentBuffer ^= 1;
         clearCurrentBuffer();
     }
 
@@ -139,10 +137,11 @@ public class Screen {
     // xxx MODIFIES: this?
     // EFFECTS: write s onto the buffer with the given position
     // and style. If wide and s.length() == 1, it will draw the string twice
-    // if not wide and s.length() == 1, an EMPTY_PIXEL will be added
+    // if not wide and s.length() == 1 and not exact, an EMPTY_PIXEL will be added
     // requires render() to render the buffer to the screen
-    public void write(String s, Coordinate coord, TextAttribute style, boolean wide) {
-        write(s, coord.getX(), coord.getY(), style, wide);
+    // if exact, x position will not be multiplied by 2 (for writing actual strings)
+    public void write(String s, Coordinate coord, TextAttribute style, boolean wide, boolean exact) {
+        write(s, coord.getX(), coord.getY(), style, wide, exact);
     }
 
     // REQUIRES: x >= 0 && x < getWidth() &&
@@ -151,14 +150,24 @@ public class Screen {
     // xxx MODIFIES: this?
     // EFFECTS: write s onto the buffer with the given position
     // and style. If wide and s.length() == 1, it will draw the string twice
-    // if not wide and s.length() == 1, an EMPTY_PIXEL will be added
+    // if not wide and s.length() == 1 and not exact, an EMPTY_PIXEL will be added
     // requires render() to render the buffer to the screen
-    public void write(String s, int x, int y, TextAttribute style, boolean wide) {
+    // if exact, x position will not be multiplied by 2 (for writing actual strings)
+    public void write(String s, int x, int y, TextAttribute style, boolean wide, boolean exact) {
         Pixel pixel;
+        int confirmX = x;
+        if (!exact) {
+            confirmX *= 2;
+        }
+
         for (int i = 0; i < s.length(); i++) {
             pixel = new Pixel(s.charAt(i), style);
-            buffers[currentBuffer][y][x * 2 + i] = pixel;
+            buffers[currentBuffer][y][confirmX + i] = pixel;
         }
+        if (exact) {
+            return;
+        }
+
         if (wide && s.length() == 1) {
             buffers[currentBuffer][y][x * 2 + 1] = buffers[currentBuffer][y][x * 2];
         } else if (s.length() == 1) {
@@ -170,13 +179,23 @@ public class Screen {
     // y >= 0 && y < getHeight() &&
     // s.length() + x < getWidth()
     // EFFECTS: immediately put s onto the screen with the given position
-    // and style. If wide and s.length() == 1, it will draw the string twice
+    // and style. If wide and s.length() == 1 and !exact, it will draw the string
+    // twice
     // if not wide and s.length() == 1, an empty space will be added
-    public void draw(String s, int x, int y, TextAttribute style, boolean wide) {
-        setCursor(x + 1, y + 1);
+    // if exact, x position will not be multiplied by 2 (for writing actual strings)
+    public void draw(String s, int x, int y, TextAttribute style, boolean wide, boolean exact) {
+        if (exact) {
+            setCursorExact(x + 1, y + 1);
+        } else {
+            setCursor(x + 1, y + 1);
+        }
 
         applyStyle(style);
         System.out.print(s);
+        if (exact) {
+            clearAllAttribute();
+            return;
+        }
         if (wide && s.length() == 1) {
             System.out.print(s);
         } else if (s.length() == 1) {
@@ -190,18 +209,21 @@ public class Screen {
     // coord.getY() >= 0 && coord.getY() < getHeight() &&
     // s.length() + coord.getX() < getWidth()
     // EFFECTS: immediately put s onto the screen with the given position
-    // and style. If wide and s.length() == 1, it will draw the string twice
+    // and style. If wide and s.length() == 1 and !exact, it will draw the string
+    // twice
     // if not wide and s.length() == 1, an empty space will be added
-    public void draw(String s, Coordinate coord, TextAttribute style, boolean wide) {
-        draw(s, coord.getX(), coord.getY(), style, wide);
+    // if exact, x position will not be multiplied by 2 (for writing actual strings)
+    public void draw(String s, Coordinate coord, TextAttribute style, boolean wide, boolean exact) {
+        draw(s, coord.getX(), coord.getY(), style, wide, exact);
     }
 
     // REQUIRES: x >= 0 && x < getWidth() &&
     // y >= 0 && y < getHeight() &&
     // EFFECTS: immediately put Pixel p on to the screen with the given position.
     // If wide it will draw it twice, else an EMPTY_PIXEL will be placed
+    // if exact, x position will not be multiplied by 2 (for writing actual strings)
     public void drawPixel(Pixel p, int x, int y, boolean wide) {
-        draw(Character.toString(p.getCharacter()), x, y, p.getAttribute(), wide);
+        draw(Character.toString(p.getCharacter()), x, y, p.getAttribute(), wide, false);
     }
 
     // REQUIRES: coord.getX() >= 0 && coord.getX() < getWidth() &&
@@ -248,7 +270,7 @@ public class Screen {
     private void clearCurrentBuffer() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                buffers[currentBuffer][i][j] = null;
+                buffers[currentBuffer][i][j] = Pixel.EMPTY_PIXEL;
             }
         }
     }
