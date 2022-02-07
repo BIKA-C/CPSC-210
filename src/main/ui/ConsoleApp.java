@@ -84,6 +84,9 @@ public class ConsoleApp {
         int line = INFO_START_LINE;
         screen.write("This is a friendly maze solving game", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT,
                 false, true);
+        screen.write("You have solved " + game.getSolved(), INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false,
+                true);
+
         line++;
         line = drawInventory(line);
 
@@ -92,11 +95,15 @@ public class ConsoleApp {
 
         line++;
         line = drawMessage(line);
+
+        line++;
+        screen.write("WASD to move, Q to quit, 1-9 to use items", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT,
+                false, true);
     }
 
     private int drawMessage(int line) {
         screen.write("Message: ", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
-        screen.write(game.getItemMessage(), INFO_PANNEL_START_X, line++, messageStyle, false, true);
+        screen.write(game.getGameMessage(), INFO_PANNEL_START_X, line++, messageStyle, false, true);
         return line;
     }
 
@@ -118,7 +125,7 @@ public class ConsoleApp {
         info = "You have " + playerInventory.getInventorySize() + " items:";
         screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
         for (int i = 0; i < playerInventory.getInventorySize(); i++) {
-            if (INFO_START_LINE + 12 + i + 1 == HEIGHT) {
+            if (INFO_START_LINE + 15 + i + 1 == HEIGHT) {
                 screen.write("    ...", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
                 return line;
             }
@@ -255,6 +262,10 @@ public class ConsoleApp {
             if (item.autoApply(game)) {
                 item.apply(game);
             } else {
+                if (playerInventory.getInventorySize() >= Inventory.TERMINAL_GUI_NUM_RESTRICT) {
+                    game.setGameMessage("Your bag is full...");
+                    return;
+                }
                 playerInventory.addItem(item);
             }
             game.popItem(i);
@@ -263,7 +274,7 @@ public class ConsoleApp {
 
     private void handleExit() {
         if (game.isEnded()) {
-            game.nextLevel();
+            game.nextLevel(false);
         }
     }
 }
