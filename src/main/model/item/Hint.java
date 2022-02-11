@@ -2,7 +2,7 @@ package model.item;
 
 import model.Game;
 
-// Hint represents a in game hints
+// Hint represents an in game hints
 // that gives some hint to the player
 public class Hint implements Item {
 

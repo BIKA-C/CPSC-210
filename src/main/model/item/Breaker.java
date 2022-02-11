@@ -12,7 +12,7 @@ public class Breaker implements Item {
     private final int range;
 
     // EFFECTS: constructs a breaker with the given range
-    // the range can't not be changed after initialized
+    // the range can't be changed after initialized
     public Breaker(int blocks) {
         this.range = blocks;
     }

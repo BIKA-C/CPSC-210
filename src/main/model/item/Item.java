@@ -24,7 +24,7 @@ public interface Item {
     public String report();
 
     // // MODIFIES: this
-    // // EFFECTS: make the item inactive, so it is no longer useable.
+    // // EFFECTS: make the item inactive, so it is no longer usable.
     // // If the item is already inactive, the function will do nothing
     // public void deactivate();
 

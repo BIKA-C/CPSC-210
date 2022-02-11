@@ -6,7 +6,7 @@ import model.utility.Direction;
 // Player is the player who plays the maze
 // it has a position on the maze and a direction
 // heading to.
-// it also a inventory bad that stores all the
+// Player also has an inventory bag that stores all the
 // items that the player picked up from the game
 public class Player {
     private Coordinate position;
@@ -25,7 +25,7 @@ public class Player {
 
     // MODIFIES: this
     // EFFECTS: if the dir != getDirection()
-    // this function will change the player's directin
+    // this function will change the player's direction
     // to the given dir and not move the player
     // otherwise, this function will the player
     // 1 unit along the given direction

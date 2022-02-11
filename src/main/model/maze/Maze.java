@@ -30,7 +30,7 @@ public class Maze {
     // EFFECTS: constructs a random maze by the given width and
     // height. A start point will be within the region of ([0, width/2), [0,
     // height/2))
-    // and a end point will be within the region of ([width/2, width-1], [height/2,
+    // and an end point will be within the region of ([width/2, width-1], [height/2,
     // height-1])
     public Maze(int width, int height) {
         this.width = width;
@@ -162,7 +162,7 @@ public class Maze {
 
     // MODIFIES: walls
     // EFFECTS: check 4 directions: up, down, right, left around the coord
-    // if any of these 4 points statisfies (isInrange(point) && isWall(point))
+    // if any of these 4 points satisfies (isInRange(point) && isWall(point))
     // this point will be added to the walls
     private void explore(Coordinate coord, ArrayList<Coordinate> walls) {
         int saveX = coord.getX();

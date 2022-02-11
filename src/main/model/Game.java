@@ -15,7 +15,7 @@ import model.utility.Coordinate;
 
 // Game represents this maze game
 // it has a maze and player and all the game items on the maze
-// it keep tracks of how many maze player has solved.
+// it keeps tracks of how many maze player has solved.
 // it has a list of items that are available on the map
 // the list will be randomly re-generated for each maze
 public class Game {
@@ -39,10 +39,10 @@ public class Game {
     // REQUIRES: (width % 2 == 0) and (height % 2 == 0) and (width and height) >= 8
     // EFFECTS: Constructs a new game object with a new player at 0,0
     // and a random maze. Solved counter will be zero.
-    // reward and num of items will be calucated proportion to the given width and
+    // reward and num of items will be calculated proportion to the given width and
     // height
     // by the REWARD_MAZE_SIZE_RATIO
-    // The actual maze's width and height will minus 2 from the
+    // The actual maze's width and height will minus 2 from
     // the given width and height. These 2 are reserved for boarders.
     // Boarders are ignored when calculating the reward and num of items
     public Game(int width, int height) {
@@ -89,7 +89,7 @@ public class Game {
     }
 
     // REQUIRES: index >= 0 && index < getItemSize()
-    // EFFECTS: return the poisition of the item
+    // EFFECTS: return the position of the item
     // by the given index
     public Coordinate getItemPosition(int index) {
         return itemPosition.get(index);
@@ -156,8 +156,8 @@ public class Game {
 
     // REQUIRES: maze != null && player != null
     // MODIFIES: this
-    // EFFECTS: init the maze. It dows the folling:
-    // set the player's poistion to the maze's starting position
+    // EFFECTS: init the maze. It does the following:
+    // set the player's position to the maze's starting position
     // clear items' list (both items and itemPosition)
     // re-generate the items list (both items and itemPosition)
     // set gameMessage to be "New Maze !!!"

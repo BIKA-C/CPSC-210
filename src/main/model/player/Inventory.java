@@ -7,7 +7,7 @@ import model.item.Item;
 // Inventory represents an inventory for the player
 // that stores all the items the player picked up
 // from the game.
-// the inventory bag can store upto 9 items
+// the inventory bag can store up to 9 items
 // except auto-applied items like coins
 public class Inventory {
     private ArrayList<Item> inventory;

@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 public class CoordinateTest {
 
     private Coordinate coord;
-    private Coordinate orgin;
+    private Coordinate origin;
 
     @BeforeEach
     public void setup() {
         coord = new Coordinate(9, 2);
-        orgin = new Coordinate(0, 0);
+        origin = new Coordinate(0, 0);
     }
 
     @Test
@@ -23,8 +23,8 @@ public class CoordinateTest {
         assertEquals(9, coord.getX());
         assertEquals(2, coord.getY());
 
-        assertEquals(0, orgin.getX());
-        assertEquals(0, orgin.getY());
+        assertEquals(0, origin.getX());
+        assertEquals(0, origin.getY());
     }
 
     @Test

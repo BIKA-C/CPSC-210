@@ -2,7 +2,7 @@ package model.item;
 
 import model.Game;
 
-// Skip represents a in-game skip item
+// Skip represents an in-game skip item
 // that will allow the player to skip the
 // current maze
 public class Skip implements Item {

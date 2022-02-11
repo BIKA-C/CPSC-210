@@ -25,7 +25,7 @@ public class Coin implements Item {
         g.setGameMessage("You got " + this.value + " coins");
     }
 
-    // EFFECTS: thie item will be auto applied after
+    // EFFECTS: this item will be auto applied after
     // picking up
     @Override
     public boolean isAutoApply() {
