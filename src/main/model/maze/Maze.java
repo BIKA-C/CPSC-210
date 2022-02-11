@@ -103,7 +103,7 @@ public class Maze {
     }
 
     // MODIFIES: this
-    // EFFECTS: generateMaze at a random with a start point within the region of
+    // EFFECTS: generate a maze with a random start point within the region of
     // ([0, width/2), [0, height/2))
     // and a random exit point within the region of
     // ([width/2, width-1], [height/2, height-1])

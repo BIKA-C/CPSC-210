@@ -14,8 +14,8 @@ public class Skip implements Item {
     // REQUIRES: g != null
     // MODIFIES: g
     // EFFECTS: g.getMaze() will return a new maze with
-    // player's position updated to new maze's start position
-    // report the maze is skipped from g.getGameMessage()
+    // player's position updated to new maze's start position.
+    // and report the maze is skipped from g.getGameMessage()
     @Override
     public void apply(Game g) {
         g.nextLevel(true);

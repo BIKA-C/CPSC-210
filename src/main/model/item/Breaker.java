@@ -5,7 +5,7 @@ import model.maze.Maze;
 import model.utility.Coordinate;
 import model.utility.Direction;
 
-// Breaker - Wall breaker is a in game item
+// Breaker - Wall breaker is an in game item
 // that can break all the walls within it's
 // range
 public class Breaker implements Item {
@@ -19,7 +19,7 @@ public class Breaker implements Item {
 
     // REQUIRES: g != null
     // MODIFIES: g
-    // EFFECTS: breaks all the walls(turn them into roads)
+    // EFFECTS: breaks all the walls (turn them into roads)
     // within the range in the direction of the player
     // and g.getGameMessage() will be the report of
     // the number of the walls that are destroyed
