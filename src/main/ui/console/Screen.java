@@ -1,6 +1,8 @@
 package ui.console;
 
 import model.utility.Coordinate;
+import model.utility.pixel.Pixel;
+import model.utility.pixel.TextAttribute;
 
 // Screen represents a terminal Screen with a width and height
 // this class represents a Screen Pixel as 2 characters to make
@@ -55,7 +57,6 @@ public class Screen {
         System.out.print("\033[0;0H");
     }
 
-    // xxx // MODIFIES: this
     // EFFECTS: put the current buffer to the screen
     // after write or writePixel, render should be called
     // to render the buffer to the screen.
@@ -108,7 +109,6 @@ public class Screen {
 
     // REQUIRES: coord.getX() >= 0 && coord.getX() < getWidth() &&
     // coord.getY() >= 0 && coord.getY() < getHeight() &&
-    // xxx MODIFIES: this?
     // EFFECTS: write Pixel p on to the background buffer at the given position.
     // If wide it will draw it twice, else an EMPTY_PIXEL will be placed
     // requires render() to render the buffer to the screen
@@ -118,7 +118,6 @@ public class Screen {
 
     // REQUIRES: x >= 0 && x < getWidth() &&
     // y >= 0 && y < getHeight() &&
-    // xxx MODIFIES: this?
     // EFFECTS: write Pixel p on to the background buffer at the given position.
     // If wide it will draw it twice, else an EMPTY_PIXEL will be placed
     // requires render() to render the buffer to the screen
@@ -134,7 +133,6 @@ public class Screen {
     // REQUIRES: coord.getX() >= 0 && coord.getX() < getWidth() &&
     // coord.getY() >= 0 && coord.getY() < getHeight() &&
     // s.length() + coord.getX() < getWidth()
-    // xxx MODIFIES: this?
     // EFFECTS: write s onto the buffer with the given position
     // and style. If wide and s.length() == 1, it will draw the string twice
     // if not wide and s.length() == 1 and not exact, an EMPTY_PIXEL will be added
@@ -147,7 +145,6 @@ public class Screen {
     // REQUIRES: x >= 0 && x < getWidth() &&
     // y >= 0 && y < getHeight() &&
     // s.length() + x < getWidth()
-    // xxx MODIFIES: this?
     // EFFECTS: write s onto the buffer with the given position
     // and style. If wide and s.length() == 1, it will draw the string twice
     // if not wide and s.length() == 1 and not exact, an EMPTY_PIXEL will be added
@@ -242,10 +239,16 @@ public class Screen {
         return width;
     }
 
+    // REQUIRES: x >= 0 && x < getWidth() * 2 && y >= o && y <= getHeight
+    // EFFECTS: set the cursor to the given x y position. This position is
+    // exact. Meaning x is not multiplied by 2
     private void setCursorExact(int x, int y) {
         System.out.print("\033[" + y + ";" + x + "H");
     }
 
+    // REQUIRES: style != null
+    // EFFECTS: print the style to the console. All the following
+    // text will apply the style until clearAllAttribute() is called
     private void applyStyle(TextAttribute style) {
         if (!style.isDefaultStyle()) {
             System.out.print("\u001b[" + style.getStyle() + "m");
@@ -258,6 +261,11 @@ public class Screen {
         }
     }
 
+    // REQUIRES: x >= 0 && x < getWidth() -1 &&
+    // y >= 0 && y < getHeight() &&
+    // EFFECTS: immediately put c onto the screen with the given position
+    // and style. This position is exact, meaning x is not multiplied by 2
+    // and c will not be drew twice
     private void drawExact(char c, int x, int y, TextAttribute style) {
         setCursorExact(x, y);
 
@@ -267,6 +275,9 @@ public class Screen {
         clearAllAttribute();
     }
 
+    // REQUIRES: buffers != null
+    // MODIFIES: this
+    // EFFECTS: set all pixels in current buffer to be Pixel.EMPTY_PIXEL
     private void clearCurrentBuffer() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {

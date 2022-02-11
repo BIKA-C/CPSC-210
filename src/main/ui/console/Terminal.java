@@ -2,6 +2,8 @@ package ui.console;
 
 import java.io.IOException;
 
+// Terminal represents a terminal, it has a screen
+// and it receives key inputs
 public class Terminal {
     private Screen screen;
 
