@@ -13,6 +13,7 @@ import model.utility.Direction;
 // a point within the region of ([0, width/2), [0, height/2))
 // will be the start point
 // assuming the top left corner is (0, 0)
+// true stands for a road and false stands for a wall
 public class Maze {
 
     private boolean[][] maze;
@@ -90,18 +91,29 @@ public class Maze {
     // REQUIRES: index >= 0 && index < getNumOfRoad()
     // EFFECTS: returns a road coord by the given index
     // the order is random
-    public Coordinate getaRoad(int index) {
+    public Coordinate getRoad(int index) {
         return roads.get(index);
     }
 
-    public void setBloack(Coordinate coord, boolean value) {
+    // REQUIRES: isInRange(coord) is true
+    // MODIFIES: this
+    // EFFECTS: set the value to the given position in the maze
+    public void setBlock(Coordinate coord, boolean value) {
         maze[coord.getY()][coord.getX()] = value;
     }
 
+    // MODIFIES: this
+    // EFFECTS: generateMaze at a random with a start point within the region of
+    // ([0, width/2), [0, height/2))
+    // and a random exit point within the region of
+    // ([width/2, width-1], [height/2, height-1])
+    // by the Randomized Prim's algorithm
+    // source link:
+    // https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Prim's_algorithm
     private void generateMaze() {
         ArrayList<Coordinate> queue = new ArrayList<>();
 
-        setBloack(start, true);
+        setBlock(start, true);
         explore(start, queue);
 
         while (queue.size() != 0) {
@@ -110,7 +122,7 @@ public class Maze {
 
             if (countSurroundingRoad(next) == 1) {
                 roads.add(next);
-                setBloack(next, true);
+                setBlock(next, true);
                 explore(next, queue);
             }
             queue.remove(index);
@@ -119,6 +131,9 @@ public class Maze {
         generateExit();
     }
 
+    // MODIFIES: this
+    // EFFECTS: set a random exit point within the region of
+    // ([width/2, width-1], [height/2, height-1])
     private void generateExit() {
         do {
             int xcoord = random.nextInt(width / 2) + width / 2;
@@ -127,6 +142,10 @@ public class Maze {
         } while (isWall(exit));
     }
 
+    // REQUIRES: isInRange(coord)
+    // EFFECTS: count the number of road around the coord
+    // only check 4 directions:
+    // up, down, left, right
     private int countSurroundingRoad(Coordinate coord) {
         int roadCounter = 0;
         int saveX = coord.getX();
@@ -141,6 +160,10 @@ public class Maze {
         return roadCounter;
     }
 
+    // MODIFIES: walls
+    // EFFECTS: check 4 directions: up, down, right, left around the coord
+    // if any of these 4 points statisfies (isInrange(point) && isWall(point))
+    // this point will be added to the walls
     private void explore(Coordinate coord, ArrayList<Coordinate> walls) {
         int saveX = coord.getX();
         int saveY = coord.getY();
