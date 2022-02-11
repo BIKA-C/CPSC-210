@@ -31,11 +31,13 @@ public class PixelTest {
 
         TextAttribute styleA = TextAttribute.DEFAULT;
         TextAttribute styleB = new TextAttribute(12, 12, 6);
+        TextAttribute styleC = new TextAttribute(12, 13, 6);
+        TextAttribute styleD = new TextAttribute(12, 12, 3);
 
-        Pixel a = new Pixel('a', styleA);
-        Pixel b = new Pixel('a', styleA);
-        Pixel c = new Pixel('a', styleA);
-        Pixel d = new Pixel('c', styleB);
+        Pixel a = new Pixel('a', styleB);
+        Pixel b = new Pixel('a', styleB);
+        Pixel c = new Pixel('a', styleB);
+        Pixel d = new Pixel('c', styleA);
 
         assertFalse(a.isSame(d));
         assertFalse(b.isSame(d));
@@ -51,14 +53,9 @@ public class PixelTest {
         assertTrue(b.isSame(c));
         assertTrue(a.isSame(c));
 
-        a.setCharacter('2');
-        assertTrue(a.isSame(a));
-
-        a.setCharacter('3');
-        assertTrue(a.isSame(a));
-
-        b.setAttribute(styleB);
-        assertTrue(b.isSame(b));
-
+        a.setAttribute(styleC);
+        assertFalse(a.isSame(b));
+        a.setAttribute(styleD);
+        assertFalse(a.isSame(b));
     }
 }
