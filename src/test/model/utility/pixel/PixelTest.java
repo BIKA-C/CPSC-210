@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.text.Text;
-
 public class PixelTest {
     private Pixel pixel;
 
@@ -37,7 +35,7 @@ public class PixelTest {
         Pixel a = new Pixel('a', styleA);
         Pixel b = new Pixel('a', styleA);
         Pixel c = new Pixel('a', styleA);
-        Pixel d = new Pixel('a', styleB);
+        Pixel d = new Pixel('c', styleB);
 
         assertFalse(a.isSame(d));
         assertFalse(b.isSame(d));
