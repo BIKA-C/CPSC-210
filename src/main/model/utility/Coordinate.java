@@ -52,22 +52,14 @@ public class Coordinate {
     // EFFECTS: go with the given direction
     // for example go(Direction.up, 1) is equivalent to goUp(1)
     public void go(Direction direction, int distance) {
-        switch (direction) {
-            case up:
-                this.goUp(distance);
-                break;
-            case down:
-                this.goDown(distance);
-                break;
-            case left:
-                this.goLeft(distance);
-                break;
-            case right:
-                this.goRight(distance);
-                break;
-
-            default:
-                break;
+        if (direction == Direction.up) {
+            goUp(distance);
+        } else if (direction == Direction.down) {
+            goDown(distance);
+        } else if (direction == Direction.left) {
+            goLeft(distance);
+        } else if (direction == Direction.right) {
+            goRight(distance);
         }
     }
 
