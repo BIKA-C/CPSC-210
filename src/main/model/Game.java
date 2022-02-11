@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javafx.beans.binding.NumberExpressionBase;
 import model.item.Breaker;
 import model.item.Coin;
 import model.item.Hint;
@@ -40,7 +39,8 @@ public class Game {
     // REQUIRES: (width % 2 == 0) and (height % 2 == 0) and (width and height) >= 8
     // EFFECTS: Constructs a new game object with a new player at 0,0
     // and a random maze. Solved counter will be zero.
-    // reward and num of items will be calucated proportion to the given width and height
+    // reward and num of items will be calucated proportion to the given width and
+    // height
     // by the REWARD_MAZE_SIZE_RATIO
     // The actual maze's width and height will minus 2 from the
     // the given width and height. These 2 are reserved for boarders.
@@ -150,8 +150,6 @@ public class Game {
                 items.add(new Skip());
             } else if (type == Items.hint) {
                 items.add(new Hint());
-            } else {
-                items.add(new Coin(random.nextInt(20) + 1));
             }
         }
     }
