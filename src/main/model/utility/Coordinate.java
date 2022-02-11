@@ -120,7 +120,7 @@ public class Coordinate {
     // REQUIRES: coordinate != null
     // EFFECTS: true if getX() == coordinate.getX() && getY() == coordinate.getY();
     public boolean isSame(Coordinate coordinate) {
-        return this.xcoord == coordinate.xcoord && this.ycoord == coordinate.ycoord;
+        return isSame(coordinate.xcoord, coordinate.ycoord);
     }
 
     // EFFECTS: true if getX() == x && getY() == y;
