@@ -148,7 +148,7 @@ public class Game {
                 items.add(new Breaker(d));
             } else if (type == Items.skip) {
                 items.add(new Skip());
-            } else if (type == Items.hint) {
+            } else {
                 items.add(new Hint());
             }
         }

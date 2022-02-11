@@ -58,7 +58,7 @@ public class Coordinate {
             goDown(distance);
         } else if (direction == Direction.left) {
             goLeft(distance);
-        } else if (direction == Direction.right) {
+        } else {
             goRight(distance);
         }
     }
