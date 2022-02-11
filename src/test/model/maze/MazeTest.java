@@ -1,14 +1,16 @@
 package model.maze;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import model.TestHelpers;
 import model.utility.Coordinate;
 
-public class MazeTest {
+public class MazeTest extends TestHelpers {
 
     private Maze maze;
 
@@ -39,15 +41,48 @@ public class MazeTest {
             assertTrue(start.getY() < 30);
             // check all the roads are actually roads
             for (int j = 0; j < maze.getNumOfRoad(); j++) {
-                assertFalse(maze.isWall(maze.getaRoad(j)));
+                assertFalse(maze.isWall(maze.getRoad(j)));
             }
 
+            assertEquals(40, maze.getWidth());
+            assertEquals(30, maze.getHeight());
         }
     }
 
     @Test
-    public void isInRangeTest() {
+    public void getRoadTest() {
+        for (int i = 0; i < maze.getNumOfRoad(); i++) {
+            assertFalse(maze.isWall(maze.getRoad(i)));
+        }
+    }
 
+    @Test
+    public void setBlockTest() {
+        Coordinate coordinate = new Coordinate(9, 7);
+        boolean[][] save = copyMaze(maze);
+
+        maze.setBlock(coordinate, false);
+        assertTrue(maze.isWall(coordinate));
+        isSameMazeExcept(maze, save, coordinate);
+
+        maze.setBlock(coordinate, true);
+        assertFalse(maze.isWall(coordinate));
+        isSameMazeExcept(maze, save, coordinate);
+
+        coordinate = new Coordinate(1, 2);
+        save = copyMaze(maze);
+
+        maze.setBlock(coordinate, false);
+        assertTrue(maze.isWall(coordinate));
+        isSameMazeExcept(maze, save, coordinate);
+
+        maze.setBlock(coordinate, true);
+        assertFalse(maze.isWall(coordinate));
+        isSameMazeExcept(maze, save, coordinate);
+    }
+
+    @Test
+    public void isInRangeTest() {
         Coordinate c = new Coordinate(10, 10);
         assertFalse(maze.isInRange(c));
 
@@ -72,6 +107,4 @@ public class MazeTest {
         c = new Coordinate(-1, -1);
         assertFalse(maze.isInRange(c));
     }
-
-    // xxx mabe more tests for getaroad and getnumofroad
 }
