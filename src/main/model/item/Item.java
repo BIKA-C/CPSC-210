@@ -2,6 +2,8 @@ package model.item;
 
 import model.Game;
 
+// Item is a game item that can be used to provide
+// some  effect to the maze or the player
 public interface Item {
 
     // MODIFIES: game, this
@@ -11,19 +13,15 @@ public interface Item {
 
     // MODIFIES: game, this
     // EFFECTS: true if the item will be auto-applied after picking up
-    // if the item will not be auto-applied, the item will update Game
-    // itemMessage for a report
-    public boolean autoApply(Game g);
+    public boolean isAutoApply();
 
     // REQUIRES: autoApply(g) == false
     // EFFECTS: returns the item name.
     public String getName();
 
-    // public String report(Game g);
-    // // MODIFIES: this
-    // // EFFECTS: active the item, so it is useable. If the item is
-    // // already activated, the function will do nothing
-    // public void activate();
+    // REQUIRES: autoApply(g) == false
+    // EFFECTS: return the item information
+    public String report();
 
     // // MODIFIES: this
     // // EFFECTS: make the item inactive, so it is no longer useable.

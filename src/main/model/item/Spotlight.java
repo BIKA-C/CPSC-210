@@ -3,6 +3,7 @@ package model.item;
 import model.Game;
 import model.player.Player;
 
+// this class is not used for Phase 1
 public class Spotlight implements Item {
 
     private final Player player;
@@ -25,7 +26,7 @@ public class Spotlight implements Item {
     }
 
     @Override
-    public boolean autoApply(Game g) {
+    public boolean isAutoApply() {
         return true;
     }
 
@@ -42,6 +43,12 @@ public class Spotlight implements Item {
 
     @Override
     public String getName() {
+        return null;
+    }
+
+    @Override
+    public String report() {
+        // TODO Auto-generated method stub
         return null;
     }
 }

@@ -5,13 +5,24 @@ import model.maze.Maze;
 import model.utility.Coordinate;
 import model.utility.Direction;
 
+// Breaker - Wall breaker is a in game item
+// that can break all the walls within it's
+// range
 public class Breaker implements Item {
-    private int range;
+    private final int range;
 
+    // EFFECTS: constructs a breaker with the given range
+    // the range can't not be changed after initialized
     public Breaker(int blocks) {
         this.range = blocks;
     }
 
+    // REQUIRES: g != null
+    // MODIFIES: g
+    // EFFECTS: breaks all the walls(turn them into roads)
+    // within the range in the direction of the player
+    // and g.getGameMessage() will be the report of
+    // the number of the walls that are destroyed
     @Override
     public void apply(Game g) {
         Direction dir = g.getPlayer().getDirection();
@@ -29,22 +40,30 @@ public class Breaker implements Item {
             if (!maze.isInRange(save) || !maze.isWall(save)) {
                 continue;
             }
-            g.getMaze().setBloack(save, true);
+            g.getMaze().setBlock(save, true);
             destroyed++;
         }
 
-        g.setItemMessage(destroyed + " walls are destroyed");
+        g.setGameMessage(destroyed + " walls are destroyed");
     }
 
+    // EFFECTS: this item will not be auto-applied
+    // after picking up
     @Override
-    public boolean autoApply(Game g) {
-        g.setItemMessage("You got a range " + range + " wall breaker.");
+    public boolean isAutoApply() {
         return false;
     }
 
+    // EFFECTS: returns the name of the item + it's range
+    // that is initialized with
     @Override
     public String getName() {
         return "wall breaker range " + range;
     }
 
+    // EFFECTS: return the item description
+    @Override
+    public String report() {
+        return "You got a range " + range + " wall breaker.";
+    }
 }

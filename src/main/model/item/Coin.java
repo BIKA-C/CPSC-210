@@ -2,6 +2,7 @@ package model.item;
 
 import model.Game;
 
+// Coin represents a coin with a value
 public class Coin implements Item {
 
     private final int value;
@@ -14,19 +15,34 @@ public class Coin implements Item {
         this.value = value;
     }
 
+    // MODIFIES: game
+    // EFFECTS: apply the effect to the game,
+    // add coin's to the player inventory bag.
+    // and report to the game from game.getGameMessage
     @Override
     public void apply(Game g) {
         g.getPlayer().getInventory().addCoins(this.value);
-        g.setItemMessage("You got " + this.value + " coins");
+        g.setGameMessage("You got " + this.value + " coins");
     }
 
+    // EFFECTS: thie item will be auto applied after
+    // picking up
     @Override
-    public boolean autoApply(Game g) {
+    public boolean isAutoApply() {
         return true;
     }
 
+    // EFFECTS: always return null since this item will be
+    // auto applied
     @Override
     public String getName() {
+        return null;
+    }
+
+    // EFFECTS: does nothing since this item will be
+    // auto applied
+    @Override
+    public String report() {
         return null;
     }
 
