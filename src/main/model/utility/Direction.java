@@ -1,8 +1,9 @@
 package model.utility;
 
+// Direction represents the 4 directions
 public enum Direction {
-    up,
-    down,
-    left,
-    right,
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
 }

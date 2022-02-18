@@ -250,13 +250,13 @@ public class ConsoleApp {
     private Direction keyToDirection(char c) {
         switch (c) {
             case 'w':
-                return Direction.up;
+                return Direction.UP;
             case 'a':
-                return Direction.left;
+                return Direction.LEFT;
             case 's':
-                return Direction.down;
+                return Direction.DOWN;
             case 'd':
-                return Direction.right;
+                return Direction.RIGHT;
             default:
                 return null;
         }

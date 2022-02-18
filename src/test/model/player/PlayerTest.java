@@ -22,7 +22,7 @@ public class PlayerTest {
 
     @Test
     public void constructorTest() {
-        assertEquals(Direction.down, player.getDirection());
+        assertEquals(Direction.DOWN, player.getDirection());
         assertTrue(player.getPosition().isSame(zero));
 
         assertNotNull(player.getInventory());
@@ -32,18 +32,18 @@ public class PlayerTest {
     public void moveRightTest() {
         Coordinate coord = new Coordinate(0, 0);
 
-        player.move(Direction.right);
-        assertEquals(Direction.right, player.getDirection());
+        player.move(Direction.RIGHT);
+        assertEquals(Direction.RIGHT, player.getDirection());
         assertTrue(player.getPosition().isSame(zero));
 
         coord.setXY(1, 0);
-        player.move(Direction.right);
-        assertEquals(Direction.right, player.getDirection());
+        player.move(Direction.RIGHT);
+        assertEquals(Direction.RIGHT, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
 
         coord.setXY(2, 0);
-        player.move(Direction.right);
-        assertEquals(Direction.right, player.getDirection());
+        player.move(Direction.RIGHT);
+        assertEquals(Direction.RIGHT, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
     }
 
@@ -51,18 +51,18 @@ public class PlayerTest {
     public void moveLeftTest() {
         Coordinate coord = new Coordinate(0, 0);
 
-        player.move(Direction.left);
-        assertEquals(Direction.left, player.getDirection());
+        player.move(Direction.LEFT);
+        assertEquals(Direction.LEFT, player.getDirection());
         assertTrue(player.getPosition().isSame(zero));
 
         coord.setXY(-1, 0);
-        player.move(Direction.left);
-        assertEquals(Direction.left, player.getDirection());
+        player.move(Direction.LEFT);
+        assertEquals(Direction.LEFT, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
 
         coord.setXY(-2, 0);
-        player.move(Direction.left);
-        assertEquals(Direction.left, player.getDirection());
+        player.move(Direction.LEFT);
+        assertEquals(Direction.LEFT, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
     }
 
@@ -70,18 +70,18 @@ public class PlayerTest {
     public void moveUpTest() {
         Coordinate coord = new Coordinate(0, 0);
 
-        player.move(Direction.up);
-        assertEquals(Direction.up, player.getDirection());
+        player.move(Direction.UP);
+        assertEquals(Direction.UP, player.getDirection());
         assertTrue(player.getPosition().isSame(zero));
 
         coord.setXY(0, -1);
-        player.move(Direction.up);
-        assertEquals(Direction.up, player.getDirection());
+        player.move(Direction.UP);
+        assertEquals(Direction.UP, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
 
         coord.setXY(0, -2);
-        player.move(Direction.up);
-        assertEquals(Direction.up, player.getDirection());
+        player.move(Direction.UP);
+        assertEquals(Direction.UP, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
 
     }
@@ -89,20 +89,20 @@ public class PlayerTest {
     @Test
     public void moveDownTest() {
         Coordinate coord = new Coordinate(0, 0);
-        player.setDirection(Direction.left);
+        player.setDirection(Direction.LEFT);
 
-        player.move(Direction.down);
-        assertEquals(Direction.down, player.getDirection());
+        player.move(Direction.DOWN);
+        assertEquals(Direction.DOWN, player.getDirection());
         assertTrue(player.getPosition().isSame(zero));
 
         coord.setXY(0, 1);
-        player.move(Direction.down);
-        assertEquals(Direction.down, player.getDirection());
+        player.move(Direction.DOWN);
+        assertEquals(Direction.DOWN, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
 
         coord.setXY(0, 2);
-        player.move(Direction.down);
-        assertEquals(Direction.down, player.getDirection());
+        player.move(Direction.DOWN);
+        assertEquals(Direction.DOWN, player.getDirection());
         assertTrue(player.getPosition().isSame(coord));
     }
 

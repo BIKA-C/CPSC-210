@@ -34,19 +34,19 @@ public class CoordinateTest {
             coord = new Coordinate(9, 2);
             coord.go(direction, 3);
             switch (direction) {
-                case up:
+                case UP:
                     assertEquals(-1, coord.getY());
                     assertEquals(9, coord.getX());
                     break;
-                case down:
+                case DOWN:
                     assertEquals(5, coord.getY());
                     assertEquals(9, coord.getX());
                     break;
-                case right:
+                case RIGHT:
                     assertEquals(2, coord.getY());
                     assertEquals(12, coord.getX());
                     break;
-                case left:
+                case LEFT:
                     assertEquals(2, coord.getY());
                     assertEquals(6, coord.getX());
                     break;

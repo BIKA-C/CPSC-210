@@ -18,7 +18,7 @@ public class Player {
     // EFFECTS: constructs a player at the position (0, 0)
     // and down direction and a new inventory
     public Player() {
-        direction = Direction.down;
+        direction = Direction.DOWN;
         position = new Coordinate(0, 0);
         inventory = new Inventory();
     }
