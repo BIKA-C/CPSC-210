@@ -109,6 +109,23 @@ public class Coordinate {
         this.ycoord -= dy;
     }
 
+    @Override
+    public int hashCode() {
+        return (xcoord + ycoord) * 31;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Coordinate coord = (Coordinate) obj;
+        return isSame(coord);
+    }
+
     // REQUIRES: coordinate != null
     // EFFECTS: true if getX() == coordinate.getX() && getY() == coordinate.getY();
     public boolean isSame(Coordinate coordinate) {
