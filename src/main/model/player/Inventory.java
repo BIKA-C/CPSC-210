@@ -2,6 +2,8 @@ package model.player;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import model.item.Item;
 
 // Inventory represents an inventory for the player
@@ -71,4 +73,12 @@ public class Inventory {
         return coins;
     }
 
+    // EFFECTS: convert the game to json object
+    public JSONObject toJson() {
+        JSONObject inventory = new JSONObject(this);
+        inventory.remove("inventorySize");
+        inventory.put("items", this.inventory);
+
+        return inventory;
+    }
 }

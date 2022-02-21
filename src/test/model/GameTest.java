@@ -23,7 +23,6 @@ public class GameTest extends TestHelpers {
 
     @Test
     public void constructorTest() {
-        assertEquals(0, game.getSolved());
         assertEquals(18, game.getMaze().getWidth());
         assertEquals(18, game.getMaze().getHeight());
         assertEquals(round((18 * 18) * Game.REWARD_TO_MAZE_SIZE_RATIO), game.getReward());
@@ -71,7 +70,7 @@ public class GameTest extends TestHelpers {
         Coordinate randomRoad = game.getItemPositionIterator().next();
 
         Item returned = game.getItem(randomRoad);
-        assertEquals(copyList.get(randomRoad).getName(), returned.getName());
+        assertEquals(copyList.get(randomRoad).getDisplayName(), returned.getDisplayName());
         assertSame(copyList.get(randomRoad), returned);
     }
 
@@ -88,7 +87,7 @@ public class GameTest extends TestHelpers {
         makeCopyOfGame();
         game.nextLevel(true);
         assertPlayerInventoryAndCoinsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
 
         assertEquals(18, game.getMaze().getWidth());
         assertEquals(18, game.getMaze().getHeight());
@@ -114,7 +113,7 @@ public class GameTest extends TestHelpers {
 
         int reward = round((18 * 18) * Game.REWARD_TO_MAZE_SIZE_RATIO);
         assertEquals("You have earned " + reward + " coins for solving the maze", game.getGameMessage());
-        assertEquals(counter, game.getSolved());
+        assertEquals(counter, game.getPlayer().getSolved());
         assertEquals(reward * counter, game.getPlayer().getInventory().getCoins());
     }
 

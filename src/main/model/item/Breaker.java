@@ -1,5 +1,7 @@
 package model.item;
 
+import org.json.JSONObject;
+
 import model.Game;
 import model.maze.Maze;
 import model.utility.Coordinate;
@@ -17,8 +19,10 @@ public class Breaker extends Item {
         this.range = blocks;
 
         isAutoApply = false;
-        name = "wall breaker range " + range;
+        displayName = "wall breaker range " + range;
         reportMessage = "You got a range " + range + " wall breaker";
+
+        type = ItemType.BREAKER;
     }
 
     // REQUIRES: g != null
@@ -49,5 +53,12 @@ public class Breaker extends Item {
         }
 
         g.setGameMessage(destroyed + " walls are destroyed");
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONObject breaker = super.toJson();
+        breaker.put("range", range);
+        return breaker.toString();
     }
 }

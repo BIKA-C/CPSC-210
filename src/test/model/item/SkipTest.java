@@ -25,7 +25,7 @@ public class SkipTest extends TestHelpers {
 
         skip.apply(game);
         assertPlayerInventoryAndCoinsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
         assertFalse(isSameMaze(game.getMaze(), saveMaze));
 
         assertEquals("Maze skipped!", game.getGameMessage());
@@ -34,7 +34,7 @@ public class SkipTest extends TestHelpers {
 
         skip.apply(game);
         assertPlayerInventoryAndCoinsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
         assertFalse(isSameMaze(game.getMaze(), saveMaze));
 
         assertEquals("Maze skipped!", game.getGameMessage());
@@ -47,7 +47,7 @@ public class SkipTest extends TestHelpers {
 
     @Test
     public void getNameTest() {
-        assertEquals("Skip this maze", skip.getName());
+        assertEquals("Skip this maze", skip.getDisplayName());
     }
 
     @Test

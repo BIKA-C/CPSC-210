@@ -25,6 +25,7 @@ public class PlayerTest {
         assertEquals(Direction.DOWN, player.getDirection());
         assertTrue(player.getPosition().isSame(zero));
 
+        assertEquals(0, player.getSolved());
         assertNotNull(player.getInventory());
     }
 
@@ -116,5 +117,14 @@ public class PlayerTest {
         coord.setXY(44, 55);
         player.setPosition(coord);
         assertTrue(player.getPosition().isSame(coord));
+    }
+
+    @Test
+    public void solvedAddOneTest() {
+        player.solvedAddOne();
+        assertEquals(1, player.getSolved());
+
+        player.solvedAddOne();
+        assertEquals(2, player.getSolved());
     }
 }

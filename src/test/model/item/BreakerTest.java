@@ -23,7 +23,7 @@ public class BreakerTest extends TestHelpers {
 
     @Test
     public void constructorTest() {
-        assertEquals("wall breaker range 3", breaker.getName());
+        assertEquals("wall breaker range 3", breaker.getDisplayName());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class BreakerTest extends TestHelpers {
 
     @Test
     public void getNameTest() {
-        assertEquals("wall breaker range 3", breaker.getName());
+        assertEquals("wall breaker range 3", breaker.getDisplayName());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class BreakerTest extends TestHelpers {
         assertOnlyInRangeMazeBlocksAreChanged(game.getMaze(), saveMaze, copyCoord, savePlayerDir);
 
         assertGameItemsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
         assertPlayerNotChanged();
     }
 

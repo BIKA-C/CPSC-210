@@ -10,8 +10,10 @@ public class Skip extends Item {
     // EFFECTS: constructs a skip
     public Skip() {
         isAutoApply = false;
-        name = "Skip this maze";
+        displayName = "Skip this maze";
         reportMessage = "You got a Skip";
+
+        type = ItemType.SKIP;
     }
 
     // REQUIRES: g != null
@@ -23,5 +25,10 @@ public class Skip extends Item {
     public void apply(Game g) {
         g.nextLevel(true);
         g.setGameMessage("Maze skipped!");
+    }
+
+    @Override
+    public String toJSONString() {
+        return super.toJson().toString();
     }
 }

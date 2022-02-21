@@ -1,5 +1,7 @@
 package model.item;
 
+import org.json.JSONObject;
+
 import model.Game;
 
 // Coin represents a coin with a value
@@ -15,6 +17,7 @@ public class Coin extends Item {
         this.value = value;
 
         isAutoApply = true;
+        type = ItemType.COIN;
     }
 
     // MODIFIES: game
@@ -27,4 +30,10 @@ public class Coin extends Item {
         g.setGameMessage("You got " + this.value + " coins");
     }
 
+    @Override
+    public String toJSONString() {
+        JSONObject coin = super.toJson();
+        coin.put("value", value);
+        return coin.toString();
+    }
 }

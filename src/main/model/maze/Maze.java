@@ -3,6 +3,8 @@ package model.maze;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.json.JSONObject;
+
 import model.utility.Coordinate;
 import model.utility.Direction;
 
@@ -100,6 +102,15 @@ public class Maze {
     // EFFECTS: set the value to the given position in the maze
     public void setBlock(Coordinate coord, boolean value) {
         maze[coord.getY()][coord.getX()] = value;
+    }
+
+    // EFFECTS: convert the maze to json object
+    public JSONObject toJson() {
+        JSONObject maze = new JSONObject();
+        maze.put("exit", exit.toJson());
+        maze.put("static", start.toJson());
+        maze.put("maze", this.maze);
+        return maze;
     }
 
     // MODIFIES: this

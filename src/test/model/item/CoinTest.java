@@ -26,7 +26,7 @@ public class CoinTest extends TestHelpers {
         coin.apply(game);
 
         assertGameItemsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
         assertMazeNotChanged();
         assertPlayerPositionAndDirectionNotChanged();
 
@@ -37,7 +37,7 @@ public class CoinTest extends TestHelpers {
         coin.apply(game);
 
         assertGameItemsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
         assertMazeNotChanged();
         assertPlayerPositionAndDirectionNotChanged();
 
@@ -53,7 +53,7 @@ public class CoinTest extends TestHelpers {
 
     @Test
     public void getNameTest() {
-        assertNull(coin.getName());
+        assertNull(coin.getDisplayName());
     }
 
     @Test

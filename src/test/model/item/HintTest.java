@@ -25,7 +25,7 @@ public class HintTest extends TestHelpers {
 
         hint.apply(game);
         assertGameItemsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
         assertMazeNotChanged();
         assertPlayerNotChanged();
         assertEquals("Exit Position: " + game.getMaze().getExit(), game.getGameMessage());
@@ -34,7 +34,7 @@ public class HintTest extends TestHelpers {
 
         hint.apply(game);
         assertGameItemsNotChanged();
-        assertGameSolvedNotChanged();
+        assertPlayerSolvedNotChanged();
         assertMazeNotChanged();
         assertPlayerNotChanged();
         assertEquals("Exit Position: " + game.getMaze().getExit(), game.getGameMessage());
@@ -47,7 +47,7 @@ public class HintTest extends TestHelpers {
 
     @Test
     public void getNameTest() {
-        assertEquals("Hint", hint.getName());
+        assertEquals("Hint", hint.getDisplayName());
     }
 
     @Test

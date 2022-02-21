@@ -95,7 +95,7 @@ public class ConsoleApp {
         int line = INFO_START_LINE;
         screen.write("This is a friendly maze solving game", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT,
                 false, true);
-        screen.write("You have solved " + game.getSolved(), INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false,
+        screen.write("You have solved " + player.getSolved(), INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false,
                 true);
 
         line++;
@@ -152,7 +152,7 @@ public class ConsoleApp {
                 screen.write("    ...", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
                 return line;
             }
-            info = "    " + (i + 1) + " - " + playerInventory.getItem(i).getName();
+            info = "    " + (i + 1) + " - " + playerInventory.getItem(i).getDisplayName();
             screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
         }
         return line;

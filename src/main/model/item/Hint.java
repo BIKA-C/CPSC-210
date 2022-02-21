@@ -9,8 +9,10 @@ public class Hint extends Item {
     // EFFECTS: constructs a hint
     public Hint() {
         isAutoApply = false;
-        name = "Hint";
+        displayName = "Hint";
         reportMessage = "You got a Hint";
+
+        type = ItemType.HINT;
     }
 
     // REQUIRES: g != null
@@ -19,5 +21,10 @@ public class Hint extends Item {
     @Override
     public void apply(Game g) {
         g.setGameMessage("Exit Position: " + g.getMaze().getExit());
+    }
+
+    @Override
+    public String toJSONString() {
+        return super.toJson().toString();
     }
 }

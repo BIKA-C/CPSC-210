@@ -47,7 +47,7 @@ public class TestHelpers {
         // saveItemPositions = copyItemPositions(game);
 
         saveGameMessage = game.getGameMessage();
-        saveSolved = game.getSolved();
+        saveSolved = game.getPlayer().getSolved();
 
         savePlayerPos = new Coordinate(coord.getX(), coord.getY());
         savePlayerDir = game.getPlayer().getDirection();
@@ -138,7 +138,7 @@ public class TestHelpers {
         while (keys.hasNext()) {
             Coordinate coord = keys.next();
             Coordinate saved = savedKeys.next();
-            assertEquals(saveItemsMap.get(coord).getName(), game.getItem(coord).getName());
+            assertEquals(saveItemsMap.get(coord).getDisplayName(), game.getItem(coord).getDisplayName());
             assertTrue(saveItemsMap.containsKey(coord));
             assertTrue(game.isItem(saved));
         }
@@ -146,15 +146,16 @@ public class TestHelpers {
 
     // REQUIRES: makeCopyOfGame() is called before this function is called
     // EFFECTS: assert game's solved counter is not changes
-    public void assertGameSolvedNotChanged() {
-        assertEquals(saveSolved, game.getSolved());
+    public void assertPlayerSolvedNotChanged() {
+        assertEquals(saveSolved, game.getPlayer().getSolved());
     }
 
     // REQUIRES: makeCopyOfGame() is called before this function is called
     // EFFECTS: assert all player inventory items not changed
     public void assertPlayerInventoryAndCoinsNotChanged() {
         for (int i = 0; i < game.getPlayer().getInventory().getInventorySize(); i++) {
-            assertEquals(savePlayerInventory.get(i).getName(), game.getPlayer().getInventory().getItem(i).getName());
+            assertEquals(savePlayerInventory.get(i).getDisplayName(),
+                    game.getPlayer().getInventory().getItem(i).getDisplayName());
             assertSame(savePlayerInventory.get(i), game.getPlayer().getInventory().getItem(i));
         }
         assertEquals(savePlayerCoins, game.getPlayer().getInventory().getCoins());
@@ -164,7 +165,8 @@ public class TestHelpers {
     // EFFECTS: assert all player inventory items not changed
     public void assertPlayerInventoryNotChanged() {
         for (int i = 0; i < game.getPlayer().getInventory().getInventorySize(); i++) {
-            assertEquals(savePlayerInventory.get(i).getName(), game.getPlayer().getInventory().getItem(i).getName());
+            assertEquals(savePlayerInventory.get(i).getDisplayName(),
+                    game.getPlayer().getInventory().getItem(i).getDisplayName());
             assertSame(savePlayerInventory.get(i), game.getPlayer().getInventory().getItem(i));
         }
     }

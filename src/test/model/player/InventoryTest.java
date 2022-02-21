@@ -67,7 +67,7 @@ public class InventoryTest {
         assertEquals(1, inventory.getInventorySize());
 
         Item returned = inventory.getItem(0);
-        assertEquals("Hint", returned.getName());
+        assertEquals("Hint", returned.getDisplayName());
         assertSame(i, returned);
     }
 

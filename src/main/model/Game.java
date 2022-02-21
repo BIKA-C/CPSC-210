@@ -25,7 +25,6 @@ public class Game {
 
     private Maze maze;
     private Player player;
-    private int solved;
     private int reward;
     private HashMap<Coordinate, Item> itemMap;
 
@@ -52,7 +51,6 @@ public class Game {
         player = new Player();
         random = new Random();
         itemMap = new HashMap<>();
-        solved = 0;
         reward = Math.toIntExact(Math.round(maze.getHeight() * maze.getWidth() * REWARD_TO_MAZE_SIZE_RATIO));
         init();
     }
@@ -66,7 +64,7 @@ public class Game {
     // MODIFIES: this
     // EFFECTS: creates a new maze with the same width and height as the next level
     // if skip is false the following will happen:
-    // add 1 to the solved counter
+    // add 1 to the player solved counter
     // add getReward() to the player's inventory
     // getGameMessage() will give the message of the reward earned
     public void nextLevel(boolean skip) {
@@ -78,7 +76,7 @@ public class Game {
         if (skip) {
             return;
         }
-        solved++;
+        player.solvedAddOne();
         gameMessage = "You have earned " + reward + " coins for solving the maze";
         player.getInventory().addCoins(reward);
     }
@@ -132,10 +130,6 @@ public class Game {
         this.gameMessage = message;
     }
 
-    public int getSolved() {
-        return solved;
-    }
-
     // REQUIRES: items != null
     // MODIFIES: this
     // EFFECTS: randomly put different items to the items list
@@ -180,9 +174,18 @@ public class Game {
         generateItems();
     }
 
+    // EFFECTS: convert the game to json object
     public JSONObject toJson() {
-        JSONObject object = new JSONObject();
-        object.put("maze", maze.getExit());
-        return object;
+        JSONObject game = new JSONObject(this);
+        game.remove("reward");
+        game.remove("numOfItems");
+        game.remove("ended");
+        game.remove("itemPositionIterator");
+        game.put("maze", 10);
+        game.put("player", player.toJson());
+        game.put("width", maze.getWidth() + 2);
+        game.put("height", maze.getHeight() + 2);
+        game.put("items", itemMap);
+        return game;
     }
 }

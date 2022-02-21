@@ -1,5 +1,7 @@
 package model.player;
 
+import org.json.JSONObject;
+
 import model.utility.Coordinate;
 import model.utility.Direction;
 
@@ -12,6 +14,7 @@ public class Player {
     private Coordinate position;
     private Direction direction;
     private Inventory inventory;
+    private int solved;
 
     public static final int TERMINAL_GUI_NUM_RESTRICT = 9;
 
@@ -21,6 +24,7 @@ public class Player {
         direction = Direction.DOWN;
         position = new Coordinate(0, 0);
         inventory = new Inventory();
+        solved = 0;
     }
 
     // MODIFIES: this
@@ -49,6 +53,16 @@ public class Player {
         return position;
     }
 
+    public int getSolved() {
+        return solved;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: add one to solved
+    public void solvedAddOne() {
+        solved++;
+    }
+
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
@@ -59,4 +73,12 @@ public class Player {
         this.position.setXY(position.getX(), position.getY());
     }
 
+    // EFFECTS: convert the game to json object
+    public JSONObject toJson() {
+        JSONObject player = new JSONObject(this);
+        player.remove("inventorySize");
+        player.remove("coins");
+        player.put("inventory", inventory.toJson());
+        return player;
+    }
 }

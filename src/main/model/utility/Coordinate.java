@@ -1,5 +1,8 @@
 package model.utility;
 
+import org.json.JSONObject;
+import org.json.JSONString;
+
 // Coordinate is a (x, y) coordinate
 public class Coordinate {
 
@@ -148,5 +151,10 @@ public class Coordinate {
     @Override
     public String toString() {
         return "(" + xcoord + " , " + ycoord + ")";
+    }
+
+    // EFFECTS: convert the coordiante to json object
+    public JSONObject toJson() {
+        return new JSONObject(this);
     }
 }
