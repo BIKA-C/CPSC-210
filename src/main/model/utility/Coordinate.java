@@ -1,7 +1,6 @@
 package model.utility;
 
 import org.json.JSONObject;
-import org.json.JSONString;
 
 // Coordinate is a (x, y) coordinate
 public class Coordinate {

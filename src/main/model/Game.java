@@ -181,7 +181,7 @@ public class Game {
         game.remove("numOfItems");
         game.remove("ended");
         game.remove("itemPositionIterator");
-        game.put("maze", 10);
+        game.put("maze", maze.toJson());
         game.put("player", player.toJson());
         game.put("width", maze.getWidth() + 2);
         game.put("height", maze.getHeight() + 2);
