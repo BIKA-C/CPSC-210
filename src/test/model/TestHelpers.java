@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import model.item.Item;
 import model.maze.Maze;
@@ -19,8 +21,7 @@ public class TestHelpers {
     protected Coordinate saveExit;
 
     protected int saveNumOfItem;
-    protected ArrayList<Item> saveItems;
-    protected ArrayList<Coordinate> saveItemPositions;
+    protected HashMap<Coordinate, Item> saveItemsMap;
 
     protected String saveGameMessage;
     protected int saveSolved;
@@ -41,8 +42,9 @@ public class TestHelpers {
         saveExit = new Coordinate(maze.getExit().getX(), maze.getExit().getY());
 
         saveNumOfItem = game.getNumOfItems();
-        saveItems = copyItemList(game);
-        saveItemPositions = copyItemPositions(game);
+        saveItemsMap = copyItemsMap(game);
+        // saveItems = copyItemList(game);
+        // saveItemPositions = copyItemPositions(game);
 
         saveGameMessage = game.getGameMessage();
         saveSolved = game.getSolved();
@@ -50,7 +52,7 @@ public class TestHelpers {
         savePlayerPos = new Coordinate(coord.getX(), coord.getY());
         savePlayerDir = game.getPlayer().getDirection();
 
-        savePlayerInventory = copyPlayerInventory(game);
+        savePlayerInventory = copyPlayerInventory();
         savePlayerCoins = game.getPlayer().getInventory().getCoins();
     }
 
@@ -106,30 +108,23 @@ public class TestHelpers {
 
     // REQUIRES: g != null
     // EFFECTS: make a deep copy of the ItemList
-    public ArrayList<Item> copyItemList(Game g) {
-        ArrayList<Item> copy = new ArrayList<>();
-        for (int i = 0; i < g.getNumOfItems(); i++) {
-            copy.add(g.getItem(i));
-        }
-        return copy;
-    }
-
-    // REQUIRES: g != null
-    // EFFECTS: make a deep copy of the Item position list
-    public ArrayList<Coordinate> copyItemPositions(Game g) {
-        ArrayList<Coordinate> copy = new ArrayList<>();
-        for (int i = 0; i < g.getNumOfItems(); i++) {
-            copy.add(g.getItemPosition(i));
+    public HashMap<Coordinate, Item> copyItemsMap(Game game) {
+        HashMap<Coordinate, Item> copy = new HashMap<>();
+        Iterator<Coordinate> keys = game.getItemPositionIterator();
+        while (keys.hasNext()) {
+            Coordinate coord = keys.next();
+            Coordinate save = new Coordinate(coord.getX(), coord.getY());
+            copy.put(save, game.getItem(save));
         }
         return copy;
     }
 
     // REQUIRES: g != null
     // EFFECTS: make a deep copy of the player inventory list
-    public ArrayList<Item> copyPlayerInventory(Game g) {
+    public ArrayList<Item> copyPlayerInventory() {
         ArrayList<Item> copy = new ArrayList<>();
-        for (int i = 0; i < g.getPlayer().getInventory().getInventorySize(); i++) {
-            copy.add(g.getPlayer().getInventory().getItem(i));
+        for (int i = 0; i < game.getPlayer().getInventory().getInventorySize(); i++) {
+            copy.add(game.getPlayer().getInventory().getItem(i));
         }
         return copy;
     }
@@ -138,11 +133,14 @@ public class TestHelpers {
     // EFFECTS: assert all game items not changed (items and their positins)
     public void assertGameItemsNotChanged() {
         assertEquals(saveNumOfItem, game.getNumOfItems());
-        for (int i = 0; i < saveNumOfItem; i++) {
-            assertEquals(saveItems.get(i).getName(), game.getItem(i).getName());
-            assertTrue(game.getItemPosition(i).isSame(saveItemPositions.get(i)));
-            assertSame(saveItems.get(i), game.getItem(i));
-            assertSame(saveItemPositions.get(i), game.getItemPosition(i));
+        Iterator<Coordinate> keys = game.getItemPositionIterator();
+        Iterator<Coordinate> savedKeys = saveItemsMap.keySet().iterator();
+        while (keys.hasNext()) {
+            Coordinate coord = keys.next();
+            Coordinate saved = savedKeys.next();
+            assertEquals(saveItemsMap.get(coord).getName(), game.getItem(coord).getName());
+            assertTrue(saveItemsMap.containsKey(coord));
+            assertTrue(game.isItem(saved));
         }
     }
 

@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import model.Game;
 import model.item.Item;
@@ -205,11 +206,13 @@ public class ConsoleApp {
     // EFFECTS: draw (or actuall write) all the available items from the maze to the screen buffer
     private void drawItems() {
         Coordinate screenPos;
-        for (int i = 0; i < game.getNumOfItems(); i++) {
-            screenPos = toScreen(game.getItemPosition(i));
+        Iterator<Coordinate> it = game.getItemPositionIterator();
+        while (it.hasNext()) {
+            screenPos = toScreen(it.next());
 
             screen.writePixel(itemPixel, screenPos, false);
         }
+
     }
 
     // MODIFIES: this
@@ -324,7 +327,7 @@ public class ConsoleApp {
     // if there is an item at the player's position,
     // the flowing will happen:
     // 1.
-    // if item.isAutoApply() the item's effect will immedately be applied.
+    // if item.isAutoApply() then the item's effect will immedately be applied.
     //
     // 2.
     // if !item.isAutoApply() the item will be added to the inventory bag iff
@@ -339,23 +342,21 @@ public class ConsoleApp {
     // if there is no item at the player's position, the function
     // do nothing
     private void handleItem() {
-        for (int i = 0; i < game.getNumOfItems(); i++) {
-            if (!game.getItemPosition(i).isSame(playerPos)) {
-                continue;
-            }
-            Item item = game.getItem(i);
-            if (item.isAutoApply()) {
-                item.apply(game);
-            } else {
-                if (playerInventory.getInventorySize() >= Inventory.TERMINAL_GUI_NUM_RESTRICT) {
-                    game.setGameMessage("Your bag is full...");
-                    return;
-                }
-                playerInventory.addItem(item);
-                game.setGameMessage(item.report());
-            }
-            game.removeItem(i);
+        if (!game.isItem(playerPos)) {
+            return;
         }
+        Item item = game.getItem(playerPos);
+        if (item.isAutoApply()) {
+            item.apply(game);
+        } else {
+            if (playerInventory.getInventorySize() >= Inventory.TERMINAL_GUI_NUM_RESTRICT) {
+                game.setGameMessage("Your bag is full...");
+                return;
+            }
+            playerInventory.addItem(item);
+            game.setGameMessage(item.report());
+        }
+        game.removeItem(playerPos);
     }
 
     // MODIFIES: this

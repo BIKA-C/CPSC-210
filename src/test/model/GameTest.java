@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,32 +57,32 @@ public class GameTest extends TestHelpers {
         }
     }
 
-    @Test
-    public void getItemPositions() {
-        ArrayList<Coordinate> copyList = copyItemPositions(game);
+    // @Test
+    // public void getItemPositions() {
+    //     ArrayList<Coordinate> copyList = copyItemPositions(game);
 
-        Coordinate returned = game.getItemPosition(0);
-        assertTrue(returned.isSame(copyList.get(0)));
-        assertSame(copyList.get(0), returned);
-    }
+    //     Coordinate returned = game.getItemPosition(0);
+    //     assertTrue(returned.isSame(copyList.get(0)));
+    //     assertSame(copyList.get(0), returned);
+    // }
 
     @Test
     public void getItemTest() {
-        ArrayList<Item> copyList = copyItemList(game);
+        HashMap<Coordinate, Item> copyList = copyItemsMap(game);
+        Coordinate randomRoad = game.getItemPositionIterator().next();
 
-        Item returned = game.getItem(0);
-        assertEquals(copyList.get(0).getName(), returned.getName());
-        assertSame(copyList.get(0), returned);
+        Item returned = game.getItem(randomRoad);
+        assertEquals(copyList.get(randomRoad).getName(), returned.getName());
+        assertSame(copyList.get(randomRoad), returned);
     }
 
     @Test
     public void removeItemTest() {
-        ArrayList<Item> copyItems = copyItemList(game);
-        ArrayList<Coordinate> copyItemsPos = copyItemPositions(game);
+        HashMap<Coordinate, Item> copyList = copyItemsMap(game);
+        Coordinate randomRoad = game.getItemPositionIterator().next();
 
-        game.removeItem(0);
-        assertEquals(copyItems.size() - 1, game.getNumOfItems());
-        assertEquals(copyItemsPos.size() - 1, game.getNumOfItems());
+        game.removeItem(randomRoad);
+        assertEquals(copyList.size() - 1, game.getNumOfItems());
     }
 
     private void assertNextLevelSkip() {

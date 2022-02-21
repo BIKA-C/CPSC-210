@@ -1,7 +1,10 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
+
+import org.json.JSONObject;
 
 import model.item.Breaker;
 import model.item.Coin;
@@ -24,8 +27,7 @@ public class Game {
     private Player player;
     private int solved;
     private int reward;
-    private ArrayList<Coordinate> itemPosition;
-    private ArrayList<Item> items;
+    private HashMap<Coordinate, Item> itemMap;
 
     private String gameMessage;
 
@@ -49,11 +51,9 @@ public class Game {
         maze = new Maze(width - 2, height - 2);
         player = new Player();
         random = new Random();
-        itemPosition = new ArrayList<>();
-        items = new ArrayList<>();
+        itemMap = new HashMap<>();
         solved = 0;
         reward = Math.toIntExact(Math.round(maze.getHeight() * maze.getWidth() * REWARD_TO_MAZE_SIZE_RATIO));
-
         init();
     }
 
@@ -83,34 +83,37 @@ public class Game {
         player.getInventory().addCoins(reward);
     }
 
+    // EFFECTS: true if the given pos is an Item position
+    public boolean isItem(Coordinate pos) {
+        return itemMap.containsKey(pos);
+    }
+
     // EFFECTS: return the number of items on the map/maze
     public int getNumOfItems() {
-        return items.size();
+        return itemMap.size();
     }
 
-    // REQUIRES: index >= 0 && index < getItemSize()
-    // EFFECTS: return the position of the item
-    // by the given index
-    public Coordinate getItemPosition(int index) {
-        return itemPosition.get(index);
+    // EFFECTS: return the iterator of the item positons
+    public Iterator<Coordinate> getItemPositionIterator() {
+        return itemMap.keySet().iterator();
     }
 
-    // REQUIRES: index >= 0 && index < getItemSize()
-    // EFFECTS: return the item by the given index
-    public Item getItem(int index) {
-        return items.get(index);
+    // EFFECTS: return the item by the given pos
+    // if the pos if not in the list, null will be returned
+    public Item getItem(Coordinate pos) {
+        return itemMap.get(pos);
     }
 
     public int getReward() {
         return reward;
     }
 
-    // REQUIRES: index >= 0 && index < getNumOfItems()
     // MODIFIES: this
-    // EFFECTS: remove the item from the list by the index
-    public void removeItem(int index) {
-        items.remove(index);
-        itemPosition.remove(index);
+    // EFFECTS: remove the item from the list by the key/pos
+    public void removeItem(Coordinate pos) {
+        // items.remove(index);
+        // itemPosition.remove(index);
+        itemMap.remove(pos);
     }
 
     public Maze getMaze() {
@@ -138,18 +141,25 @@ public class Game {
     // EFFECTS: randomly put different items to the items list
     private void generateItems() {
         int index;
-        for (int i = 0; i < numOfItemOnMap; i++) {
+        while (itemMap.size() < numOfItemOnMap) {
+            index = random.nextInt(maze.getNumOfRoad());
+            Coordinate road = maze.getRoad(index);
+            if (itemMap.containsKey(road)) {
+                continue;
+            }
+
             index = random.nextInt(Items.values().length);
             Items type = Items.values()[index];
+
             if (type == Items.coin) {
-                items.add(new Coin(random.nextInt(20) + 1));
+                itemMap.put(road, new Coin(random.nextInt(20) + 1));
             } else if (type == Items.breaker) {
                 int d = random.nextInt(5) + 1;
-                items.add(new Breaker(d));
+                itemMap.put(road, new Breaker(d));
             } else if (type == Items.skip) {
-                items.add(new Skip());
+                itemMap.put(road, new Skip());
             } else {
-                items.add(new Hint());
+                itemMap.put(road, new Hint());
             }
         }
     }
@@ -163,20 +173,16 @@ public class Game {
     // set gameMessage to be "New Maze !!!"
     private void init() {
         player.setPosition(maze.getStart());
-        itemPosition.clear();
+        itemMap.clear();
         gameMessage = "New Maze !!!";
         numOfItemOnMap = Math.toIntExact(Math.round(maze.getNumOfRoad() * NUM_OF_ITEMS_TO_MAZE_SIZE_RATIO));
 
-        int index;
-        do {
-            index = random.nextInt(maze.getNumOfRoad());
-            Coordinate road = maze.getRoad(index);
-            if (!itemPosition.contains(road)) {
-                itemPosition.add(road);
-            }
-        } while (itemPosition.size() < numOfItemOnMap);
-
-        items.clear();
         generateItems();
+    }
+
+    public JSONObject toJson() {
+        JSONObject object = new JSONObject();
+        object.put("maze", maze.getExit());
+        return object;
     }
 }
