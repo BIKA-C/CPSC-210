@@ -156,7 +156,7 @@ public class Game {
             } else if (type == ItemType.BREAKER) {
                 int d = random.nextInt(5) + 1;
                 itemMap.put(road, new Breaker(d));
-            } else if (type == ItemType.skip) {
+            } else if (type == ItemType.SKIP) {
                 itemMap.put(road, new Skip());
             } else {
                 itemMap.put(road, new Hint());
