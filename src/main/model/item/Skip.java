@@ -5,10 +5,13 @@ import model.Game;
 // Skip represents an in-game skip item
 // that will allow the player to skip the
 // current maze
-public class Skip implements Item {
+public class Skip extends Item {
 
     // EFFECTS: constructs a skip
     public Skip() {
+        isAutoApply = false;
+        name = "Skip this maze";
+        reportMessage = "You got a Skip";
     }
 
     // REQUIRES: g != null
@@ -21,24 +24,4 @@ public class Skip implements Item {
         g.nextLevel(true);
         g.setGameMessage("Maze skipped!");
     }
-
-    // EFFECTS: this item will not be auto-applied
-    // after picking up
-    @Override
-    public boolean isAutoApply() {
-        return false;
-    }
-
-    // EFFECTS: return the item name
-    @Override
-    public String getName() {
-        return "Skip this maze";
-    }
-
-    // EFFECTS: return item description
-    @Override
-    public String report() {
-        return "You got a Skip";
-    }
-
 }

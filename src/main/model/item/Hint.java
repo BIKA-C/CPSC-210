@@ -4,11 +4,13 @@ import model.Game;
 
 // Hint represents an in game hints
 // that gives some hint to the player
-public class Hint implements Item {
+public class Hint extends Item {
 
     // EFFECTS: constructs a hint
     public Hint() {
-
+        isAutoApply = false;
+        name = "Hint";
+        reportMessage = "You got a Hint";
     }
 
     // REQUIRES: g != null
@@ -17,24 +19,5 @@ public class Hint implements Item {
     @Override
     public void apply(Game g) {
         g.setGameMessage("Exit Position: " + g.getMaze().getExit());
-    }
-
-    // EFFECTS: this item will not be auto-applied
-    // after picking up
-    @Override
-    public boolean isAutoApply() {
-        return false;
-    }
-
-    // EFFECTS: return the item name
-    @Override
-    public String getName() {
-        return "Hint";
-    }
-
-    // EFFECTS: return the item description
-    @Override
-    public String report() {
-        return "You got a Hint";
     }
 }

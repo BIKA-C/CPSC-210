@@ -4,24 +4,32 @@ import model.Game;
 
 // Item is a game item that can be used to provide
 // some  effect to the maze or the player
-public interface Item {
+public abstract class Item {
+
+    protected String name;
+    protected boolean isAutoApply;
+    protected String reportMessage;
 
     // MODIFIES: game, this
     // EFFECTS: apply the effect to the game
-    public void apply(Game g);
+    public abstract void apply(Game g);
 
-
-    // MODIFIES: game, this
     // EFFECTS: true if the item will be auto-applied after picking up
-    public boolean isAutoApply();
+    public boolean isAutoApply() {
+        return isAutoApply;
+    }
 
-    // REQUIRES: autoApply(g) == false
     // EFFECTS: returns the item name.
-    public String getName();
+    // if isAtuoApply(), null will be returned
+    public String getName() {
+        return isAutoApply ? null : name;
+    }
 
-    // REQUIRES: autoApply(g) == false
     // EFFECTS: return the item information
-    public String report();
+    // if isAtuoApply(), null will be returned
+    public String report() {
+        return isAutoApply ? null : reportMessage;
+    }
 
     // // MODIFIES: this
     // // EFFECTS: make the item inactive, so it is no longer usable.

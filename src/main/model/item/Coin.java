@@ -3,7 +3,7 @@ package model.item;
 import model.Game;
 
 // Coin represents a coin with a value
-public class Coin implements Item {
+public class Coin extends Item {
 
     private final int value;
 
@@ -13,6 +13,8 @@ public class Coin implements Item {
     // coin can not be deactivated and it is always active
     public Coin(int value) {
         this.value = value;
+
+        isAutoApply = true;
     }
 
     // MODIFIES: game
@@ -24,36 +26,5 @@ public class Coin implements Item {
         g.getPlayer().getInventory().addCoins(this.value);
         g.setGameMessage("You got " + this.value + " coins");
     }
-
-    // EFFECTS: this item will be auto applied after
-    // picking up
-    @Override
-    public boolean isAutoApply() {
-        return true;
-    }
-
-    // EFFECTS: always return null since this item will be
-    // auto applied
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    // EFFECTS: does nothing since this item will be
-    // auto applied
-    @Override
-    public String report() {
-        return null;
-    }
-
-    // @Override
-    // public boolean isCoin() {
-    // return true;
-    // }
-
-    // @Override
-    // public int coinValue() {
-    // return this.value;
-    // }
 
 }

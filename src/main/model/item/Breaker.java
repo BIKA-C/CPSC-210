@@ -8,13 +8,17 @@ import model.utility.Direction;
 // Breaker - Wall breaker is an in game item
 // that can break all the walls within it's
 // range
-public class Breaker implements Item {
+public class Breaker extends Item {
     private final int range;
 
     // EFFECTS: constructs a breaker with the given range
     // the range can't be changed after initialized
     public Breaker(int blocks) {
         this.range = blocks;
+
+        isAutoApply = false;
+        name = "wall breaker range " + range;
+        reportMessage = "You got a range " + range + " wall breaker";
     }
 
     // REQUIRES: g != null
@@ -45,25 +49,5 @@ public class Breaker implements Item {
         }
 
         g.setGameMessage(destroyed + " walls are destroyed");
-    }
-
-    // EFFECTS: this item will not be auto-applied
-    // after picking up
-    @Override
-    public boolean isAutoApply() {
-        return false;
-    }
-
-    // EFFECTS: returns the name of the item + it's range
-    // that is initialized with
-    @Override
-    public String getName() {
-        return "wall breaker range " + range;
-    }
-
-    // EFFECTS: return the item description
-    @Override
-    public String report() {
-        return "You got a range " + range + " wall breaker.";
     }
 }
