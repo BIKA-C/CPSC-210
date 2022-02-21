@@ -10,7 +10,7 @@ import model.item.Breaker;
 import model.item.Coin;
 import model.item.Hint;
 import model.item.Item;
-import model.item.Items;
+import model.item.ItemType;
 import model.item.Skip;
 import model.maze.Maze;
 import model.player.Player;
@@ -148,15 +148,15 @@ public class Game {
                 continue;
             }
 
-            index = random.nextInt(Items.values().length);
-            Items type = Items.values()[index];
+            index = random.nextInt(ItemType.values().length);
+            ItemType type = ItemType.values()[index];
 
-            if (type == Items.coin) {
+            if (type == ItemType.COIN) {
                 itemMap.put(road, new Coin(random.nextInt(20) + 1));
-            } else if (type == Items.breaker) {
+            } else if (type == ItemType.BREAKER) {
                 int d = random.nextInt(5) + 1;
                 itemMap.put(road, new Breaker(d));
-            } else if (type == Items.skip) {
+            } else if (type == ItemType.skip) {
                 itemMap.put(road, new Skip());
             } else {
                 itemMap.put(road, new Hint());
