@@ -179,4 +179,11 @@ public class CoordinateTest {
         b.setX(3);
         assertTrue(b.isSame(b));
     }
+
+    @Test
+    public void equalsTest() {
+        assertTrue(coord.equals(coord));
+        assertFalse(coord.equals("abc"));
+        assertFalse(coord.equals(888));
+    }
 }

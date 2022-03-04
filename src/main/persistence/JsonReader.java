@@ -70,7 +70,8 @@ public class JsonReader {
     }
 
     // EFFECTS: parse the json into a Game object
-    // xxx if anything goes wrong, JSONException will be thrown
+    // if anything goes wrong, JSONException will be thrown
+    // if file can not open for read, IOException will be thrown
     public Game parseGame(String file) throws JSONException, IOException {
         JSONObject gameJson = new JSONObject(read(file));
         int width = gameJson.getInt("width");
@@ -87,7 +88,6 @@ public class JsonReader {
 
     // MODIFIES: maze
     // EFFECTS: parse the json and write it into maze
-    // xxx if anything goes wrong, JSONException will be thrown
     private void parseMaze(Maze maze, JSONObject json) {
         maze.setStart(parseCoordinate(json.getJSONObject("start")));
         maze.setExit(parseCoordinate(json.getJSONObject("exit")));
@@ -105,7 +105,6 @@ public class JsonReader {
 
     // MODIFIES: game
     // EFFECTS: parse the JSONArray items into game items
-    // xxx if anything goes wrong, JSONException will be thrown
     private void parseGameItems(Game game, JSONArray items) {
         game.removeAllItemsOnMap();
         for (int i = 0; i < items.length(); i++) {
@@ -118,7 +117,6 @@ public class JsonReader {
 
     // MODIFIES: player
     // EFFECTS: parse the json and write it into player
-    // xxx if anything goes wrong, JSONException will be thrown
     private void parsePlayer(Player player, JSONObject json) {
         player.setDirection(parseDirection(json.getString("direction")));
         player.setSolved(json.getInt("solved"));
@@ -128,7 +126,6 @@ public class JsonReader {
 
     // MODIFIES: inventory
     // EFFECTS: parse the json and write it into inventory
-    // xxx if anything goes wrong, JSONException will be thrown
     private void parseInventory(Inventory inventory, JSONObject json) {
         inventory.addCoins(json.getInt("coins"));
 
@@ -140,7 +137,6 @@ public class JsonReader {
     }
 
     // EFFECTS: parse the json into an Item and return it
-    // xxx if anything goes wrong, JSONException will be thrown
     private Item parseItem(JSONObject json) {
         ItemType type = parseItemType(json.getString("type"));
 
@@ -166,13 +162,11 @@ public class JsonReader {
 
     // REQUIRES: dir is contained in Direction.values()
     // EFFECTS: parse the dir into Direction
-    // xxx if anything goes wrong, JSONException will be thrown
     private Direction parseDirection(String dir) {
         return Direction.valueOf(dir);
     }
 
     // EFFECTS: parse the json into Coordiante
-    // xxx if anything goes wrong, JSONException will be thrown
     private Coordinate parseCoordinate(JSONObject json) {
         return new Coordinate(json.getInt("x"), json.getInt("y"));
     }

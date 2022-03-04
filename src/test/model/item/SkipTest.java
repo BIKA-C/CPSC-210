@@ -54,4 +54,9 @@ public class SkipTest extends TestHelpers {
     public void reportTest() {
         assertEquals("You got a Skip", skip.report());
     }
+
+    @Test
+    public void toJsonStringTest() {
+        assertEquals(skip.toJson().toString(), skip.toJSONString());
+    }
 }

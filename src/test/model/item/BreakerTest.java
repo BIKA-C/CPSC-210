@@ -53,6 +53,11 @@ public class BreakerTest extends TestHelpers {
         assertEquals("You got a range 3 wall breaker", breaker.report());
     }
 
+    @Test
+    public void toJsonStringTest() {
+        assertEquals(breaker.toJson().toString(), breaker.toJSONString());
+    }
+
     // EFFECTS: apply the effct once, and test if all things work properly
     private void assertEffect() {
         Coordinate coord = game.getPlayer().getPosition();

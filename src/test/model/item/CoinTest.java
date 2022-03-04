@@ -60,4 +60,9 @@ public class CoinTest extends TestHelpers {
     public void reportTest() {
         assertNull(coin.report());
     }
+
+    @Test
+    public void toJsonStringTest() {
+        assertEquals(coin.toJson().toString(), coin.toJSONString());
+    }
 }

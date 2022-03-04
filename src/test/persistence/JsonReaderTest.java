@@ -95,6 +95,18 @@ public class JsonReaderTest {
         }
     }
 
+    @Test
+    public void fileListEmpty() {
+        String[] list = reader.fileList("./", ".json", false);
+        assertEquals(0, list.length);
+    }
+
+    @Test
+    public void getFileTest() {
+        String[] list = reader.fileList(ConsoleApp.DATA_STORAGE, ".json", false);
+        assertEquals(list[0], reader.getAlphaSortedFileUnderDirByIndex(ConsoleApp.DATA_STORAGE, ".json", 0));
+    }
+
     // EFFECTS: return the file content as a string
     // fail the test if failed reading
     private String readFile(String file) {

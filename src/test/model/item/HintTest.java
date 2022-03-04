@@ -54,4 +54,9 @@ public class HintTest extends TestHelpers {
     public void reportTest() {
         assertEquals("You got a Hint", hint.report());
     }
+
+    @Test
+    public void toJsonStringTest() {
+        assertEquals(hint.toJson().toString(), hint.toJSONString());
+    }
 }
