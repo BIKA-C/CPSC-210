@@ -22,9 +22,4 @@ public class Hint extends Item {
     public void apply(Game g) {
         g.setGameMessage("Exit Position: " + g.getMaze().getExit());
     }
-
-    @Override
-    public String toJSONString() {
-        return super.toJson().toString();
-    }
 }

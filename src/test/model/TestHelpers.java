@@ -72,6 +72,21 @@ public class TestHelpers {
     }
 
     // REQUIRES: a.getWidth() == b.getWidth() && a.getHeight() == b.getHeight()
+    // EFFECTS: return true if maze a and b are the same, false if not
+    public boolean isSameMaze(Maze a, Maze b) {
+        Coordinate coord;
+        for (int i = 0; i < a.getHeight(); i++) {
+            for (int j = 0; j < a.getWidth(); j++) {
+                coord = new Coordinate(j, i);
+                if (b.isWall(coord) != a.isWall(coord)) {
+                    return false;
+                }
+            }
+        }
+        return b.getExit().isSame(a.getExit()) && b.getStart().isSame(a.getStart());
+    }
+
+    // REQUIRES: a.getWidth() == b.getWidth() && a.getHeight() == b.getHeight()
     // EFFECTS: assert if two mazes are the same, and at the except point will be
     // ignored
     public void isSameMazeExcept(Maze a, boolean[][] b, Coordinate except) {

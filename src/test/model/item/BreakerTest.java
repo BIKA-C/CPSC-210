@@ -50,7 +50,7 @@ public class BreakerTest extends TestHelpers {
 
     @Test
     public void reportTest() {
-        assertEquals("You got a range 3 wall breaker.", breaker.report());
+        assertEquals("You got a range 3 wall breaker", breaker.report());
     }
 
     // EFFECTS: apply the effct once, and test if all things work properly

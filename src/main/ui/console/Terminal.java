@@ -9,10 +9,22 @@ public class Terminal {
 
     // REQUIRES: width > 0 and height > 0
     // EFFECTS: creates a new terminal screen with the given width and height
-    public Terminal(int width, int height) throws InterruptedException, IOException {
+    // if anything causes InterruptedException or IOException, the program terminates
+    // with a status code 1;
+    public Terminal(int width, int height) {
         screen = new Screen(width, height);
         String[] cmd = { "/bin/sh", "-c", "stty raw </dev/tty" };
-        Runtime.getRuntime().exec(cmd).waitFor();
+        try {
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    // EFFECTS: return true if the terminal is closed
+    public boolean isClosed() {
+        return screen == null;
     }
 
     // REQUIRES: getScreen() != null
@@ -20,9 +32,16 @@ public class Terminal {
     // EFFECTS: revert the terminal to be the normal state and
     // and set screen to be null. Once the terminal is closed, screen is unusable
     // (you can't write/draw anything anymore)
-    public void close() throws InterruptedException, IOException {
+    // if anything causes InterruptedException or IOException, the program terminates
+    // with a status code 1;
+    public void close() {
         String[] cmd = new String[] { "/bin/sh", "-c", "stty sane </dev/tty" };
-        Runtime.getRuntime().exec(cmd).waitFor();
+        try {
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         screen.clear();
         screen = null;
     }
@@ -48,8 +67,17 @@ public class Terminal {
     // (it does not wait for the enter), if ctrl+c is
     // pressed, this function will end the entire program
     // with a status code of 0
-    public int getKey() throws IOException, InterruptedException {
-        int key = System.in.read();
+    // if anything causes InterruptedException or IOException, the program terminates
+    // with a status code 1;
+    public int getKey() {
+        int key = -1;
+        try {
+            key = System.in.read();
+        } catch (IOException e) {
+            close();
+            e.printStackTrace();
+            System.exit(0);
+        }
         if (key == 3) {
             close();
             System.exit(0);
@@ -59,7 +87,14 @@ public class Terminal {
 
     // REQUIRES: getScreen() != null
     // EFFECTS: returns true if one or more keys is down
-    public boolean isKeyDown() throws IOException {
-        return System.in.available() > 0;
+    public boolean isKeyDown() {
+        boolean keydown = false;
+        try {
+            keydown = System.in.available() > 0;
+        } catch (IOException e) {
+            return false;
+        }
+
+        return keydown;
     }
 }

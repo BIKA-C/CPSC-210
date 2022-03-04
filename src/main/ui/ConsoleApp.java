@@ -1,17 +1,32 @@
 package ui;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
+import org.json.JSONException;
+
 import model.Game;
+import model.exceptions.BagIsFullException;
+import model.exceptions.FileOverLimitException;
+import model.exceptions.NotRecognizedKeyException;
 import model.item.Item;
 import model.maze.Maze;
 import model.player.Inventory;
 import model.player.Player;
 import model.utility.Coordinate;
 import model.utility.Direction;
+import model.utility.menu.Menu;
+import model.utility.menu.MenuOption;
+import model.utility.menu.MessageBoxOption;
 import model.utility.pixel.Pixel;
 import model.utility.pixel.TextAttribute;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.console.Screen;
 import ui.console.Terminal;
 
@@ -23,14 +38,21 @@ public class ConsoleApp {
     private Terminal termial;
     private boolean quit;
 
+    private Player player;
+    private Inventory playerInventory;
+    private Coordinate playerPos;
+    private String gameLoaded;
+
     private final Screen screen;
-
-    private final Player player;
-    private final Inventory playerInventory;
-    private final Coordinate playerPos;
-
     private final int screenWidth;
     private final int screenHeight;
+
+    private final Menu mainMenu;
+    private final Menu fileMenu;
+
+    private final JsonWriter writer;
+    private final JsonReader reader;
+    private final DateTimeFormatter dtf;
 
     private final TextAttribute wallStyle = new TextAttribute(4, TextAttribute.DEFAULT_VALUE, 0);
     private final TextAttribute exitStyle = new TextAttribute(9, TextAttribute.DEFAULT_VALUE, 0);
@@ -48,45 +70,83 @@ public class ConsoleApp {
     public static final int INFO_PANNEL_WIDTH = 30;
     public static final int INFO_START_LINE = Math.toIntExact(Math.round(HEIGHT * 0.15));
 
+    public static final int TERMINAL_GUI_NUM_RESTRICT = 9;
+    public static final String DATA_STORAGE = "./data/";
+    public static final String FILE_EXTENSION = ".json";
+
     // EFFECTS: constructs a consoleApp with all elements initialized
-    public ConsoleApp() throws InterruptedException, IOException {
+    public ConsoleApp() {
         quit = false;
         screenWidth = WIDTH + INFO_PANNEL_WIDTH;
         screenHeight = HEIGHT;
 
-        game = new Game(WIDTH, HEIGHT);
         termial = new Terminal(screenWidth, screenHeight);
 
         screen = termial.getScreen();
 
+        writer = new JsonWriter();
+        reader = new JsonReader();
+        dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        gameLoaded = null;
+
+        mainMenu = new Menu("A Friendly Maze Game", new ArrayList<MenuOption>(
+                Arrays.asList(MenuOption.NEWGAME, MenuOption.LOADGAME, MenuOption.QUIT)));
+
+        fileMenu = new Menu("", new ArrayList<>());
+    }
+
+    // MODIFIES: this
+    // EFFECTS: create a new game from newGame if newGame is not null
+    // otherwise, game will be the newGame
+    // link all the references
+    private void init(Game newGame) {
+        game = newGame == null ? new Game(WIDTH, HEIGHT) : newGame;
         player = game.getPlayer();
         playerInventory = player.getInventory();
         playerPos = player.getPosition();
     }
 
     // MODIFIES: this
-    // EFFECTS: start the game. quit game until q or ctrl-c is pressed
-    public void start() throws IOException, InterruptedException {
+    // EFFECTS: start the app
+    public void start() {
         screen.setCursorInvisible();
-        render();
+
+        menu(mainMenu, 0, (screenWidth * 2 - 18) / 2 - 4, (screenHeight - 3 + 1) / 3 - 1);
+
+        okMessageBox("Closing the Program", "Thanks for playing! Have a good day!");
+        okMessageBox("Bye", "A Game made by William Chen");
+
+        termial.close();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: start the game
+    private void startGame() {
+        quit = false;
+        render(true);
         while (!quit) {
             if (!termial.isKeyDown()) {
                 continue;
             }
             handleKeyDown();
-            render();
+            if (!quit) {
+                render(true);
+            }
         }
-        termial.close();
     }
 
     // MODIFIES: this
-    // EFFECTS: render all the elements to the screen
-    private void render() throws IOException, InterruptedException {
+    // EFFECTS: render all the elements to the screen if renderNow is true
+    // otherwise, write to the buffer
+    private void render(boolean renderNow) {
         drawInfoPannel();
         drawMaze();
         drawItems();
         drawPlayer();
-        screen.render();
+        if (renderNow) {
+            screen.render();
+        }
     }
 
     // MODIFIES: this
@@ -145,7 +205,7 @@ public class ConsoleApp {
         screen.write("Inventory: ", INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
         info = "Coins: " + playerInventory.getCoins();
         screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
-        info = "You have " + playerInventory.getInventorySize() + " items:";
+        info = "You have " + playerInventory.getInventorySize() + "/9 items:";
         screen.write(info, INFO_PANNEL_START_X, line++, TextAttribute.DEFAULT, false, true);
         for (int i = 0; i < playerInventory.getInventorySize(); i++) {
             if (INFO_START_LINE + 15 + i + 1 == HEIGHT) {
@@ -224,12 +284,12 @@ public class ConsoleApp {
 
     // MODIFIES: this
     // EFFECTS: response to all the user's key input, and update game logics
-    private void handleKeyDown() throws IOException, InterruptedException {
+    private void handleKeyDown() {
         int key = termial.getKey();
         char c = (char) key;
 
         if (c == 'q') {
-            quit = true;
+            askForSaveBeforeQuit();
             return;
         } else if (isDirectionKey(c)) {
             Direction dir = keyToDirection(c);
@@ -242,6 +302,92 @@ public class ConsoleApp {
 
         handleItem();
         handleExit();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: pop a message box to ask if the use want to save the game
+    // close the message box only if a valid input is received
+    private void askForSaveBeforeQuit() {
+        render(false);
+        screen.writeMessageBox("Quit", "Do you want to save the game?", MessageBoxOption.YES_NO_CANCEL, WIDTH / 2,
+                HEIGHT / 3 + 3);
+        screen.render();
+
+        while (true) {
+            if (!termial.isKeyDown()) {
+                continue;
+            }
+            char key = (char) termial.getKey();
+            boolean finish = handleYesNoCancel(key);
+            if (finish) {
+                return;
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: pop a ok message box at the center of the game if a game is running
+    // otherwise it will be located at the center of the screen. wait until enter is presses
+    private void okMessageBox(String title, String message) {
+        int x = (screenWidth * 2 - message.length() - 10) / 2;
+        if (game != null && !quit) {
+            render(false);
+            x = (WIDTH * 2 - message.length() - 10) / 2;
+            x = x < 0 ? (screenWidth * 2 - message.length() - 10) / 2 : x;
+        }
+        screen.writeMessageBox(title, message, MessageBoxOption.OK, x,
+                HEIGHT / 3 + 3);
+        screen.render();
+        while (true) {
+            if (!termial.isKeyDown()) {
+                continue;
+            }
+            int key = (char) termial.getKey();
+            if (key == 13) {
+                return;
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handle the ask for save key input
+    // if key is y, it will try to save the file, and quit the game
+    // and return true to indicate a valid key is received
+    // if saving is failed, okMessageBox will be poped, and the game will
+    // continue
+    // if key is c, return true to indicate a valid key is received
+    // if key is n, return true to indicate a valid key is received, and
+    // quit the game
+    private boolean handleYesNoCancel(char key) {
+        if (key == 'c') {
+            return true;
+        } else if (key == 'y') {
+            quit = true;
+            try {
+                saveFile();
+                // todo updateFileMenuOptions();
+                gameLoaded = null;
+            } catch (FileNotFoundException e) {
+                quit = false;
+                okMessageBox(e.toString().split(":")[0], e.getMessage());
+                okMessageBox("Warning", "File not saved");
+            } catch (FileOverLimitException e) {
+                quit = false;
+                okMessageBox("File Not Saved", "You can only save upto " + (TERMINAL_GUI_NUM_RESTRICT - 1) + " games");
+            }
+            return true;
+        } else if (key == 'n') {
+            quit = true;
+            gameLoaded = null;
+            return true;
+        }
+        return false;
+    }
+
+    // EFFECTS: return a string of the local time
+    // in the form of yyyy-mm-dd hh:mm:ss
+    private String getTimeStamp() {
+        return dtf.format(LocalDateTime.now());
     }
 
     // REQUIRES: isDirectionKey(c)
@@ -278,7 +424,6 @@ public class ConsoleApp {
             default:
                 return false;
         }
-
     }
 
     // EFFECTS: convert the pos to the screen pos
@@ -315,11 +460,12 @@ public class ConsoleApp {
     // i.e. user does not have this indexed item in the bag
     private void tryApply(int index) {
         Item item = playerInventory.getItem(index);
-        if (item == null) {
+        try {
+            item.apply(game);
+            playerInventory.removeItem(index);
+        } catch (NullPointerException e) {
             return;
         }
-        item.apply(game);
-        playerInventory.removeItem(index);
     }
 
     // MODIFIES: this
@@ -331,7 +477,7 @@ public class ConsoleApp {
     //
     // 2.
     // if !item.isAutoApply() the item will be added to the inventory bag iff
-    // plaeryInventory.getInventorySize < Inventory.TERMINAL_GUI_NUM_RESTRICT
+    // plaeryInventory.getInventorySize < TERMINAL_GUI_NUM_RESTRICT
     // and then the item's report will be updated through game.getGameMessage().
     // if the item is not added to the player's inventory, "Your bad is full..."
     // will be reported through game.getGameMessage()
@@ -348,15 +494,28 @@ public class ConsoleApp {
         Item item = game.getItem(playerPos);
         if (item.isAutoApply()) {
             item.apply(game);
-        } else {
-            if (playerInventory.getInventorySize() >= Inventory.TERMINAL_GUI_NUM_RESTRICT) {
-                game.setGameMessage("Your bag is full...");
-                return;
-            }
-            playerInventory.addItem(item);
-            game.setGameMessage(item.report());
+            game.removeItem(playerPos);
+            return;
         }
-        game.removeItem(playerPos);
+
+        try {
+            addItemToPlayerInventory(item);
+            game.setGameMessage(item.report());
+            game.removeItem(playerPos);
+        } catch (BagIsFullException e) {
+            game.setGameMessage("Your bag is full...");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: try to add the item to the player inventory
+    // if playerInventory.getInventorySize() >= TERMINAL_GUI_NUM_RESTRICT
+    // then throws BagIsFullException and the item will not be added
+    private void addItemToPlayerInventory(Item item) throws BagIsFullException {
+        if (playerInventory.getInventorySize() >= TERMINAL_GUI_NUM_RESTRICT) {
+            throw new BagIsFullException();
+        }
+        playerInventory.addItem(item);
     }
 
     // MODIFIES: this
@@ -372,4 +531,191 @@ public class ConsoleApp {
             game.nextLevel(false);
         }
     }
+
+    // REQUIRES: x > 0 && the longest string in menu.getOptions() + 10 + x < screen.getWidth()
+    // y > 0 && menu.getOptions().size() + y + 5 < screen().getHeight()
+    // MODIFIES: this
+    // EFFECTS: a menu loop, display the given the menu and wait until an option is selected
+    private void menu(Menu menu, int defualtSelect, int x, int y) {
+        int current = defualtSelect;
+
+        String[] stringOptions = menuOptionArrayToStrings(menu.getOptions());
+        screen.writeMenu(x, y, menu.getTitle(), stringOptions, current);
+        screen.render();
+        while (!menu.isQuit()) {
+            if (!termial.isKeyDown()) {
+                continue;
+            }
+
+            try {
+                current = processeKeyCommand(current, menu);
+            } catch (NotRecognizedKeyException e) {
+                continue;
+            }
+
+            if (menu == fileMenu) {
+                stringOptions = menuOptionArrayToStrings(menu.getOptions());
+            }
+            screen.writeMenu(x, y, menu.getTitle(), stringOptions, current);
+            screen.render();
+        }
+    }
+
+    // EFFECTS: process the key pressed.
+    // If enter is pressed, call the corresponding function in response
+    // if a valid number between 1 - menu.getOptions().size(), call the corresponding function in response
+    // If w/s is pressed return the new seleced index (1-based).
+    // If the new selected is out of index bound, it loops back
+    private int processeKeyCommand(int current, Menu menu) throws NotRecognizedKeyException {
+        int optionsSize = menu.getOptions().size();
+        int save = handleMenuKeyDown(current, 1 + 48, optionsSize + 48);
+
+        if (save == -1) {
+            functionDispather(menu, current);
+            return current;
+        } else if (save >= 1 + 48 && save <= optionsSize + 48) {
+            functionDispather(menu, save - 48 - 1);
+            return save - 48 - 1;
+        }
+
+        return save;
+    }
+
+    // EFFECTS: converts ArrayList<MenuOption> to String[]
+    private String[] menuOptionArrayToStrings(ArrayList<MenuOption> options) {
+        String[] strings = new String[options.size()];
+        for (int i = 0; i < options.size(); i++) {
+            strings[i] = options.get(i).getOption();
+        }
+        return strings;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: update the fileMenu options
+    private void updateFileMenuOptions() {
+        String[] files = reader.fileList(DATA_STORAGE, FILE_EXTENSION, true);
+        ArrayList<MenuOption> options = fileMenu.getOptions();
+
+        if (files.length == options.size() - 1) {
+            return;
+        }
+
+        int difference = files.length - (options.size() - 1);
+
+        for (int i = 0; i < options.size(); i++) {
+            if (options.get(i).getOption() == files[i]) {
+                continue;
+            }
+            if (i == options.size() - 1) {
+                options.set(i, new MenuOption(files[i]));
+            }
+            options.get(i).setOption(files[i]);
+        }
+
+        if (difference < 0) {
+            options.retainAll(options.subList(0, files.length - 1));
+        } else {
+            for (int i = options.size(); i < files.length; i++) {
+                options.add(new MenuOption(files[i]));
+            }
+        }
+
+        options.add(MenuOption.QUIT);
+    }
+
+    // REQUIRES: selected > 0 && seleced < menu.getOptions().size()
+    // MODIFIES: this
+    // EFFECTS: call seleced menu function
+    private void functionDispather(Menu menu, int selected) {
+        if (menu.getOptions().get(selected) == MenuOption.QUIT) {
+            menu.setQuit(true);
+        } else if (menu.getOptions().get(selected) == MenuOption.NEWGAME) {
+            init(null);
+            startGame();
+        } else if (menu.getOptions().get(selected) == MenuOption.LOADGAME) {
+            chooseSaveMenu();
+        } else {
+            loadGame(selected);
+        }
+    }
+
+    // REQUIRES: selected > 0 && seleced < fileMenu.getOptions().size()
+    // MODIFIES: this
+    // EFFECTS: load the selected game
+    private void loadGame(int selected) {
+        String file = reader.getAlphaSortedFileUnderDirByIndex(DATA_STORAGE, FILE_EXTENSION, selected);
+        try {
+            init(reader.parseGame(DATA_STORAGE + file));
+            gameLoaded = file;
+            startGame();
+        } catch (JSONException e) {
+            okMessageBox(e.toString().split(":")[0], e.getMessage());
+            okMessageBox("Failed to Load", file + " is corrupted");
+        } catch (IOException e) {
+            okMessageBox(e.toString().split(":")[0], e.getMessage());
+            okMessageBox("Failed to Load", "IOException");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: display the choose a game menu until an option is selected
+    private void chooseSaveMenu() {
+        updateFileMenuOptions();
+        String title = "You have " + (fileMenu.getOptions().size() - 1) + "/" + (TERMINAL_GUI_NUM_RESTRICT - 1)
+                + " files";
+        fileMenu.setTitle(title);
+        fileMenu.setQuit(false);
+        menu(fileMenu, 0, (screenWidth * 2 - 21) / 2 - 3, (screenHeight - 3 + 1) / 3 - 1);
+    }
+
+    // REQUIRES: current + 48 > min && current + 48 < max
+    // EFFECTS: if w is pressed return current - 1 or max - 48 -1 if current -1 < 0
+    // if s is pressed return current + 1 or 0 if current + 1 > max - 48 -1
+    // if any number key between min and max (inclusive) is pressed, return that number + 48
+    // if enter is pressed return -1
+    // if any other key is pressed, throws NotRecognizedKeyException
+    private int handleMenuKeyDown(int current, int min, int max) throws NotRecognizedKeyException {
+        char key = (char) termial.getKey();
+        int save = current;
+        if (key >= min && key <= max) {
+            return key;
+        } else if (key == 'w') {
+            current = current - 1 >= 0 ? current - 1 : max - 48 - 1;
+        } else if (key == 's') {
+            current = current + 1 <= max - 48 - 1 ? current + 1 : 0;
+        } else if ((int) key == 13) {
+            return -1;
+        }
+
+        if (current == save) {
+            throw new NotRecognizedKeyException();
+        }
+
+        return current;
+    }
+
+
+    // EFFECTS: save the file to the DATA_STORAGE
+    // if the destination is not found, throws FileNotFoundException
+    // if the number of the files already saved under DATA_STORAGE folder is
+    // greater than TERMINAL_GUI_NUM_RESTRICT - 2, throws FileOverLimitException
+    private void saveFile() throws FileNotFoundException, FileOverLimitException {
+        if (gameLoaded != null) {
+            writer.saveToFile(DATA_STORAGE + gameLoaded, game);
+            return;
+        }
+        if (reader.fileCount(DATA_STORAGE, FILE_EXTENSION) > TERMINAL_GUI_NUM_RESTRICT - 2) {
+            throw new FileOverLimitException();
+        }
+        writer.saveToFile(DATA_STORAGE + getTimeStamp() + ".json", game);
+    }
+
+    // private void fatelClose(String reason, Exception e) {
+    //     termial.close();
+    //     System.out.println("Fatel: " + reason);
+    //     System.out.println("Program closed due to: " + e.getMessage());
+    //     System.out.println("\nStack Trace:");
+    //     e.printStackTrace();
+    //     System.exit(1);
+    // }
 }

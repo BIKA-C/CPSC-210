@@ -55,10 +55,11 @@ public class Breaker extends Item {
         g.setGameMessage(destroyed + " walls are destroyed");
     }
 
+    // EFFECTS: converts the item to a JSON object
     @Override
-    public String toJSONString() {
+    public JSONObject toJson() {
         JSONObject breaker = super.toJson();
         breaker.put("range", range);
-        return breaker.toString();
+        return breaker;
     }
 }

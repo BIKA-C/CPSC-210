@@ -24,6 +24,10 @@ public abstract class Item implements JSONString {
         return isAutoApply;
     }
 
+    public ItemType getType() {
+        return type;
+    }
+
     // EFFECTS: returns the item name.
     // if isAtuoApply(), null will be returned
     public String getDisplayName() {
@@ -36,11 +40,18 @@ public abstract class Item implements JSONString {
         return isAutoApply ? null : reportMessage;
     }
 
+    // EFFECTS: converts the item to a JSON object
     public JSONObject toJson() {
         JSONObject item = new JSONObject();
         item.put("type", type);
         item.put("autoApply", isAutoApply);
         return item;
+    }
+
+    // EFFECTS: converts the item to a JSON string
+    @Override
+    public String toJSONString() {
+        return toJson().toString();
     }
 
     // // MODIFIES: this

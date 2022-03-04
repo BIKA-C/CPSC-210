@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.item.Breaker;
@@ -102,6 +103,13 @@ public class Game {
         return itemMap.get(pos);
     }
 
+    // MODIFIES: this
+    // EFFECTS: add the item to the map with the corresponding pos
+    // if the pos already has an item, nothing will happen
+    public void setItem(Coordinate pos, Item item) {
+        itemMap.put(pos, item);
+    }
+
     public int getReward() {
         return reward;
     }
@@ -112,6 +120,12 @@ public class Game {
         // items.remove(index);
         // itemPosition.remove(index);
         itemMap.remove(pos);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: remove all the items on the map
+    public void removeAllItemsOnMap() {
+        itemMap.clear();
     }
 
     public Maze getMaze() {
@@ -174,7 +188,7 @@ public class Game {
         generateItems();
     }
 
-    // EFFECTS: convert the game to json object
+    // EFFECTS: convert the game to a JSON object
     public JSONObject toJson() {
         JSONObject game = new JSONObject(this);
         game.remove("reward");
@@ -185,7 +199,23 @@ public class Game {
         game.put("player", player.toJson());
         game.put("width", maze.getWidth() + 2);
         game.put("height", maze.getHeight() + 2);
-        game.put("items", itemMap);
+        game.put("items", itemMapToJsonArray());
         return game;
+    }
+
+    // EFFECTS: converts the itemMap to a JSONArray
+    private JSONArray itemMapToJsonArray() {
+        Iterator<Coordinate> keys = itemMap.keySet().iterator();
+        JSONArray items = new JSONArray();
+        while (keys.hasNext()) {
+            JSONObject item = new JSONObject();
+            Coordinate key = keys.next();
+            item.put("position", key.toJson());
+            item.put("item", itemMap.get(key).toJson());
+
+            items.put(item);
+        }
+
+        return items;
     }
 }

@@ -15,8 +15,6 @@ public class Inventory {
     private ArrayList<Item> inventory;
     private int coins;
 
-    public static final int TERMINAL_GUI_NUM_RESTRICT = 9;
-
     // EFFECTS: constructs a inventory bag with zero items in
     // and zero coins
     public Inventory() {
@@ -27,11 +25,7 @@ public class Inventory {
     // REQUIRES: i != null
     // MODIFIES: this
     // EFFECTS: add i into the inventory
-    // if getInventorySize() >= TERMINAL_GUI_NUM_RESTRICT, i will not be added
     public void addItem(Item i) {
-        if (inventory.size() >= TERMINAL_GUI_NUM_RESTRICT) {
-            return;
-        }
         inventory.add(i);
     }
 

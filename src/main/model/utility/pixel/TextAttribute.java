@@ -9,6 +9,7 @@ public class TextAttribute {
     private int style;
 
     public static final TextAttribute DEFAULT = new TextAttribute(-1, -1, -1);
+    public static final TextAttribute REVERSED = new TextAttribute(-1, -1, 7);
     public static final int DEFAULT_VALUE = -1;
 
     // EFFECTS: constructs a textAttribute with the given properties

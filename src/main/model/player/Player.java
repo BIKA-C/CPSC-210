@@ -67,6 +67,10 @@ public class Player {
         this.direction = direction;
     }
 
+    public void setSolved(int solved) {
+        this.solved = solved;
+    }
+
     // MODIFIES: this
     // EFFECTS: set the player's position by the given position
     public void setPosition(Coordinate position) {

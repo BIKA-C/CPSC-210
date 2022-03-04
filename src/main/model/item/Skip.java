@@ -26,9 +26,4 @@ public class Skip extends Item {
         g.nextLevel(true);
         g.setGameMessage("Maze skipped!");
     }
-
-    @Override
-    public String toJSONString() {
-        return super.toJson().toString();
-    }
 }

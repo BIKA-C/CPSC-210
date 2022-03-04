@@ -30,10 +30,11 @@ public class Coin extends Item {
         g.setGameMessage("You got " + this.value + " coins");
     }
 
+    // EFFECTS: converts the item to a JSON object
     @Override
-    public String toJSONString() {
+    public JSONObject toJson() {
         JSONObject coin = super.toJson();
         coin.put("value", value);
-        return coin.toString();
+        return coin;
     }
 }

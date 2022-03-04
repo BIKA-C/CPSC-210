@@ -85,6 +85,20 @@ public class Maze {
         return exit;
     }
 
+    // REQUIRES: isInRange(start)
+    // MODIFIES: this
+    // EFFECTS: set the start to be the given start
+    public void setStart(Coordinate start) {
+        this.start = start;
+    }
+
+    // REQUIRES: isInRange(exit)
+    // MODIFIES: this
+    // EFFECTS: set the exit to be the given exit
+    public void setExit(Coordinate exit) {
+        this.exit = exit;
+    }
+
     // EFFECTS: return the number of the roads
     public int getNumOfRoad() {
         return roads.size();
@@ -104,11 +118,11 @@ public class Maze {
         maze[coord.getY()][coord.getX()] = value;
     }
 
-    // EFFECTS: convert the maze to json object
+    // EFFECTS: convert the maze to a JSON object
     public JSONObject toJson() {
         JSONObject maze = new JSONObject();
         maze.put("exit", exit.toJson());
-        maze.put("static", start.toJson());
+        maze.put("start", start.toJson());
         maze.put("maze", this.maze);
         return maze;
     }
