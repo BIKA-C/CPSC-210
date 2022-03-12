@@ -30,7 +30,7 @@ Everyone!
 
 ### Phase 2
 
-= As a user, I want to be able to save the game
-= As a user, I want to be able to load the game that I choose
+- As a user, I want to be able to save the game
+- As a user, I want to be able to load the game that I choose
 - As a user, I want to be able to be noticed when a file is corrupted
 - As a user, I want to be able to be noticed when saving is unsuccessful
