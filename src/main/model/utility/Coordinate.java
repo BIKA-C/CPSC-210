@@ -120,7 +120,7 @@ public class Coordinate {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (obj.getClass() != this.getClass()) {
+        } else if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
 
