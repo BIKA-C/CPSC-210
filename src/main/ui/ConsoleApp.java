@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Map;
 
 import org.json.JSONException;
 
@@ -266,10 +266,8 @@ public class ConsoleApp {
     // EFFECTS: draw (or actuall write) all the available items from the maze to the screen buffer
     private void drawItems() {
         Coordinate screenPos;
-        Iterator<Coordinate> it = game.getItemPositionIterator();
-        while (it.hasNext()) {
-            screenPos = toScreen(it.next());
-
+        for (Map.Entry<Coordinate, Item> entry : game.getItemEntrySet()) {
+            screenPos = toScreen(entry.getKey());
             screen.writePixel(itemPixel, screenPos, false);
         }
 
@@ -693,7 +691,6 @@ public class ConsoleApp {
 
         return current;
     }
-
 
     // EFFECTS: save the file to the DATA_STORAGE
     // if the destination is not found, throws FileNotFoundException

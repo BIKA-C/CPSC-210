@@ -2,7 +2,9 @@ package model;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -93,8 +95,8 @@ public class Game {
     }
 
     // EFFECTS: return the iterator of the item positons
-    public Iterator<Coordinate> getItemPositionIterator() {
-        return itemMap.keySet().iterator();
+    public Set<Map.Entry<Coordinate, Item>> getItemEntrySet() {
+        return itemMap.entrySet();
     }
 
     // EFFECTS: return the item by the given pos

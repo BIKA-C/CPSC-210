@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,13 +62,8 @@ public class JsonWriterTest extends TestHelpers {
         assertEquals(expected.getGameMessage(), actual.getGameMessage());
         assertTrue(isSameMaze(expected.getMaze(), actual.getMaze()));
 
-        Iterator<Coordinate> expectedIt = expected.getItemPositionIterator();
-        Iterator<Coordinate> actualIt = actual.getItemPositionIterator();
-        while (expectedIt.hasNext() || actualIt.hasNext()) {
-            Coordinate expectedItemPos = expectedIt.next();
-            Coordinate actualItemPos = actualIt.next();
-            assertTrue(expectedItemPos.isSame(actualItemPos));
-            assertItemSame(expected.getItem(expectedItemPos), actual.getItem(actualItemPos));
+        for (Map.Entry<Coordinate, Item> entry : expected.getItemEntrySet()) {
+            assertItemSame(entry.getValue(), actual.getItem(entry.getKey()));
         }
 
         assertTrue(expected.getPlayer().getPosition().isSame(actual.getPlayer().getPosition()));

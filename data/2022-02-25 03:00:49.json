@@ -1730,7 +1730,7 @@
                 {"autoApply":false,"type":"SKIP"}
             ]
         },
-        "direction": "DOWN"
+        "direction": "UP"
     },
     "height": 38
 }
