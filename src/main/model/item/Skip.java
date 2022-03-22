@@ -23,7 +23,7 @@ public class Skip extends Item {
     // and report the maze is skipped from g.getGameMessage()
     @Override
     public void apply(Game g) {
-        g.nextLevel(true);
+        g.nextLevel(true, false);
         g.setGameMessage("Maze skipped!");
     }
 }

@@ -16,7 +16,7 @@ public class CoinTest extends TestHelpers {
 
     @BeforeEach
     public void setup() {
-        game = new Game(20, 20);
+        game = new Game(20);
         coin = new Coin(20);
     }
 

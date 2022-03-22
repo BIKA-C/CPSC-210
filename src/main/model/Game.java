@@ -9,6 +9,10 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javafx.scene.input.DragEvent;
+import model.exceptions.CollisionException;
+import model.exceptions.NotRecognizedKeyException;
+import model.exceptions.PlayerMovementException;
 import model.item.Breaker;
 import model.item.Coin;
 import model.item.Hint;
@@ -18,6 +22,7 @@ import model.item.Skip;
 import model.maze.Maze;
 import model.player.Player;
 import model.utility.Coordinate;
+import model.utility.Direction;
 
 // Game represents this maze game
 // it has a maze and player and all the game items on the maze
@@ -29,6 +34,7 @@ public class Game {
     private Maze maze;
     private Player player;
     private int reward;
+    private int mazeSize;
     private HashMap<Coordinate, Item> itemMap;
 
     private String gameMessage;
@@ -40,7 +46,7 @@ public class Game {
     public static final double REWARD_TO_MAZE_SIZE_RATIO = 0.09375;
     public static final double NUM_OF_ITEMS_TO_MAZE_SIZE_RATIO = 0.05;
 
-    // REQUIRES: (width % 2 == 0) and (height % 2 == 0) and (width and height) >= 8
+    // REQUIRES: size >= 8 && size % 2 == 0
     // EFFECTS: Constructs a new game object with a new player at 0,0
     // and a random maze. Solved counter will be zero.
     // reward and num of items will be calculated proportion to the given width and
@@ -49,13 +55,19 @@ public class Game {
     // The actual maze's width and height will minus 2 from
     // the given width and height. These 2 are reserved for boarders.
     // Boarders are ignored when calculating the reward and num of items
-    public Game(int width, int height) {
-        maze = new Maze(width - 2, height - 2);
+    public Game(int size) {
+        maze = new Maze(size - 2, size - 2);
         player = new Player();
         random = new Random();
         itemMap = new HashMap<>();
         reward = Math.toIntExact(Math.round(maze.getHeight() * maze.getWidth() * REWARD_TO_MAZE_SIZE_RATIO));
+        mazeSize = size;
         init();
+    }
+
+    public Game() {
+        this(10);
+        mazeSize = 10;
     }
 
     // EFFECTS: true if getPlayer.getPosition().isSame(getMaze().getExit())
@@ -64,16 +76,19 @@ public class Game {
         return player.getPosition().isSame(maze.getExit());
     }
 
+    // REQUIRES: skip and increaseSize can't be both true
     // MODIFIES: this
     // EFFECTS: creates a new maze with the same width and height as the next level
     // if skip is false the following will happen:
     // add 1 to the player solved counter
     // add getReward() to the player's inventory
     // getGameMessage() will give the message of the reward earned
-    public void nextLevel(boolean skip) {
-        int width = maze.getWidth();
-        int height = maze.getHeight();
-        this.maze = new Maze(width, height);
+    public void nextLevel(boolean skip, boolean increaseSize) {
+        if (increaseSize) {
+            mazeSize += 2;
+        }
+        this.maze = new Maze(mazeSize - 2, mazeSize - 2);
+        reward = Math.toIntExact(Math.round(maze.getHeight() * maze.getWidth() * REWARD_TO_MAZE_SIZE_RATIO));
 
         init();
         if (skip) {
@@ -82,6 +97,37 @@ public class Game {
         player.solvedAddOne();
         gameMessage = "You have earned " + reward + " coins for solving the maze";
         player.getInventory().addCoins(reward);
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: moves the player by the key
+    // if the player arrives the exit, goes to the next level
+    // if the player is at an item position, stores the item into the
+    // player inventory bag
+    public void movePlayer(char key) throws PlayerMovementException {
+        Direction direction;
+        if (key == 'w') {
+            direction = Direction.UP;
+        } else if (key == 'a') {
+            direction = Direction.LEFT;
+        } else if (key == 's') {
+            direction = Direction.DOWN;
+        } else if (key == 'd') {
+            direction = Direction.RIGHT;
+        } else {
+            throw new NotRecognizedKeyException();
+        }
+
+        Coordinate save = new Coordinate(player.getPosition());
+        save.go(direction, 1);
+        if (!maze.isInRange(save) || maze.isWall(save)) {
+            throw new CollisionException();
+        }
+
+        player.move(direction);
+        checkExit();
+        checkItem();
     }
 
     // EFFECTS: true if the given pos is an Item position
@@ -94,7 +140,7 @@ public class Game {
         return itemMap.size();
     }
 
-    // EFFECTS: return the iterator of the item positons
+    // EFFECTS: return the the entry set of the items
     public Set<Map.Entry<Coordinate, Item>> getItemEntrySet() {
         return itemMap.entrySet();
     }
@@ -146,6 +192,14 @@ public class Game {
         this.gameMessage = message;
     }
 
+    public int getMazeSize() {
+        return mazeSize;
+    }
+
+    public void setMazeSize(int mazeSize) {
+        this.mazeSize = mazeSize;
+    }
+
     // REQUIRES: items != null
     // MODIFIES: this
     // EFFECTS: randomly put different items to the items list
@@ -154,7 +208,7 @@ public class Game {
         while (itemMap.size() < numOfItemOnMap) {
             index = random.nextInt(maze.getNumOfRoad());
             Coordinate road = maze.getRoad(index);
-            if (itemMap.containsKey(road)) {
+            if (itemMap.containsKey(road) || road.isSame(getMaze().getExit())) {
                 continue;
             }
 
@@ -190,17 +244,30 @@ public class Game {
         generateItems();
     }
 
+    private void checkExit() {
+        if (!player.getPosition().isSame(maze.getExit())) {
+            return;
+        }
+        nextLevel(false, true);
+    }
+
+    private void checkItem() {
+        if (!itemMap.containsKey(player.getPosition())) {
+            return;
+        }
+        player.getInventory().addItem(itemMap.get(player.getPosition()));
+        itemMap.remove(player.getPosition());
+    }
+
     // EFFECTS: convert the game to a JSON object
     public JSONObject toJson() {
         JSONObject game = new JSONObject(this);
         game.remove("reward");
         game.remove("numOfItems");
         game.remove("ended");
-        game.remove("itemPositionIterator");
+        game.remove("itemEntrySet");
         game.put("maze", maze.toJson());
         game.put("player", player.toJson());
-        game.put("width", maze.getWidth() + 2);
-        game.put("height", maze.getHeight() + 2);
         game.put("items", itemMapToJsonArray());
         return game;
     }
@@ -220,4 +287,5 @@ public class Game {
 
         return items;
     }
+
 }

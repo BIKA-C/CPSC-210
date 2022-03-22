@@ -18,7 +18,7 @@ public class BreakerTest extends TestHelpers {
     @BeforeEach
     public void setup() {
         breaker = new Breaker(3);
-        game = new Game(20, 20);
+        game = new Game(20);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class BreakerTest extends TestHelpers {
         // the position to special positions on the maze. So, I test it 2000 times
         // 500 times for each directions
         for (int i = 0; i < 2000; i++) {
-            game = new Game(20, 20);
+            game = new Game(20);
             game.getPlayer().setDirection(Direction.values()[i % 4]);
             assertEffect();
         }

@@ -15,7 +15,7 @@ public class HintTest extends TestHelpers {
 
     @BeforeEach
     public void setup() {
-        game = new Game(20, 20);
+        game = new Game(20);
         hint = new Hint();
     }
 

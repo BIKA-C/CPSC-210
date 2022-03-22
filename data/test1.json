@@ -1,6 +1,6 @@
 {
     "gameMessage": "You got a Skip",
-    "width": 38,
+    "mazeSize": 38,
     "maze": {
         "exit": {
             "x": 34,
@@ -1779,6 +1779,5 @@
             ]
         },
         "direction": "LEFT"
-    },
-    "height": 38
+    }
 }

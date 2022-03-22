@@ -18,7 +18,7 @@ public class GameTest extends TestHelpers {
 
     @BeforeEach
     public void setup() {
-        game = new Game(20, 20);
+        game = new Game(20);
     }
 
     @Test
@@ -45,6 +45,15 @@ public class GameTest extends TestHelpers {
     public void nextLevelNonSkipTest() {
         for (int i = 0; i < 20; i++) {
             assertNextLevelNonSkip(i + 1);
+        }
+    }
+
+    @Test
+
+    public void nextLevelNonSkipTestIncreaseSize() {
+        int coins = 0;
+        for (int i = 0; i < 20; i++) {
+            coins = assertNextLevelNonSkipIncrease(i + 1, coins);
         }
     }
 
@@ -85,7 +94,7 @@ public class GameTest extends TestHelpers {
 
     private void assertNextLevelSkip() {
         makeCopyOfGame();
-        game.nextLevel(true);
+        game.nextLevel(true, false);
         assertPlayerInventoryAndCoinsNotChanged();
         assertPlayerSolvedNotChanged();
 
@@ -101,7 +110,7 @@ public class GameTest extends TestHelpers {
 
     private void assertNextLevelNonSkip(int counter) {
         makeCopyOfGame();
-        game.nextLevel(false);
+        game.nextLevel(false, false);
         assertPlayerInventoryNotChanged();
 
         assertEquals(18, game.getMaze().getWidth());
@@ -115,6 +124,25 @@ public class GameTest extends TestHelpers {
         assertEquals("You have earned " + reward + " coins for solving the maze", game.getGameMessage());
         assertEquals(counter, game.getPlayer().getSolved());
         assertEquals(reward * counter, game.getPlayer().getInventory().getCoins());
+    }
+
+    private int assertNextLevelNonSkipIncrease(int counter, int coinsBefore) {
+        makeCopyOfGame();
+        game.nextLevel(false, true);
+        assertPlayerInventoryNotChanged();
+
+        assertEquals(18 + counter * 2, game.getMaze().getWidth());
+        assertEquals(18 + counter * 2, game.getMaze().getHeight());
+        assertEquals(round(Math.pow(18 + counter * 2, 2) * Game.REWARD_TO_MAZE_SIZE_RATIO), game.getReward());
+        assertEquals(round(game.getMaze().getNumOfRoad() * Game.NUM_OF_ITEMS_TO_MAZE_SIZE_RATIO), game.getNumOfItems());
+
+        assertNotNull(game.getMaze());
+
+        int reward = round(Math.pow(18 + counter * 2, 2) * Game.REWARD_TO_MAZE_SIZE_RATIO);
+        assertEquals("You have earned " + reward + " coins for solving the maze", game.getGameMessage());
+        assertEquals(counter, game.getPlayer().getSolved());
+        assertEquals(reward + coinsBefore, game.getPlayer().getInventory().getCoins());
+        return game.getPlayer().getInventory().getCoins();
     }
 
     private int round(double num) {

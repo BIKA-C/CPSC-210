@@ -14,6 +14,12 @@ public class Coordinate {
         this.ycoord = ycoord;
     }
 
+    // EFFECTS: constructs a coordinate with the given coord
+    public Coordinate(Coordinate coord) {
+        this.xcoord = coord.getX();
+        this.ycoord = coord.getY();
+    }
+
     // MODIFIES: this
     // EFFECTS: set x to be the given x
     public void setX(int xcoord) {

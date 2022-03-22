@@ -25,7 +25,7 @@ public class JsonWriterTest extends TestHelpers {
     @BeforeEach
     public void setup() {
         writer = new JsonWriter();
-        game = new Game(ConsoleApp.WIDTH, ConsoleApp.HEIGHT);
+        game = new Game(ConsoleApp.WIDTH);
     }
 
     @Test

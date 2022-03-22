@@ -74,9 +74,8 @@ public class JsonReader {
     // if file can not open for read, IOException will be thrown
     public Game parseGame(String file) throws JSONException, IOException {
         JSONObject gameJson = new JSONObject(read(file));
-        int width = gameJson.getInt("width");
-        int height = gameJson.getInt("height");
-        Game game = new Game(width, height);
+        int width = gameJson.getInt("mazeSize");
+        Game game = new Game(width);
 
         game.setGameMessage(gameJson.getString("gameMessage"));
         parsePlayer(game.getPlayer(), gameJson.getJSONObject("player"));

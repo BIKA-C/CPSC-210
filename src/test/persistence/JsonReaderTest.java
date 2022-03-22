@@ -63,8 +63,7 @@ public class JsonReaderTest {
         try {
             game = reader.parseGame(file);
             assertEquals(json.getString("gameMessage"), game.getGameMessage());
-            assertEquals(json.getInt("width"), game.getMaze().getWidth() + 2);
-            assertEquals(json.getInt("height"), game.getMaze().getHeight() + 2);
+            assertEquals(json.getInt("mazeSize"), game.getMazeSize());
             assertMazeRead(json.getJSONObject("maze"), game.getMaze());
             assertPlayerRead(json.getJSONObject("player"), game.getPlayer());
             assertGameItemRead(json.getJSONArray("items"), game);

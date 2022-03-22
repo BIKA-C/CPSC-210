@@ -11,6 +11,7 @@ import java.util.Map;
 import org.json.JSONException;
 
 import model.Game;
+import model.exceptions.NotRecognizedKeyException;
 import model.item.Item;
 import model.maze.Maze;
 import model.player.Inventory;
@@ -28,7 +29,6 @@ import ui.console.Screen;
 import ui.console.Terminal;
 import ui.exceptions.BagIsFullException;
 import ui.exceptions.FileOverLimitException;
-import ui.exceptions.NotRecognizedKeyException;
 
 // ConsoleApp represents the maze in the console
 // it processes the game logics.
@@ -101,7 +101,7 @@ public class ConsoleApp {
     // otherwise, game will be the newGame
     // link all the references
     private void init(Game newGame) {
-        game = newGame == null ? new Game(WIDTH, HEIGHT) : newGame;
+        game = newGame == null ? new Game(WIDTH) : newGame;
         player = game.getPlayer();
         playerInventory = player.getInventory();
         playerPos = player.getPosition();
@@ -526,7 +526,7 @@ public class ConsoleApp {
     // game.getGameMessage()
     private void handleExit() {
         if (game.isEnded()) {
-            game.nextLevel(false);
+            game.nextLevel(false, false);
         }
     }
 
