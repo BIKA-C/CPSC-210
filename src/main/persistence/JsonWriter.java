@@ -12,7 +12,7 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes json form of the game to the just opened dest file and closes the file
-    public static void saveToFile(String dest, Game game) throws FileNotFoundException {
+    public void saveToFile(String dest, Game game) throws FileNotFoundException {
         PrintWriter writer = new PrintWriter(new File(dest));
 
         writer.print(game.toJson().toString(4));

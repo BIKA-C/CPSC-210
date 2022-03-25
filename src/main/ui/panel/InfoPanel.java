@@ -66,7 +66,9 @@ public class InfoPanel extends JPanel {
     private static final int LINE_BREAK = 10;
 
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private JFileChooser jfc = new JFileChooser(MazeGame.DATA_STORAGE, FileSystemView.getFileSystemView());
+    private final JFileChooser jfc = new JFileChooser(MazeGame.DATA_STORAGE, FileSystemView.getFileSystemView());
+    private final JsonReader reader = new JsonReader();
+    private final JsonWriter writer = new JsonWriter();
 
     // EFFECTS: constructs a infoPanel
     public InfoPanel(Game game, Dimension size, GamePanel panel) {
@@ -213,7 +215,7 @@ public class InfoPanel extends JPanel {
                 }
                 gameLoaded = MazeGame.DATA_STORAGE + jfc.getSelectedFile().getName();
                 try {
-                    game = JsonReader.parseGame(gameLoaded);
+                    game = reader.parseGame(gameLoaded);
                     gamePanel.setGame(game);
                     System.out.println("Game loaded");
                     updateItems();
@@ -307,7 +309,7 @@ public class InfoPanel extends JPanel {
         String gameToSave = gameLoaded == null ? MazeGame.DATA_STORAGE + getTimeStamp() + MazeGame.FILE_EXTENSION
                 : gameLoaded;
         try {
-            JsonWriter.saveToFile(gameToSave, game);
+            writer.saveToFile(gameToSave, game);
             gameLoaded = gameLoaded == null ? gameToSave : gameLoaded;
             JOptionPane.showMessageDialog(null,
                     "Game Saved!",
