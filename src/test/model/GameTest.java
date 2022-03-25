@@ -76,20 +76,22 @@ public class GameTest extends TestHelpers {
     @Test
     public void getItemTest() {
         HashMap<Coordinate, Item> copyList = copyItemsMap(game);
-        Coordinate randomRoad = game.getItemEntrySet().iterator().next().getKey();
+        Coordinate randomKey = game.getItemEntrySet().iterator().next().getKey();
 
-        Item returned = game.getItem(randomRoad);
-        assertEquals(copyList.get(randomRoad).getDisplayName(), returned.getDisplayName());
-        assertSame(copyList.get(randomRoad), returned);
+        Item returned = game.getItem(randomKey);
+        assertEquals(copyList.get(randomKey).getDisplayName(), returned.getDisplayName());
+        assertSame(copyList.get(randomKey), returned);
+        assertTrue(game.isItem(randomKey));
     }
 
     @Test
     public void removeItemTest() {
         HashMap<Coordinate, Item> copyList = copyItemsMap(game);
-        Coordinate randomRoad = game.getItemEntrySet().iterator().next().getKey();
+        Coordinate randomKey = game.getItemEntrySet().iterator().next().getKey();
 
-        game.removeItem(randomRoad);
+        game.removeItem(randomKey);
         assertEquals(copyList.size() - 1, game.getNumOfItems());
+        assertFalse(game.isItem(randomKey));
     }
 
     private void assertNextLevelSkip() {

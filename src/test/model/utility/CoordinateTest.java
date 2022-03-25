@@ -1,5 +1,6 @@
 package model.utility;
 
+import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,6 +26,10 @@ public class CoordinateTest {
 
         assertEquals(0, origin.getX());
         assertEquals(0, origin.getY());
+
+        Coordinate newCoord = new Coordinate(coord);
+        newCoord.isSame(coord);
+        assertNotSame(newCoord, coord);
     }
 
     @Test
@@ -185,5 +190,6 @@ public class CoordinateTest {
         assertTrue(coord.equals(coord));
         assertFalse(coord.equals("abc"));
         assertFalse(coord.equals(888));
+        assertFalse(coord.equals(null));
     }
 }

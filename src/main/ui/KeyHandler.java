@@ -3,13 +3,13 @@ package ui;
 import java.awt.event.KeyListener;
 
 import model.Game;
-import model.exceptions.CollisionException;
-import model.exceptions.PlayerMovementException;
 import model.item.Item;
 import model.player.Inventory;
 import model.utility.Coordinate;
 import model.utility.Direction;
 import ui.exceptions.BagIsFullException;
+import ui.exceptions.CollisionException;
+import ui.exceptions.PlayerMovementException;
 import ui.panel.GamePanel;
 
 import java.awt.event.KeyEvent;

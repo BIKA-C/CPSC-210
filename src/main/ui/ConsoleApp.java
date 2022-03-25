@@ -11,7 +11,6 @@ import java.util.Map;
 import org.json.JSONException;
 
 import model.Game;
-import model.exceptions.NotRecognizedKeyException;
 import model.item.Item;
 import model.maze.Maze;
 import model.player.Inventory;
@@ -29,6 +28,7 @@ import ui.console.Screen;
 import ui.console.Terminal;
 import ui.exceptions.BagIsFullException;
 import ui.exceptions.FileOverLimitException;
+import ui.exceptions.NotRecognizedKeyException;
 
 // ConsoleApp represents the maze in the console
 // it processes the game logics.

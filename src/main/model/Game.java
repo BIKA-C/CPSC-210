@@ -9,9 +9,6 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import model.exceptions.CollisionException;
-import model.exceptions.NotRecognizedKeyException;
-import model.exceptions.PlayerMovementException;
 import model.item.Breaker;
 import model.item.Coin;
 import model.item.Hint;
@@ -21,7 +18,6 @@ import model.item.Skip;
 import model.maze.Maze;
 import model.player.Player;
 import model.utility.Coordinate;
-import model.utility.Direction;
 
 // Game represents this maze game
 // it has a maze and player and all the game items on the maze
@@ -64,10 +60,10 @@ public class Game {
         init();
     }
 
-    public Game() {
-        this(10);
-        mazeSize = 10;
-    }
+    // public Game() {
+    //     this(10);
+    //     mazeSize = 10;
+    // }
 
     // EFFECTS: true if getPlayer.getPosition().isSame(getMaze().getExit())
     // false otherwise
@@ -193,10 +189,6 @@ public class Game {
 
     public int getMazeSize() {
         return mazeSize;
-    }
-
-    public void setMazeSize(int mazeSize) {
-        this.mazeSize = mazeSize;
     }
 
     // REQUIRES: items != null
