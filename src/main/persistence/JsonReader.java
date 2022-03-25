@@ -30,7 +30,7 @@ public class JsonReader {
     // REQUIRES: fileName != null
     // EFFECTS: return the content of the given file as a string
     // if anything goes wrong, IOException will be thrown
-    public String read(String fileName) throws IOException {
+    public static String read(String fileName) throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(fileName)));
         return content;
     }
@@ -38,7 +38,7 @@ public class JsonReader {
     // REQUIRES: dir != null && extension != null
     // EFFECTS: retrun a list of alphabetically sorted filenames ending in extension
     // if trimExtension is true, the extension will be trimed
-    public String[] fileList(String dir, String extension, boolean trimExtension) {
+    public static String[] fileList(String dir, String extension, boolean trimExtension) {
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File file) {
@@ -59,20 +59,20 @@ public class JsonReader {
 
     // REQUIRES: dir != null && extension != null && index > 0 && index < fileCount(dir, extension)
     // EFFECTS: retrun the full file name under a alphabetically sorted directory by index
-    public String getAlphaSortedFileUnderDirByIndex(String dir, String extension, int index) {
+    public static String getAlphaSortedFileUnderDirByIndex(String dir, String extension, int index) {
         return fileList(dir, extension, false)[index];
     }
 
     // REQUIRES: dir != null && extension != null
     // EFFECTS: return the number of files under a directory that ends wiht the given extension
-    public int fileCount(String dir, String extension) {
+    public static int fileCount(String dir, String extension) {
         return fileList(dir, extension, false).length;
     }
 
     // EFFECTS: parse the json into a Game object
     // if anything goes wrong, JSONException will be thrown
     // if file can not open for read, IOException will be thrown
-    public Game parseGame(String file) throws JSONException, IOException {
+    public static Game parseGame(String file) throws JSONException, IOException {
         JSONObject gameJson = new JSONObject(read(file));
         int width = gameJson.getInt("mazeSize");
         Game game = new Game(width);
@@ -87,7 +87,7 @@ public class JsonReader {
 
     // MODIFIES: maze
     // EFFECTS: parse the json and write it into maze
-    private void parseMaze(Maze maze, JSONObject json) {
+    private static void parseMaze(Maze maze, JSONObject json) {
         maze.setStart(parseCoordinate(json.getJSONObject("start")));
         maze.setExit(parseCoordinate(json.getJSONObject("exit")));
         Coordinate coord = new Coordinate(0, 0);
@@ -104,7 +104,7 @@ public class JsonReader {
 
     // MODIFIES: game
     // EFFECTS: parse the JSONArray items into game items
-    private void parseGameItems(Game game, JSONArray items) {
+    private static void parseGameItems(Game game, JSONArray items) {
         game.removeAllItemsOnMap();
         for (int i = 0; i < items.length(); i++) {
             JSONObject itemJson = items.getJSONObject(i);
@@ -116,7 +116,7 @@ public class JsonReader {
 
     // MODIFIES: player
     // EFFECTS: parse the json and write it into player
-    private void parsePlayer(Player player, JSONObject json) {
+    private static void parsePlayer(Player player, JSONObject json) {
         player.setDirection(parseDirection(json.getString("direction")));
         player.setSolved(json.getInt("solved"));
         player.setPosition(parseCoordinate(json.getJSONObject("position")));
@@ -125,7 +125,7 @@ public class JsonReader {
 
     // MODIFIES: inventory
     // EFFECTS: parse the json and write it into inventory
-    private void parseInventory(Inventory inventory, JSONObject json) {
+    private static void parseInventory(Inventory inventory, JSONObject json) {
         inventory.addCoins(json.getInt("coins"));
 
         JSONArray items = json.getJSONArray("items");
@@ -136,7 +136,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parse the json into an Item and return it
-    private Item parseItem(JSONObject json) {
+    private static Item parseItem(JSONObject json) {
         ItemType type = parseItemType(json.getString("type"));
 
         if (type == ItemType.COIN) {
@@ -155,18 +155,18 @@ public class JsonReader {
 
     // REQUIRES: type is contained in ItemType.values()
     // EFFECTS: parse the type into ItemType
-    private ItemType parseItemType(String type) {
+    private static ItemType parseItemType(String type) {
         return ItemType.valueOf(type);
     }
 
     // REQUIRES: dir is contained in Direction.values()
     // EFFECTS: parse the dir into Direction
-    private Direction parseDirection(String dir) {
+    private static Direction parseDirection(String dir) {
         return Direction.valueOf(dir);
     }
 
     // EFFECTS: parse the json into Coordiante
-    private Coordinate parseCoordinate(JSONObject json) {
+    private static Coordinate parseCoordinate(JSONObject json) {
         return new Coordinate(json.getInt("x"), json.getInt("y"));
     }
 

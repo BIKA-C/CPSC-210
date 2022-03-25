@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import model.Game;
@@ -13,6 +14,7 @@ import model.maze.Maze;
 import model.utility.Coordinate;
 import ui.MazeGame;
 
+// the panel that holds the maze
 public class MazePanel extends JPanel {
 
     private Game game;
@@ -26,11 +28,7 @@ public class MazePanel extends JPanel {
     private final int playerSize;
     private final int exitSize;
 
-    private static final Color WALL_COLOR = new Color(0, 146, 202).darker();
-    private static final Color EXIT_COLOR = new Color(228, 63, 90);
-    private static final Color ITEM_COLOR = new Color(23, 183, 148);
-    private static final Color PLAYER_COLOR = new Color(241, 208, 10);
-
+    // EFFECTS: constructs the mazePanel with the given game and size
     public MazePanel(Game game, Dimension size) {
         super();
         int width = size.height < size.width ? size.height : size.width;
@@ -42,8 +40,19 @@ public class MazePanel extends JPanel {
         itemSize = (int) (unit * ITEM_RATIO);
         playerSize = (int) (unit * PLAYER_RATIO);
         exitSize = (int) (unit * EXIT_RATIO);
+
+        //xxx
+        if (MazeGame.DEBUG) {
+            super.setBorder(BorderFactory.createLineBorder(Color.RED));
+        }
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    // MODIFIES: g
+    // EFFECTS: paint the components, not managed by this class
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -52,8 +61,10 @@ public class MazePanel extends JPanel {
         drawItems(g);
     }
 
+    // MODIFIES: g
+    // EFFECTS: draw all the items on map to g
     private void drawItems(Graphics g) {
-        g.setColor(ITEM_COLOR);
+        g.setColor(MazeGame.ITEM_COLOR);
         Coordinate pos;
         for (Map.Entry<Coordinate, Item> entry : game.getItemEntrySet()) {
             pos = toScreen(entry.getKey());
@@ -62,18 +73,20 @@ public class MazePanel extends JPanel {
         }
     }
 
+    // MODIFIES: g
+    // EFFECTS: draw the player to g
     private void drawPlayer(Graphics g) {
-        g.setColor(PLAYER_COLOR);
+        g.setColor(MazeGame.PLAYER_COLOR);
         Coordinate pos = toScreen(game.getPlayer().getPosition());
         int offset = offset(PLAYER_RATIO);
         g.fillOval(pos.getX() + offset, pos.getY() + offset, playerSize, playerSize);
     }
 
-    // MODIFIES: this
-    // EFFECTS: draw the maze
+    // MODIFIES: g
+    // EFFECTS: draw the maze to g
     private void drawMaze(Graphics g) {
         Maze maze = game.getMaze();
-        g.setColor(WALL_COLOR);
+        g.setColor(MazeGame.WALL_COLOR);
         drawMazeBorder(g);
         Coordinate pos;
         Coordinate screenPos;
@@ -82,11 +95,11 @@ public class MazePanel extends JPanel {
                 pos = new Coordinate(j, i);
                 screenPos = toScreen(pos);
                 if (i == maze.getExit().getY() && j == maze.getExit().getX()) {
-                    g.setColor(EXIT_COLOR);
+                    g.setColor(MazeGame.EXIT_COLOR);
                     int offset = offset(EXIT_RATIO);
                     g.fillRoundRect(screenPos.getX() + offset, screenPos.getY() + offset, exitSize, exitSize,
                             (int) (unit * 0.4), (int) (unit * 0.4));
-                    g.setColor(WALL_COLOR);
+                    g.setColor(MazeGame.WALL_COLOR);
                 } else if (maze.isWall(pos)) {
                     g.fillRect(screenPos.getX(), screenPos.getY(), unit, unit);
                 }
@@ -94,8 +107,8 @@ public class MazePanel extends JPanel {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: draw the maze boarders
+    // MODIFIES: g
+    // EFFECTS: draw the maze boarders to g
     private void drawMazeBorder(Graphics g) {
         Coordinate up = new Coordinate(0, 0);
         Coordinate bottom = new Coordinate(0, game.getMazeSize() - 1);
@@ -116,6 +129,7 @@ public class MazePanel extends JPanel {
         }
     }
 
+    // EFFECTS: converts the pos to a new pos that is relative to the screen(ready to render)
     private Coordinate toScreen(Coordinate pos) {
         Coordinate screenPos = new Coordinate(pos.getX(), pos.getY());
         screenPos.increaseXY(1, 1);
@@ -123,6 +137,9 @@ public class MazePanel extends JPanel {
         return screenPos;
     }
 
+    // EFFECTS: computes the offset one element needs to take to be centered at the given unit square
+    // if the element's widht/height/radius/etc is not equal to the unit. i.e. it has be scaled by
+    // the ratio
     private int offset(double ratio) {
         return Math.toIntExact(Math.round(unit * (1 - ratio))) / 2;
     }

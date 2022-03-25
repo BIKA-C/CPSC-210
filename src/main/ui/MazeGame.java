@@ -10,18 +10,28 @@ import javax.swing.JFrame;
 import model.Game;
 import ui.panel.GamePanel;
 
+// the gui maze game
 public class MazeGame extends JFrame {
 
-    private Game game;
     private GamePanel gamePanel;
 
     public static final Color BACKGROUND_COLOR = new Color(4, 28, 50);
+    public static final Color WALL_COLOR = new Color(0, 146, 202).darker();
+    public static final Color EXIT_COLOR = new Color(228, 63, 90);
+    public static final Color ITEM_COLOR = new Color(23, 183, 148);
+    public static final Color PLAYER_COLOR = new Color(241, 208, 10);
 
+    public static final String DATA_STORAGE = "./data/";
+    public static final String FILE_EXTENSION = ".json";
+
+    public static final boolean DEBUG = false;
+
+    // prepare the game and the gui
     public MazeGame() {
         super("Maze Game");
-        game = new Game(40);
+        Game game = new Game(40);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension window = determWindowSize();
+        Dimension window = determWindowSize(game);
 
         super.setLayout(new BorderLayout());
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -31,16 +41,22 @@ public class MazeGame extends JFrame {
         gamePanel = new GamePanel(game, window);
 
         super.add(gamePanel, BorderLayout.CENTER);
-        super.addKeyListener(new KeyHandler(game, gamePanel));
+        // super.addKeyListener(keyHandler);
 
         super.pack();
         super.setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
+    }
+
+    //EFFECTS: start the game
+    public void start() {
         super.setVisible(true);
     }
 
-    private Dimension determWindowSize() {
+    //EFFECTS: determine the proper window size based on the game(maze) size
+    private Dimension determWindowSize(Game game) {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension window = new Dimension(screen.width * 6 / 7, screen.height * 6 / 7);
+        Dimension window = new Dimension((screen.width * 8 / 9), screen.height * 6 / 7);
+        // Dimension window = new Dimension(screen.width, screen.height * 6 / 7);
 
         int left = window.height % game.getMazeSize();
         if (left >= game.getMazeSize() / 2) {

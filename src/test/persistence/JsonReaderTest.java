@@ -11,7 +11,6 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Game;
@@ -24,17 +23,10 @@ import ui.ConsoleApp;
 
 public class JsonReaderTest {
 
-    private JsonReader reader;
-
-    @BeforeEach
-    public void setup() {
-        reader = new JsonReader();
-    }
-
     @Test
     public void readNonExistTest() {
         try {
-            reader.parseGame("abc.json");
+            JsonReader.parseGame("abc.json");
             fail("Expecting IOException");
         } catch (JSONException e) {
             fail("Expecting IOException");
@@ -46,7 +38,7 @@ public class JsonReaderTest {
     @Test
     public void readCorruptedTest() {
         try {
-            reader.parseGame(ConsoleApp.DATA_STORAGE + "corrupted.json");
+            JsonReader.parseGame(ConsoleApp.DATA_STORAGE + "corrupted.json");
             fail("Expecting JSONException");
         } catch (JSONException e) {
             //expected
@@ -61,7 +53,7 @@ public class JsonReaderTest {
         String file = ConsoleApp.DATA_STORAGE + "test1.json";
         JSONObject json = new JSONObject(readFile(file));
         try {
-            game = reader.parseGame(file);
+            game = JsonReader.parseGame(file);
             assertEquals(json.getString("gameMessage"), game.getGameMessage());
             assertEquals(json.getInt("mazeSize"), game.getMazeSize());
             assertMazeRead(json.getJSONObject("maze"), game.getMaze());
@@ -76,8 +68,8 @@ public class JsonReaderTest {
 
     @Test
     public void fileListJsonNoTrimTest() {
-        String[] list = reader.fileList(ConsoleApp.DATA_STORAGE, ".json", false);
-        assertEquals(reader.fileCount(ConsoleApp.DATA_STORAGE, ".json"), list.length);
+        String[] list = JsonReader.fileList(ConsoleApp.DATA_STORAGE, ".json", false);
+        assertEquals(JsonReader.fileCount(ConsoleApp.DATA_STORAGE, ".json"), list.length);
 
         for (int i = 0; i < list.length; i++) {
             assertTrue(list[i].endsWith(".json"));
@@ -86,8 +78,8 @@ public class JsonReaderTest {
 
     @Test
     public void fileListJsonTrimTest() {
-        String[] list = reader.fileList(ConsoleApp.DATA_STORAGE, ".json", true);
-        assertEquals(reader.fileCount(ConsoleApp.DATA_STORAGE, ".json"), list.length);
+        String[] list = JsonReader.fileList(ConsoleApp.DATA_STORAGE, ".json", true);
+        assertEquals(JsonReader.fileCount(ConsoleApp.DATA_STORAGE, ".json"), list.length);
 
         for (int i = 0; i < list.length; i++) {
             assertFalse(list[i].endsWith(".json"));
@@ -96,21 +88,21 @@ public class JsonReaderTest {
 
     @Test
     public void fileListEmpty() {
-        String[] list = reader.fileList("./", ".json", false);
+        String[] list = JsonReader.fileList("./", ".json", false);
         assertEquals(0, list.length);
     }
 
     @Test
     public void getFileTest() {
-        String[] list = reader.fileList(ConsoleApp.DATA_STORAGE, ".json", false);
-        assertEquals(list[0], reader.getAlphaSortedFileUnderDirByIndex(ConsoleApp.DATA_STORAGE, ".json", 0));
+        String[] list = JsonReader.fileList(ConsoleApp.DATA_STORAGE, ".json", false);
+        assertEquals(list[0], JsonReader.getAlphaSortedFileUnderDirByIndex(ConsoleApp.DATA_STORAGE, ".json", 0));
     }
 
     // EFFECTS: return the file content as a string
     // fail the test if failed reading
     private String readFile(String file) {
         try {
-            return reader.read(file);
+            return JsonReader.read(file);
         } catch (IOException e) {
             fail("Cannot read the file");
             return null;

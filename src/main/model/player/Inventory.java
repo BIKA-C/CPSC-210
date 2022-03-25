@@ -15,6 +15,8 @@ public class Inventory {
     private ArrayList<Item> inventory;
     private int coins;
 
+    public static final int NUM_RESTRICT = 9;
+
     // EFFECTS: constructs a inventory bag with zero items in
     // and zero coins
     public Inventory() {

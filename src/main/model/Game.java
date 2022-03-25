@@ -9,7 +9,6 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javafx.scene.input.DragEvent;
 import model.exceptions.CollisionException;
 import model.exceptions.NotRecognizedKeyException;
 import model.exceptions.PlayerMovementException;
@@ -105,30 +104,30 @@ public class Game {
     // if the player arrives the exit, goes to the next level
     // if the player is at an item position, stores the item into the
     // player inventory bag
-    public void movePlayer(char key) throws PlayerMovementException {
-        Direction direction;
-        if (key == 'w') {
-            direction = Direction.UP;
-        } else if (key == 'a') {
-            direction = Direction.LEFT;
-        } else if (key == 's') {
-            direction = Direction.DOWN;
-        } else if (key == 'd') {
-            direction = Direction.RIGHT;
-        } else {
-            throw new NotRecognizedKeyException();
-        }
+    // public void movePlayer(char key) throws PlayerMovementException {
+    //     Direction direction;
+    //     if (key == 'w') {
+    //         direction = Direction.UP;
+    //     } else if (key == 'a') {
+    //         direction = Direction.LEFT;
+    //     } else if (key == 's') {
+    //         direction = Direction.DOWN;
+    //     } else if (key == 'd') {
+    //         direction = Direction.RIGHT;
+    //     } else {
+    //         throw new NotRecognizedKeyException();
+    //     }
 
-        Coordinate save = new Coordinate(player.getPosition());
-        save.go(direction, 1);
-        if (!maze.isInRange(save) || maze.isWall(save)) {
-            throw new CollisionException();
-        }
+    //     Coordinate save = new Coordinate(player.getPosition());
+    //     save.go(direction, 1);
+    //     if (!maze.isInRange(save) || maze.isWall(save)) {
+    //         throw new CollisionException();
+    //     }
 
-        player.move(direction);
-        checkExit();
-        checkItem();
-    }
+    //     player.move(direction);
+    //     checkExit();
+    //     checkItem();
+    // }
 
     // EFFECTS: true if the given pos is an Item position
     public boolean isItem(Coordinate pos) {
@@ -244,20 +243,20 @@ public class Game {
         generateItems();
     }
 
-    private void checkExit() {
-        if (!player.getPosition().isSame(maze.getExit())) {
-            return;
-        }
-        nextLevel(false, true);
-    }
+    // private void checkExit() {
+    //     if (!player.getPosition().isSame(maze.getExit())) {
+    //         return;
+    //     }
+    //     nextLevel(false, true);
+    // }
 
-    private void checkItem() {
-        if (!itemMap.containsKey(player.getPosition())) {
-            return;
-        }
-        player.getInventory().addItem(itemMap.get(player.getPosition()));
-        itemMap.remove(player.getPosition());
-    }
+    // private void checkItem() {
+    //     if (!itemMap.containsKey(player.getPosition())) {
+    //         return;
+    //     }
+    //     player.getInventory().addItem(itemMap.get(player.getPosition()));
+    //     itemMap.remove(player.getPosition());
+    // }
 
     // EFFECTS: convert the game to a JSON object
     public JSONObject toJson() {

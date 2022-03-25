@@ -19,19 +19,17 @@ import model.utility.Coordinate;
 import ui.ConsoleApp;
 
 public class JsonWriterTest extends TestHelpers {
-    private JsonWriter writer;
     Game game;
 
     @BeforeEach
     public void setup() {
-        writer = new JsonWriter();
         game = new Game(ConsoleApp.WIDTH);
     }
 
     @Test
     public void writeNonExistTest() {
         try {
-            writer.saveToFile("abc/abc.json", game);
+            JsonWriter.saveToFile("abc/abc.json", game);
             fail("Expecting FileNotFoundException");
         } catch (FileNotFoundException e) {
             //expected
@@ -41,14 +39,13 @@ public class JsonWriterTest extends TestHelpers {
     @Test
     public void saveTest() {
         try {
-            writer.saveToFile(ConsoleApp.DATA_STORAGE + "saveTest.json", game);
+            JsonWriter.saveToFile(ConsoleApp.DATA_STORAGE + "saveTest.json", game);
         } catch (FileNotFoundException e) {
             fail("Not expecting FileNotFoundException");
         }
 
-        JsonReader reader = new JsonReader();
         try {
-            Game saved = reader.parseGame(ConsoleApp.DATA_STORAGE + "saveTest.json");
+            Game saved = JsonReader.parseGame(ConsoleApp.DATA_STORAGE + "saveTest.json");
             assertGameWrite(game, saved);
         } catch (JSONException e) {
             fail("File failed to write");
