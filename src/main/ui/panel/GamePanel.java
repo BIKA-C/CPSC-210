@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import model.Game;
 import ui.KeyHandler;
+import ui.MazeGame;
 
 // gamePanel holds both mazePanel and infoPanel.
 // it is the base panel for the game
@@ -31,6 +32,11 @@ public class GamePanel extends JPanel {
         super.setFocusable(true);
         super.setRequestFocusEnabled(true);
         super.requestFocusInWindow();
+
+        //xxx
+        if (MazeGame.DEBUG) {
+            super.setBorder(MazeGame.DEBUG_BORDER);
+        }
     }
 
     // MODIFIES: this

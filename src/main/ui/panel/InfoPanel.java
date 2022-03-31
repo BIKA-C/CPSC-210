@@ -239,7 +239,7 @@ public class InfoPanel extends JPanel {
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         //xxx
         if (MazeGame.DEBUG) {
-            panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+            panel.setBorder(MazeGame.DEBUG_BORDER);
         }
         return panel;
     }

@@ -9,6 +9,9 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import model.exception.BagIsFullException;
+import model.exception.CollisionException;
+import model.exception.PlayerMovementException;
 import model.item.Breaker;
 import model.item.Coin;
 import model.item.Hint;
@@ -16,8 +19,10 @@ import model.item.Item;
 import model.item.ItemType;
 import model.item.Skip;
 import model.maze.Maze;
+import model.player.Inventory;
 import model.player.Player;
 import model.utility.Coordinate;
+import model.utility.Direction;
 
 // Game represents this maze game
 // it has a maze and player and all the game items on the maze
@@ -95,6 +100,108 @@ public class Game {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS:
+    // if there is an item at the player's position,
+    // the flowing will happen:
+    // 1.
+    // if item.isAutoApply() then the item's effect will immedately be applied.
+    //
+    // 2.
+    // if !item.isAutoApply() the item will be added to the inventory bag iff
+    // plaeryInventory.getInventorySize < TERMINAL_GUI_NUM_RESTRICT
+    // and then the item's report will be updated through game.getGameMessage().
+    // if the item is not added to the player's inventory, "Your bad is full..."
+    // will be reported through game.getGameMessage()
+    //
+    // 3.
+    // this item will be removed from map/maze
+    //
+    // if there is no item at the player's position, the function
+    // do nothing
+    private void handleItem() {
+        Coordinate playerPos = getPlayer().getPosition();
+        if (!isItem(playerPos)) {
+            return;
+        }
+        Item item = getItem(playerPos);
+        if (item.isAutoApply()) {
+            item.apply(this);
+            EventLog.getInstance().logEvent(new Event("Player picked up and auto applied " + item));
+            removeItem(playerPos);
+            return;
+        }
+
+        try {
+            addItemToPlayerInventory(item);
+            EventLog.getInstance().logEvent(new Event("Player picked up " + item));
+            setGameMessage(item.report());
+            removeItem(playerPos);
+        } catch (BagIsFullException e) {
+            setGameMessage("Your bag is full...");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: try to add the item to the player inventory
+    // if playerInventory.getInventorySize() >= Inventory.NUM_RESTRICT
+    // then throws BagIsFullException and the item will not be added
+    private void addItemToPlayerInventory(Item item) throws BagIsFullException {
+        Inventory playerInventory = getPlayer().getInventory();
+        if (playerInventory.getInventorySize() >= Inventory.NUM_RESTRICT) {
+            throw new BagIsFullException();
+        }
+        playerInventory.addItem(item);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: apply the item in the player's inventory bag by
+    // the index. Then the item will be removed
+    // from the player's inventory
+    // if such index does not exist, the function will do nothing
+    // i.e. user does not have this indexed item in the bag
+    public void applyItem(int index) {
+        Inventory playerInventory = getPlayer().getInventory();
+        Item item = playerInventory.getItem(index);
+        try {
+            item.apply(this);
+            EventLog.getInstance().logEvent(new Event("Player used " + item));
+            playerInventory.removeItem(index);
+        } catch (NullPointerException e) {
+            return;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: move the player along the direction, if movePlayer(direction) throws
+    // PlayerMovementException, player will not be moved.
+    // if player is moved, it will check if the player can pick any game item
+    public void move(Direction direction) {
+        try {
+            movePlayer(direction);
+            handleItem();
+        } catch (PlayerMovementException e1) {
+            return;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: try move the player 1 unit along the direction
+    // if the movement will cause the player to be out of the
+    // boundary of the game or the destination is a wall
+    // the function will only update the player's direction to the
+    // given direction and the movement will not occur and the function
+    // throws PlayerMovementException but panel.getInfoPanel() will be updated
+    private void movePlayer(Direction direction) throws PlayerMovementException {
+        Coordinate save = new Coordinate(getPlayer().getPosition());
+        save.go(direction, 1);
+        if (!getMaze().isInRange(save) || getMaze().isWall(save)) {
+            getPlayer().setDirection(direction);
+            throw new CollisionException();
+        }
+
+        getPlayer().move(direction);
+    }
     // MODIFIES: this
     // EFFECTS: moves the player by the key
     // if the player arrives the exit, goes to the next level
@@ -209,7 +316,7 @@ public class Game {
             if (type == ItemType.COIN) {
                 itemMap.put(road, new Coin(random.nextInt(20) + 1));
             } else if (type == ItemType.BREAKER) {
-                int d = random.nextInt(5) + 1;
+                int d = random.nextInt(10) + 1;
                 itemMap.put(road, new Breaker(d));
             } else if (type == ItemType.SKIP) {
                 itemMap.put(road, new Skip());

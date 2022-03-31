@@ -62,4 +62,9 @@ public class Breaker extends Item {
         breaker.put("range", range);
         return breaker;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " range of " + range;
+    }
 }

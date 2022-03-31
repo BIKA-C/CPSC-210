@@ -46,19 +46,19 @@ public class InventoryTest {
         assertSame(breaker, inventory.getItem(3));
     }
 
-    // @Test
-    // public void addItemOverLimitTest() {
-    //     Item i = new Hint();
+    @Test
+    public void addItemOverLimitTest() {
+        Item i = new Hint();
 
-    //     for (int j = 0; j < 9; j++) {
-    //         inventory.addItem(i);
-    //         assertEquals(j + 1, inventory.getInventorySize());
-    //     }
+        for (int j = 0; j < 9; j++) {
+            inventory.addItem(i);
+            assertEquals(j + 1, inventory.getInventorySize());
+        }
 
-    //     assertEquals(9, inventory.getInventorySize());
-    //     inventory.addItem(i);
-    //     assertEquals(9, inventory.getInventorySize());
-    // }
+        assertEquals(9, inventory.getInventorySize());
+        inventory.addItem(i);
+        assertEquals(9, inventory.getInventorySize());
+    }
 
     @Test
     public void getItemTest() {

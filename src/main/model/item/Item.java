@@ -54,6 +54,11 @@ public abstract class Item implements JSONString {
         return toJson().toString();
     }
 
+    @Override
+    public String toString() {
+        return type.toString();
+    }
+
     // // MODIFIES: this
     // // EFFECTS: make the item inactive, so it is no longer usable.
     // // If the item is already inactive, the function will do nothing

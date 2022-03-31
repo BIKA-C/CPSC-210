@@ -4,9 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
 
+import model.Event;
+import model.EventLog;
 import model.Game;
 import ui.panel.GamePanel;
 
@@ -25,6 +31,7 @@ public class MazeGame extends JFrame {
     public static final String FILE_EXTENSION = ".json";
 
     public static final boolean DEBUG = false;
+    public static final Border DEBUG_BORDER = BorderFactory.createLineBorder(Color.RED);
 
     // prepare the game and the gui
     public MazeGame() {
@@ -41,8 +48,15 @@ public class MazeGame extends JFrame {
         gamePanel = new GamePanel(game, window);
 
         super.add(gamePanel, BorderLayout.CENTER);
-        // super.addKeyListener(keyHandler);
-
+        super.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event);
+                }
+                super.windowClosing(e);
+            }
+        });
         super.pack();
         super.setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
     }

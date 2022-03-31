@@ -37,4 +37,9 @@ public class Coin extends Item {
         coin.put("value", value);
         return coin;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " value of " + value;
+    }
 }

@@ -27,7 +27,11 @@ public class Inventory {
     // REQUIRES: i != null
     // MODIFIES: this
     // EFFECTS: add i into the inventory
+    // if getInvenotySize() >= NUM_RESTRICT, this metho do nothing
     public void addItem(Item i) {
+        if (inventory.size() >= NUM_RESTRICT) {
+            return;
+        }
         inventory.add(i);
     }
 

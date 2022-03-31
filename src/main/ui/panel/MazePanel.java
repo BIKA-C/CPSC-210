@@ -1,11 +1,9 @@
 package ui.panel;
 
 import java.awt.Graphics;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import model.Game;
@@ -43,7 +41,7 @@ public class MazePanel extends JPanel {
 
         //xxx
         if (MazeGame.DEBUG) {
-            super.setBorder(BorderFactory.createLineBorder(Color.RED));
+            super.setBorder(MazeGame.DEBUG_BORDER);
         }
     }
 
