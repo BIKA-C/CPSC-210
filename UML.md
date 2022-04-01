@@ -43,4 +43,5 @@ classDiagram
 
 
 	MazeGame "1" o--> "1" GamePanel
+    class Main
 ```
