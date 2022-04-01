@@ -90,4 +90,5 @@ Player used HINT
 
 - The problem: there are too many association to the Game class
 - Where is it: MazePanel, InfoPanel, KeyHandler
-- How to fix it: Instead of letting those all the 3 panels to have association to the Game directly, let GamePanel, which holds all those 3 panels to have one single association to the Game. GamePanel then provide getter to let MazePanel, InfoPanel, and KeyHandler to use it
+- How to fix it: Instead of letting those all the 3 panels to have association to the Game directly, let GamePanel, which holds all those 3 panels to have one single association to the Game. GamePanel then provide getter to let MazePanel, InfoPanel, and KeyHandler to use it. Or:
+I can implement observer pattern, where the Game is the observerable and the GamePanel (or the MazePanel, InfoPanel and the KeyHandler) to be the observers
