@@ -2,12 +2,10 @@ package ui.panel;
 
 import java.awt.Graphics;
 import java.awt.Dimension;
-import java.util.Map;
 
 import javax.swing.JPanel;
 
 import model.Game;
-import model.item.Item;
 import model.maze.Maze;
 import model.utility.Coordinate;
 import ui.MazeGame;
@@ -63,9 +61,8 @@ public class MazePanel extends JPanel {
     // EFFECTS: draw all the items on map to g
     private void drawItems(Graphics g) {
         g.setColor(MazeGame.ITEM_COLOR);
-        Coordinate pos;
-        for (Map.Entry<Coordinate, Item> entry : game.getItemEntrySet()) {
-            pos = toScreen(entry.getKey());
+        for (Coordinate pos : game) {
+            pos = toScreen(pos);
             int offset = offset(ITEM_RATIO);
             g.fillOval(pos.getX() + offset, pos.getY() + offset, itemSize, itemSize);
         }

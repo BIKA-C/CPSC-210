@@ -76,7 +76,7 @@ public class GameTest extends TestHelpers {
     @Test
     public void getItemTest() {
         HashMap<Coordinate, Item> copyList = copyItemsMap(game);
-        Coordinate randomKey = game.getItemEntrySet().iterator().next().getKey();
+        Coordinate randomKey = game.iterator().next();
 
         Item returned = game.getItem(randomKey);
         assertEquals(copyList.get(randomKey).getDisplayName(), returned.getDisplayName());
@@ -87,7 +87,7 @@ public class GameTest extends TestHelpers {
     @Test
     public void removeItemTest() {
         HashMap<Coordinate, Item> copyList = copyItemsMap(game);
-        Coordinate randomKey = game.getItemEntrySet().iterator().next().getKey();
+        Coordinate randomKey = game.iterator().next();
 
         game.removeItem(randomKey);
         assertEquals(copyList.size() - 1, game.getNumOfItems());

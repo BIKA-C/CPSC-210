@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import model.item.Item;
 import model.maze.Maze;
@@ -127,9 +125,8 @@ public class TestHelpers {
     public HashMap<Coordinate, Item> copyItemsMap(Game game) {
         HashMap<Coordinate, Item> copy = new HashMap<>();
         // Iterator<Coordinate> keys = game.getItemEntrySet();
-        for (Map.Entry<Coordinate, Item> entry : game.getItemEntrySet()) {
-            Coordinate coord = entry.getKey();
-            Coordinate save = new Coordinate(coord.getX(), coord.getY());
+        for (Coordinate pos : game) {
+            Coordinate save = new Coordinate(pos.getX(), pos.getY());
             copy.put(save, game.getItem(save));
 
         }
@@ -150,10 +147,9 @@ public class TestHelpers {
     // EFFECTS: assert all game items not changed (items and their positins)
     public void assertGameItemsNotChanged() {
         assertEquals(saveNumOfItem, game.getNumOfItems());
-        for (Entry<Coordinate, Item> entry : game.getItemEntrySet()) {
-            Coordinate coord = entry.getKey();
-            assertEquals(saveItemsMap.get(coord).getDisplayName(), game.getItem(coord).getDisplayName());
-            assertTrue(saveItemsMap.containsKey(coord));
+        for (Coordinate pos : game) {
+            assertEquals(saveItemsMap.get(pos).getDisplayName(), game.getItem(pos).getDisplayName());
+            assertTrue(saveItemsMap.containsKey(pos));
 
         }
     }

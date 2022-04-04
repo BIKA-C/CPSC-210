@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -170,11 +169,10 @@ public class JsonReaderTest {
     private void assertGameItemRead(JSONArray jsonItems, Game game) {
         assertEquals(jsonItems.length(), game.getNumOfItems());
         int i = 0;
-        for (Map.Entry<Coordinate, Item> entry : game.getItemEntrySet()) {
-            Coordinate key = entry.getKey();
+        for (Coordinate pos : game) {
             JSONObject jsonItemPack = jsonItems.getJSONObject(i);
-            assertCoordinate(jsonItemPack.getJSONObject("position"), key);
-            asserItem(jsonItemPack.getJSONObject("item"), game.getItem(key));
+            assertCoordinate(jsonItemPack.getJSONObject("position"), pos);
+            asserItem(jsonItemPack.getJSONObject("item"), game.getItem(pos));
             i++;
         }
     }

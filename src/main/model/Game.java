@@ -2,9 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +27,7 @@ import model.utility.Direction;
 // it keeps tracks of how many maze player has solved.
 // it has a list of items that are available on the map
 // the list will be randomly re-generated for each maze
-public class Game {
+public class Game implements Iterable<Coordinate> {
 
     private Maze maze;
     private Player player;
@@ -242,10 +240,10 @@ public class Game {
         return itemMap.size();
     }
 
-    // EFFECTS: return the the entry set of the items
-    public Set<Map.Entry<Coordinate, Item>> getItemEntrySet() {
-        return itemMap.entrySet();
-    }
+    // // EFFECTS: return the the entry set of the items
+    // public Set<Map.Entry<Coordinate, Item>> getItemEntrySet() {
+    //     return itemMap.entrySet();
+    // }
 
     // EFFECTS: return the item by the given pos
     // if the pos if not in the list, null will be returned
@@ -384,6 +382,11 @@ public class Game {
         }
 
         return items;
+    }
+
+    @Override
+    public Iterator<Coordinate> iterator() {
+        return itemMap.keySet().iterator();
     }
 
 }

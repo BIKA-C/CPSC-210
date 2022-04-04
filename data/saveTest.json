@@ -3,32 +3,19 @@
     "mazeSize": 38,
     "maze": {
         "exit": {
-            "x": 31,
-            "y": 18
+            "x": 32,
+            "y": 24
         },
         "start": {
-            "x": 7,
-            "y": 17
+            "x": 10,
+            "y": 0
         },
         "maze": [
             [
                 true,
-                false,
-                true,
-                false,
-                false,
-                false,
                 true,
                 true,
-                false,
                 true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
                 true,
                 true,
                 true,
@@ -38,30 +25,12 @@
                 true,
                 true,
                 false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true
-            ],
-            [
                 true,
                 true,
                 true,
                 true,
                 false,
                 true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
                 false,
                 true,
                 true,
@@ -72,152 +41,22 @@
                 true,
                 false,
                 true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false
-            ],
-            [
-                false,
-                true,
-                false,
                 true,
                 true,
                 true,
-                false,
                 true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
                 true,
                 true,
                 false
             ],
             [
-                true,
                 false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
                 true,
                 false,
                 true,
                 false,
                 false,
                 true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true
-            ],
-            [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
-            ],
-            [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
                 false,
                 false,
                 true,
@@ -231,8 +70,17 @@
                 true,
                 true,
                 true,
+                true,
                 false,
                 false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
                 false,
                 true,
                 false,
@@ -240,69 +88,57 @@
                 true
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
                 false,
                 false,
                 true,
                 true,
                 false,
                 true,
-                false,
-                false,
-                false,
-                false,
                 true,
+                false,
                 true,
                 true,
                 true,
                 false,
                 true,
+                true,
+                true,
                 false,
                 false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
                 false,
                 false,
                 true,
                 true,
-                true,
+                false,
                 false,
                 true
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
                 false,
                 true,
                 false,
                 true,
                 false,
                 true,
-                true,
-                true,
-                false,
-                true,
-                true,
                 false,
                 true,
                 false,
+                false,
+                false,
+                false,
+                true,
                 false,
                 true,
                 true,
@@ -311,42 +147,16 @@
                 true,
                 false,
                 true,
-                false,
-                true,
-                true
-            ],
-            [
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
                 true,
                 true,
                 true,
                 false,
-                true,
                 false,
                 false,
-                true,
-                true,
                 false,
                 false,
                 true,
                 false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
                 false,
                 true,
                 true,
@@ -355,6 +165,65 @@
             ],
             [
                 true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true
+            ],
+            [
+                false,
+                false,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
                 false,
                 true,
                 true,
@@ -363,30 +232,9 @@
                 true,
                 true,
                 false,
-                true,
                 false,
                 true,
                 false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
                 false,
                 false,
                 true
@@ -396,23 +244,13 @@
                 true,
                 false,
                 true,
-                false,
-                true,
-                false,
-                false,
                 true,
                 false,
                 true,
-                false,
-                false,
                 true,
                 false,
                 true,
-                false,
                 true,
-                false,
-                true,
-                false,
                 true,
                 false,
                 true,
@@ -420,35 +258,37 @@
                 false,
                 true,
                 false,
+                false,
+                true,
+                false,
+                true,
                 true,
                 true,
                 false,
                 true,
                 false,
+                false,
                 true,
+                true,
+                true,
+                true,
+                true,
+                false,
                 true,
                 true
             ],
             [
-                true,
                 false,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
                 true,
                 true,
                 true,
                 false,
                 true,
                 true,
-                true,
-                true,
-                true,
+                false,
                 false,
                 true,
+                false,
                 true,
                 true,
                 true,
@@ -462,113 +302,23 @@
                 true,
                 false,
                 true,
-                true,
-                false,
-                true,
-                false
-            ],
-            [
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
                 false,
                 true,
                 true,
                 false,
                 false,
-                false,
-                false,
-                true,
-                false,
                 true,
                 false,
                 false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true
-            ],
-            [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
                 true,
                 true,
                 true,
                 false
             ],
             [
-                true,
-                true,
                 false,
                 true,
                 false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
                 false,
                 true,
                 false,
@@ -577,16 +327,13 @@
                 true,
                 true,
                 false,
-                true,
-                false,
-                true
-            ],
-            [
-                true,
-                false,
-                false,
                 false,
                 true,
+                false,
+                true,
+                true,
+                true,
+                false,
                 false,
                 false,
                 true,
@@ -598,25 +345,12 @@
                 false,
                 true,
                 false,
-                false,
                 true,
-                false,
-                false,
-                false,
                 false,
                 true,
                 false,
                 true,
-                true,
                 false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
                 true
             ],
             [
@@ -627,8 +361,15 @@
                 true,
                 true,
                 true,
+                false,
+                false,
                 true,
                 true,
+                true,
+                false,
+                true,
+                true,
+                false,
                 true,
                 true,
                 true,
@@ -643,16 +384,85 @@
                 true,
                 true,
                 false,
-                false,
-                true,
-                false,
                 true,
                 true,
                 false,
                 true,
                 true,
+                true
+            ],
+            [
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
                 true,
                 true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true
+            ],
+            [
+                false,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true,
+                false,
                 true,
                 true,
                 false
@@ -666,19 +476,11 @@
                 true,
                 false,
                 true,
-                false,
-                false,
-                false,
-                false,
+                true,
                 true,
                 false,
                 true,
-                false,
                 true,
-                false,
-                true,
-                false,
-                false,
                 true,
                 true,
                 true,
@@ -686,29 +488,49 @@
                 true,
                 true,
                 false,
-                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
                 true,
                 false,
                 true,
-                false,
+                true,
                 false,
                 true,
+                true,
+                false,
                 true
             ],
             [
                 true,
                 true,
                 false,
-                false,
-                true,
-                false,
-                false,
                 true,
                 true,
                 true,
                 true,
                 false,
                 true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
                 true,
                 false,
                 true,
@@ -717,13 +539,39 @@
                 false,
                 true,
                 false,
+                true,
+                true,
+                true
+            ],
+            [
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
                 false,
                 true,
                 false,
                 false,
                 true,
                 false,
-                true,
                 true,
                 false,
                 true,
@@ -734,23 +582,6 @@
                 true
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
                 true,
                 true,
                 true,
@@ -762,34 +593,13 @@
                 false,
                 true,
                 true,
-                false,
                 true,
                 false,
                 false,
                 true,
-                false,
-                true,
-                true
-            ],
-            [
-                false,
-                false,
-                false,
                 true,
                 false,
                 false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
                 false,
                 true,
                 false,
@@ -800,74 +610,18 @@
                 false,
                 true,
                 false,
-                true,
+                false,
                 true,
                 true,
                 false,
-                true,
                 false,
+                true,
                 true,
                 false
             ],
             [
                 false,
                 true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
-            ],
-            [
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
                 false,
                 true,
                 false,
@@ -877,60 +631,38 @@
                 false,
                 true,
                 false,
+                false,
                 true,
                 true,
                 true,
                 false,
                 true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                false,
+                true,
+                true,
+                false,
                 true,
                 true
             ],
             [
-                true,
                 false,
-                true,
-                true,
+                false,
                 false,
                 false,
                 true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false
-            ],
-            [
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
                 true,
                 true,
                 true,
@@ -938,41 +670,7 @@
                 false,
                 false,
                 true,
-                false,
-                false,
                 true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true
-            ],
-            [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
                 false,
                 true,
                 true,
@@ -986,9 +684,6 @@
                 true,
                 false,
                 true,
-                true,
-                true,
-                false,
                 false,
                 false,
                 true,
@@ -997,43 +692,6 @@
                 true,
                 false,
                 true,
-                false
-            ],
-            [
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
                 true,
                 false
             ],
@@ -1044,135 +702,40 @@
                 true,
                 false,
                 false,
-                false,
-                false,
-                true,
                 true,
                 false,
                 true,
-                false,
-                true,
-                true,
-                false,
                 true,
                 true,
                 false,
                 true,
                 false,
                 true,
-                true,
-                false,
-                false,
-                false,
-                false,
                 false,
                 false,
                 true,
                 false,
                 true,
+                true,
+                true,
+                false,
                 false,
                 true,
                 true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
                 true
             ],
             [
                 true,
                 true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
-            ],
-            [
-                false,
-                true,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true
-            ],
-            [
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                false,
                 true,
                 true,
                 true,
@@ -1184,30 +747,12 @@
                 false,
                 true,
                 true,
-                true,
-                false,
-                true,
-                false
-            ],
-            [
-                false,
-                false,
-                true,
-                false,
-                true,
                 false,
                 true,
                 true,
                 true,
                 true,
                 true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
                 false,
                 true,
                 false,
@@ -1223,7 +768,6 @@
                 false,
                 true,
                 false,
-                true,
                 true,
                 true
             ],
@@ -1231,7 +775,13 @@
                 false,
                 true,
                 false,
+                false,
                 true,
+                false,
+                true,
+                false,
+                true,
+                false,
                 true,
                 true,
                 false,
@@ -1240,16 +790,6 @@
                 false,
                 true,
                 false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
                 false,
                 true,
                 false,
@@ -1259,15 +799,102 @@
                 false,
                 true,
                 false,
-                false,
+                true,
                 true,
                 false,
+                true,
+                true,
+                true,
+                true,
                 true,
                 false
             ],
             [
                 true,
                 true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true
+            ],
+            [
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true
+            ],
+            [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
                 true,
                 false,
                 false,
@@ -1281,21 +908,14 @@
                 true,
                 true,
                 false,
-                true,
                 false,
-                false,
-                true,
-                false,
-                false,
-                true,
                 true,
                 false,
                 true,
                 false,
-                false,
                 true,
-                false,
-                false,
+                true,
+                true,
                 true,
                 true,
                 true,
@@ -1304,6 +924,105 @@
                 true
             ],
             [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                true,
+                false,
+                true,
+                true
+            ],
+            [
+                false,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                false,
+                false,
+                true
+            ],
+            [
+                false,
+                true,
+                true,
+                false,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                false,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
                 true,
                 false,
                 true,
@@ -1312,7 +1031,31 @@
                 true,
                 false,
                 true,
+                false,
                 true,
+                false,
+                true,
+                true
+            ],
+            [
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
                 false,
                 true,
                 true,
@@ -1320,18 +1063,47 @@
                 true,
                 true,
                 true,
+                false,
                 true,
-                true,
-                false,
-                false,
-                false,
                 false,
                 true,
                 true,
                 true,
                 true,
+                true,
+                true,
+                false,
+                false
+            ],
+            [
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
                 false,
                 false,
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
                 true,
                 false,
                 true,
@@ -1343,7 +1115,121 @@
             ],
             [
                 true,
+                false,
+                false,
                 true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                false,
+                true
+            ],
+            [
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false
+            ],
+            [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true
+            ],
+            [
+                true,
+                false,
                 false,
                 true,
                 false,
@@ -1354,6 +1240,22 @@
                 true,
                 false,
                 true,
+                false,
+                true,
+                true,
+                false,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
                 true,
                 false,
                 true,
@@ -1361,14 +1263,9 @@
                 true,
                 false,
                 false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
+                true
+            ],
+            [
                 true,
                 true,
                 true,
@@ -1376,7 +1273,110 @@
                 true,
                 true,
                 false,
+                true,
                 false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+            ],
+            [
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false
+            ],
+            [
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                true,
+                true,
                 true
             ]
         ]
@@ -1385,383 +1385,21 @@
         {
             "item": {
                 "autoApply": false,
-                "type": "SKIP"
-            },
-            "position": {
-                "x": 29,
-                "y": 35
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 1,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 7,
-                "y": 24
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "SKIP"
-            },
-            "position": {
-                "x": 27,
-                "y": 2
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 9
-            },
-            "position": {
-                "x": 3,
-                "y": 26
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
                 "type": "HINT"
             },
             "position": {
-                "x": 26,
-                "y": 1
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 1,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 3,
-                "y": 22
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "HINT"
-            },
-            "position": {
-                "x": 32,
-                "y": 24
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 9,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 13,
-                "y": 8
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "HINT"
-            },
-            "position": {
-                "x": 17,
-                "y": 4
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "SKIP"
-            },
-            "position": {
-                "x": 30,
-                "y": 22
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 7,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 1,
-                "y": 18
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 8,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 34,
-                "y": 16
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "HINT"
-            },
-            "position": {
-                "x": 27,
-                "y": 21
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "HINT"
-            },
-            "position": {
-                "x": 29,
+                "x": 12,
                 "y": 19
             }
         },
         {
             "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 16
-            },
-            "position": {
-                "x": 30,
-                "y": 14
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "HINT"
-            },
-            "position": {
-                "x": 4,
-                "y": 7
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 3
-            },
-            "position": {
-                "x": 8,
-                "y": 34
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 15
-            },
-            "position": {
-                "x": 9,
-                "y": 0
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 4,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 7,
-                "y": 0
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 7
-            },
-            "position": {
-                "x": 15,
-                "y": 21
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 10
-            },
-            "position": {
-                "x": 1,
-                "y": 33
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 15
-            },
-            "position": {
-                "x": 8,
-                "y": 26
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 5
-            },
-            "position": {
-                "x": 14,
-                "y": 20
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "HINT"
-            },
-            "position": {
-                "x": 30,
-                "y": 35
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 18
-            },
-            "position": {
-                "x": 7,
-                "y": 25
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 8
-            },
-            "position": {
-                "x": 3,
-                "y": 27
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "SKIP"
-            },
-            "position": {
-                "x": 6,
-                "y": 22
-            }
-        },
-        {
-            "item": {
                 "autoApply": false,
                 "type": "HINT"
             },
             "position": {
                 "x": 1,
-                "y": 27
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "SKIP"
-            },
-            "position": {
-                "x": 8,
-                "y": 20
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 1
-            },
-            "position": {
-                "x": 10,
-                "y": 8
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 1
-            },
-            "position": {
-                "x": 26,
-                "y": 21
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 16
-            },
-            "position": {
-                "x": 33,
-                "y": 14
-            }
-        },
-        {
-            "item": {
-                "autoApply": true,
-                "type": "COIN",
-                "value": 7
-            },
-            "position": {
-                "x": 14,
-                "y": 29
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 8,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 33,
-                "y": 10
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "range": 6,
-                "type": "BREAKER"
-            },
-            "position": {
-                "x": 10,
-                "y": 0
-            }
-        },
-        {
-            "item": {
-                "autoApply": false,
-                "type": "SKIP"
-            },
-            "position": {
-                "x": 34,
-                "y": 7
+                "y": 30
             }
         },
         {
@@ -1771,7 +1409,142 @@
             },
             "position": {
                 "x": 20,
-                "y": 19
+                "y": 11
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "SKIP"
+            },
+            "position": {
+                "x": 31,
+                "y": 31
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "HINT"
+            },
+            "position": {
+                "x": 12,
+                "y": 17
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 9,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 21,
+                "y": 6
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "HINT"
+            },
+            "position": {
+                "x": 21,
+                "y": 35
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 5,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 28,
+                "y": 28
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "HINT"
+            },
+            "position": {
+                "x": 24,
+                "y": 32
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 18
+            },
+            "position": {
+                "x": 14,
+                "y": 9
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "SKIP"
+            },
+            "position": {
+                "x": 11,
+                "y": 10
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "HINT"
+            },
+            "position": {
+                "x": 24,
+                "y": 28
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 3,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 2,
+                "y": 15
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "HINT"
+            },
+            "position": {
+                "x": 14,
+                "y": 32
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 1
+            },
+            "position": {
+                "x": 14,
+                "y": 30
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "HINT"
+            },
+            "position": {
+                "x": 26,
+                "y": 18
             }
         },
         {
@@ -1781,8 +1554,8 @@
                 "value": 5
             },
             "position": {
-                "x": 16,
-                "y": 21
+                "x": 5,
+                "y": 35
             }
         },
         {
@@ -1791,16 +1564,254 @@
                 "type": "HINT"
             },
             "position": {
-                "x": 33,
+                "x": 22,
+                "y": 16
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "HINT"
+            },
+            "position": {
+                "x": 13,
+                "y": 25
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "SKIP"
+            },
+            "position": {
+                "x": 27,
+                "y": 9
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 1,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 30,
+                "y": 6
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 9,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 26,
+                "y": 10
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 11
+            },
+            "position": {
+                "x": 21,
+                "y": 9
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 11
+            },
+            "position": {
+                "x": 32,
+                "y": 27
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 9,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 6,
+                "y": 20
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 20
+            },
+            "position": {
+                "x": 11,
+                "y": 15
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 1,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 30,
+                "y": 27
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 16
+            },
+            "position": {
+                "x": 9,
+                "y": 15
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "SKIP"
+            },
+            "position": {
+                "x": 27,
+                "y": 28
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 8
+            },
+            "position": {
+                "x": 23,
+                "y": 26
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 7
+            },
+            "position": {
+                "x": 18,
+                "y": 29
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 3,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 16,
+                "y": 31
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 10,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 30,
+                "y": 15
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 6,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 20,
+                "y": 21
+            }
+        },
+        {
+            "item": {
+                "autoApply": true,
+                "type": "COIN",
+                "value": 5
+            },
+            "position": {
+                "x": 8,
                 "y": 0
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 6,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 30,
+                "y": 9
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 5,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 7,
+                "y": 30
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 9,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 4,
+                "y": 33
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "range": 6,
+                "type": "BREAKER"
+            },
+            "position": {
+                "x": 27,
+                "y": 8
+            }
+        },
+        {
+            "item": {
+                "autoApply": false,
+                "type": "SKIP"
+            },
+            "position": {
+                "x": 2,
+                "y": 31
             }
         }
     ],
     "player": {
         "solved": 0,
         "position": {
-            "x": 7,
-            "y": 17
+            "x": 10,
+            "y": 0
         },
         "inventory": {
             "coins": 0,

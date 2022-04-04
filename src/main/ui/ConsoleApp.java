@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 import org.json.JSONException;
 
@@ -266,8 +265,8 @@ public class ConsoleApp {
     // EFFECTS: draw (or actuall write) all the available items from the maze to the screen buffer
     private void drawItems() {
         Coordinate screenPos;
-        for (Map.Entry<Coordinate, Item> entry : game.getItemEntrySet()) {
-            screenPos = toScreen(entry.getKey());
+        for (Coordinate pos : game) {
+            screenPos = toScreen(pos);
             screen.writePixel(itemPixel, screenPos, false);
         }
 
